@@ -1,0 +1,92 @@
+syntax = "proto3";
+
+package refractedlabs.flowtrade;
+
+import "cosmos/base/v1beta1/coin.proto";
+import "gogoproto/gogo.proto";
+import "refractedlabs/flowtrade/params.proto";
+import "refractedlabs/flowtrade/flow.proto";
+
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+
+// Msg defines the Msg service.
+service Msg {
+  rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
+  rpc CreateFlow(MsgCreateFlow) returns (MsgCreateFlowResponse);
+  rpc JoinFlow(MsgJoinFlow) returns (MsgJoinFlowResponse);
+  rpc ExitFlow(MsgExitFlow) returns (MsgExitFlowResponse);
+  rpc SetOperator(MsgSetOperator) returns (MsgSetOperatorResponse);
+  rpc ClaimTokenIn(MsgClaimTokenIn) returns (MsgClaimTokenInResponse);
+  rpc ClaimTokenOut(MsgClaimTokenOut) returns (MsgClaimTokenOutResponse);
+  rpc StopFlow(MsgStopFlow) returns (MsgStopFlowResponse);
+}
+message MsgUpdateParams {
+  string authority = 1;
+  Params params = 2 [(gogoproto.nullable) = false];
+}
+
+message MsgUpdateParamsResponse {}
+
+message MsgCreateFlow {
+  string creator = 1;
+  FlowCreationRequest request = 2 [(gogoproto.nullable) = false];
+}
+
+message MsgCreateFlowResponse {
+  uint64 id = 1;
+}
+
+message MsgJoinFlow {
+  uint64 flow = 1;
+  string address = 2;
+  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
+  string signer = 4;
+}
+
+message MsgJoinFlowResponse {}
+
+message MsgExitFlow {
+  uint64 flow = 1;
+  string address = 2;
+  cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
+  string signer = 4;
+}
+
+message MsgExitFlowResponse {}
+
+message MsgSetOperator {
+  uint64 flow = 1;
+  string owner = 2;
+  string operator = 3;
+}
+
+message MsgSetOperatorResponse {}
+
+message MsgClaimTokenIn {
+  string creator = 1;
+  uint64 flow = 2;
+  string treasury_address = 3;
+}
+
+message MsgClaimTokenInResponse {
+  cosmos.base.v1beta1.Coin claimed = 1 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin fee = 2 [(gogoproto.nullable) = false];
+}
+
+message MsgClaimTokenOut {
+  uint64 flow = 1;
+  string address = 2;
+  string signer = 3;
+}
+
+message MsgClaimTokenOutResponse {
+  cosmos.base.v1beta1.Coin claimed = 1 [(gogoproto.nullable) = false];
+  cosmos.base.v1beta1.Coin fee = 2 [(gogoproto.nullable) = false];
+}
+
+message MsgStopFlow {
+  uint64 flow_id = 1;
+  string creator = 2;
+}
+
+message MsgStopFlowResponse {}

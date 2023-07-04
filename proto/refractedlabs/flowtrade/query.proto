@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+package refractedlabs.flowtrade;
+
+import "cosmos/base/query/v1beta1/pagination.proto";
+import "gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "refractedlabs/flowtrade/params.proto";
+import "refractedlabs/flowtrade/position.proto";
+import "refractedlabs/flowtrade/flow.proto";
+
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+
+// Query defines the gRPC querier service.
+service Query {
+  // Parameters queries the parameters of the module.
+  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+    option (google.api.http).get = "/flowtrade/flowtrade/params";
+  }
+
+  rpc Flow(QueryGetFlowRequest) returns (QueryGetFlowResponse) {
+    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow/{id}";
+  }
+
+  rpc FlowAll(QueryAllFlowRequest) returns (QueryAllFlowResponse) {
+    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow";
+  }
+
+  rpc Position(QueryGetPositionRequest) returns (QueryGetPositionResponse) {
+    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/position/{flow}/{owner}";
+  }
+}
+
+// QueryParamsRequest is request type for the Query/Params RPC method.
+message QueryParamsRequest {}
+
+// QueryParamsResponse is response type for the Query/Params RPC method.
+message QueryParamsResponse {
+  // params holds all the parameters of this module.
+  Params params = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetFlowRequest {
+  uint64 id = 1;
+}
+
+message QueryGetFlowResponse {
+  Flow flow = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryAllFlowRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryAllFlowResponse {
+  repeated Flow flow = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetPositionRequest {
+  uint64 flow = 1;
+  string owner = 2;
+}
+
+message QueryGetPositionResponse {
+  Position position = 1 [(gogoproto.nullable) = false];
+}
