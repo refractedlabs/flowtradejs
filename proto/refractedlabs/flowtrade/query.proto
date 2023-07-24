@@ -29,6 +29,14 @@ service Query {
   rpc Position(QueryGetPositionRequest) returns (QueryGetPositionResponse) {
     option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/position/{flow}/{owner}";
   }
+
+  rpc FlowPositions(QueryGetFlowPositionsRequest) returns (QueryGetFlowPositionsResponse) {
+    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow-positions/{flow}";
+  }
+
+  rpc UserPositions(QueryGetUserPositionsRequest) returns (QueryGetUserPositionsResponse) {
+    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/user-positions/{owner}";
+  }
 }
 
 // QueryParamsRequest is request type for the Query/Params RPC method.
@@ -64,4 +72,24 @@ message QueryGetPositionRequest {
 
 message QueryGetPositionResponse {
   Position position = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryGetFlowPositionsRequest {
+  uint64 flow = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryGetFlowPositionsResponse {
+  repeated Position position = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryGetUserPositionsRequest {
+  string owner = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryGetUserPositionsResponse {
+  repeated Position position = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }

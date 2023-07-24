@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@refractedlabs/flowtradejs": "0.1.0"
+    "@refractedlabs/flowtradejs": "0.1.1"
   }
 }

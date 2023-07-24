@@ -3,7 +3,7 @@ import { grpc } from "@improbable-eng/grpc-web";
 import { UnaryMethodDefinitionish } from "../../grpc-web";
 import { DeepPartial } from "../../helpers";
 import { BrowserHeaders } from "browser-headers";
-import { QueryParamsRequest, QueryParamsResponse, QueryGetFlowRequest, QueryGetFlowResponse, QueryAllFlowRequest, QueryAllFlowResponse, QueryGetPositionRequest, QueryGetPositionResponse } from "./query";
+import { QueryParamsRequest, QueryParamsResponse, QueryGetFlowRequest, QueryGetFlowResponse, QueryAllFlowRequest, QueryAllFlowResponse, QueryGetPositionRequest, QueryGetPositionResponse, QueryGetFlowPositionsRequest, QueryGetFlowPositionsResponse, QueryGetUserPositionsRequest, QueryGetUserPositionsResponse } from "./query";
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -11,6 +11,8 @@ export interface Query {
   flow(request: DeepPartial<QueryGetFlowRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowResponse>;
   flowAll(request?: DeepPartial<QueryAllFlowRequest>, metadata?: grpc.Metadata): Promise<QueryAllFlowResponse>;
   position(request: DeepPartial<QueryGetPositionRequest>, metadata?: grpc.Metadata): Promise<QueryGetPositionResponse>;
+  flowPositions(request: DeepPartial<QueryGetFlowPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowPositionsResponse>;
+  userPositions(request: DeepPartial<QueryGetUserPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetUserPositionsResponse>;
 }
 export class QueryClientImpl implements Query {
   private readonly rpc: Rpc;
@@ -20,6 +22,8 @@ export class QueryClientImpl implements Query {
     this.flow = this.flow.bind(this);
     this.flowAll = this.flowAll.bind(this);
     this.position = this.position.bind(this);
+    this.flowPositions = this.flowPositions.bind(this);
+    this.userPositions = this.userPositions.bind(this);
   }
   params(request: DeepPartial<QueryParamsRequest> = {}, metadata?: grpc.Metadata): Promise<QueryParamsResponse> {
     return this.rpc.unary(QueryParamsDesc, QueryParamsRequest.fromPartial(request), metadata);
@@ -34,6 +38,12 @@ export class QueryClientImpl implements Query {
   }
   position(request: DeepPartial<QueryGetPositionRequest>, metadata?: grpc.Metadata): Promise<QueryGetPositionResponse> {
     return this.rpc.unary(QueryGetPositionDesc, QueryGetPositionRequest.fromPartial(request), metadata);
+  }
+  flowPositions(request: DeepPartial<QueryGetFlowPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowPositionsResponse> {
+    return this.rpc.unary(QueryGetFlowPositionsDesc, QueryGetFlowPositionsRequest.fromPartial(request), metadata);
+  }
+  userPositions(request: DeepPartial<QueryGetUserPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetUserPositionsResponse> {
+    return this.rpc.unary(QueryGetUserPositionsDesc, QueryGetUserPositionsRequest.fromPartial(request), metadata);
   }
 }
 export const QueryDesc = {
@@ -116,6 +126,48 @@ export const QueryGetPositionDesc: UnaryMethodDefinitionish = {
     deserializeBinary(data: Uint8Array) {
       return {
         ...QueryGetPositionResponse.decode(data),
+        toObject() {
+          return this;
+        }
+      };
+    }
+  } as any)
+};
+export const QueryGetFlowPositionsDesc: UnaryMethodDefinitionish = {
+  methodName: "FlowPositions",
+  service: QueryDesc,
+  requestStream: false,
+  responseStream: false,
+  requestType: ({
+    serializeBinary() {
+      return QueryGetFlowPositionsRequest.encode(this).finish();
+    }
+  } as any),
+  responseType: ({
+    deserializeBinary(data: Uint8Array) {
+      return {
+        ...QueryGetFlowPositionsResponse.decode(data),
+        toObject() {
+          return this;
+        }
+      };
+    }
+  } as any)
+};
+export const QueryGetUserPositionsDesc: UnaryMethodDefinitionish = {
+  methodName: "UserPositions",
+  service: QueryDesc,
+  requestStream: false,
+  responseStream: false,
+  requestType: ({
+    serializeBinary() {
+      return QueryGetUserPositionsRequest.encode(this).finish();
+    }
+  } as any),
+  responseType: ({
+    deserializeBinary(data: Uint8Array) {
+      return {
+        ...QueryGetUserPositionsResponse.decode(data),
         toObject() {
           return this;
         }

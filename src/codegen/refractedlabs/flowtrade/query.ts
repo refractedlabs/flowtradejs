@@ -57,6 +57,38 @@ export interface QueryGetPositionResponse {
 export interface QueryGetPositionResponseSDKType {
   position?: PositionSDKType;
 }
+export interface QueryGetFlowPositionsRequest {
+  flow: Long;
+  pagination?: PageRequest;
+}
+export interface QueryGetFlowPositionsRequestSDKType {
+  flow: Long;
+  pagination?: PageRequestSDKType;
+}
+export interface QueryGetFlowPositionsResponse {
+  position: Position[];
+  pagination?: PageResponse;
+}
+export interface QueryGetFlowPositionsResponseSDKType {
+  position: PositionSDKType[];
+  pagination?: PageResponseSDKType;
+}
+export interface QueryGetUserPositionsRequest {
+  owner: string;
+  pagination?: PageRequest;
+}
+export interface QueryGetUserPositionsRequestSDKType {
+  owner: string;
+  pagination?: PageRequestSDKType;
+}
+export interface QueryGetUserPositionsResponse {
+  position: Position[];
+  pagination?: PageResponse;
+}
+export interface QueryGetUserPositionsResponseSDKType {
+  position: PositionSDKType[];
+  pagination?: PageResponseSDKType;
+}
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -426,6 +458,234 @@ export const QueryGetPositionResponse = {
   fromPartial(object: Partial<QueryGetPositionResponse>): QueryGetPositionResponse {
     const message = createBaseQueryGetPositionResponse();
     message.position = object.position !== undefined && object.position !== null ? Position.fromPartial(object.position) : undefined;
+    return message;
+  }
+};
+function createBaseQueryGetFlowPositionsRequest(): QueryGetFlowPositionsRequest {
+  return {
+    flow: Long.UZERO,
+    pagination: undefined
+  };
+}
+export const QueryGetFlowPositionsRequest = {
+  encode(message: QueryGetFlowPositionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (!message.flow.isZero()) {
+      writer.uint32(8).uint64(message.flow);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowPositionsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetFlowPositionsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.flow = (reader.uint64() as Long);
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryGetFlowPositionsRequest {
+    return {
+      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryGetFlowPositionsRequest): unknown {
+    const obj: any = {};
+    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetFlowPositionsRequest>): QueryGetFlowPositionsRequest {
+    const message = createBaseQueryGetFlowPositionsRequest();
+    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
+    return message;
+  }
+};
+function createBaseQueryGetFlowPositionsResponse(): QueryGetFlowPositionsResponse {
+  return {
+    position: [],
+    pagination: undefined
+  };
+}
+export const QueryGetFlowPositionsResponse = {
+  encode(message: QueryGetFlowPositionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.position) {
+      Position.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowPositionsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetFlowPositionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.position.push(Position.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryGetFlowPositionsResponse {
+    return {
+      position: Array.isArray(object?.position) ? object.position.map((e: any) => Position.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryGetFlowPositionsResponse): unknown {
+    const obj: any = {};
+    if (message.position) {
+      obj.position = message.position.map(e => e ? Position.toJSON(e) : undefined);
+    } else {
+      obj.position = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetFlowPositionsResponse>): QueryGetFlowPositionsResponse {
+    const message = createBaseQueryGetFlowPositionsResponse();
+    message.position = object.position?.map(e => Position.fromPartial(e)) || [];
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
+    return message;
+  }
+};
+function createBaseQueryGetUserPositionsRequest(): QueryGetUserPositionsRequest {
+  return {
+    owner: "",
+    pagination: undefined
+  };
+}
+export const QueryGetUserPositionsRequest = {
+  encode(message: QueryGetUserPositionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.owner !== "") {
+      writer.uint32(10).string(message.owner);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUserPositionsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetUserPositionsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.owner = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryGetUserPositionsRequest {
+    return {
+      owner: isSet(object.owner) ? String(object.owner) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryGetUserPositionsRequest): unknown {
+    const obj: any = {};
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetUserPositionsRequest>): QueryGetUserPositionsRequest {
+    const message = createBaseQueryGetUserPositionsRequest();
+    message.owner = object.owner ?? "";
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
+    return message;
+  }
+};
+function createBaseQueryGetUserPositionsResponse(): QueryGetUserPositionsResponse {
+  return {
+    position: [],
+    pagination: undefined
+  };
+}
+export const QueryGetUserPositionsResponse = {
+  encode(message: QueryGetUserPositionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.position) {
+      Position.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUserPositionsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryGetUserPositionsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.position.push(Position.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+  fromJSON(object: any): QueryGetUserPositionsResponse {
+    return {
+      position: Array.isArray(object?.position) ? object.position.map((e: any) => Position.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined
+    };
+  },
+  toJSON(message: QueryGetUserPositionsResponse): unknown {
+    const obj: any = {};
+    if (message.position) {
+      obj.position = message.position.map(e => e ? Position.toJSON(e) : undefined);
+    } else {
+      obj.position = [];
+    }
+    message.pagination !== undefined && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+  fromPartial(object: Partial<QueryGetUserPositionsResponse>): QueryGetUserPositionsResponse {
+    const message = createBaseQueryGetUserPositionsResponse();
+    message.position = object.position?.map(e => Position.fromPartial(e)) || [];
+    message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     return message;
   }
 };
