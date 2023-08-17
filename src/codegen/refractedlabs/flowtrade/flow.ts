@@ -1,8 +1,9 @@
 import { Timestamp, TimestampSDKType } from "../../google/protobuf/timestamp";
 import { Duration, DurationSDKType } from "../../google/protobuf/duration";
 import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
-import { Long, isSet, fromJsonTimestamp, fromTimestamp } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { Decimal } from "@cosmjs/math";
+import { isSet, fromJsonTimestamp, fromTimestamp } from "../../helpers";
 export enum FlowStatus {
   /** WAITING - the flow is waiting to be started */
   WAITING = 0,
@@ -53,31 +54,31 @@ export function flowStatusToJSON(object: FlowStatus): string {
 /** Flow holds information and price calculations for a flow trade */
 export interface Flow {
   /** auto-generated identifier for a flow */
-  id: Long;
+  id: bigint;
   /** the address of flow creator and owner */
   creator: string;
   /** informational data about the flow */
-  flowInfo?: FlowInfo;
+  flowInfo: FlowInfo;
   /** the time that swap distribution starts */
-  startTime?: Timestamp;
+  startTime: Timestamp;
   /** the time that flow is ended */
-  endTime?: Timestamp;
+  endTime: Timestamp;
   /**
    * the interval in which the distribution index is updated and hence tokens are swapped
    * if dist_interval is 0, the flow is updated every time in or out tokens are increased or decreased
    * if dist_interval is equal to the duration of flow, it means that all of the tokens are swapped once after the flow ends
    */
-  distInterval?: Duration;
+  distInterval: Duration;
   /** the address that the swapped tokens are sent to after the flow ends */
   treasuryAddress: string;
   /** total amount creator provided to be swapped */
-  totalTokenOut?: Coin;
+  totalTokenOut: Coin;
   /** the accepted token to buy the out tokens */
   tokenInDenom: string;
   /** the time from then the buyers can claim their purchased tokens */
-  tokenOutClaimableAfter?: Timestamp;
+  tokenOutClaimableAfter: Timestamp;
   /** the time from then the flow creator can claim the swapped tokens */
-  tokenInClaimableAfter?: Timestamp;
+  tokenInClaimableAfter: Timestamp;
   /** whether the flow can be stopped by the flow's creator */
   stoppable: boolean;
   /** whether to allow buyers to claim their tokens immediately after the flow is stopped */
@@ -87,7 +88,7 @@ export interface Flow {
   /** a global index for the amount of purchase that has already been applied */
   distIndex: string;
   /** the last time the dist index is updated */
-  lastDistUpdate?: Timestamp;
+  lastDistUpdate: Timestamp;
   /** the amount of remaining out tokens to sell */
   tokenOutBalance: string;
   /** the current amount of token-in provided to buy token-out */
@@ -101,7 +102,7 @@ export interface Flow {
   /** the current status of flow */
   status: FlowStatus;
   /** the amount of creation deposit that should be revenue to the flow creator */
-  creationDeposit?: Coin;
+  creationDeposit: Coin;
   /** the fee ratio taken from token-out, this is copied from module params at the time of flow creation */
   tokenOutFeeRatio: string;
   /** the fee ratio taken from token-in, this is copied from module params at the time of flow creation */
@@ -118,29 +119,29 @@ export interface Flow {
 }
 /** Flow holds information and price calculations for a flow trade */
 export interface FlowSDKType {
-  id: Long;
+  id: bigint;
   creator: string;
-  flow_info?: FlowInfoSDKType;
-  start_time?: TimestampSDKType;
-  endTime?: TimestampSDKType;
-  dist_interval?: DurationSDKType;
+  flow_info: FlowInfoSDKType;
+  start_time: TimestampSDKType;
+  endTime: TimestampSDKType;
+  dist_interval: DurationSDKType;
   treasury_address: string;
-  total_token_out?: CoinSDKType;
+  total_token_out: CoinSDKType;
   token_in_denom: string;
-  token_out_claimable_after?: TimestampSDKType;
-  token_in_claimable_after?: TimestampSDKType;
+  token_out_claimable_after: TimestampSDKType;
+  token_in_claimable_after: TimestampSDKType;
   stoppable: boolean;
   allow_immediate_token_out_claim_if_stopped: boolean;
   allow_immediate_token_in_claim_if_stopped: boolean;
   dist_index: string;
-  last_dist_update?: TimestampSDKType;
+  last_dist_update: TimestampSDKType;
   token_out_balance: string;
   token_in_balance: string;
   spent_token_in: string;
   total_shares: string;
   live_price: string;
   status: FlowStatus;
-  creation_deposit?: CoinSDKType;
+  creation_deposit: CoinSDKType;
   token_out_fee_ratio: string;
   token_in_fee_ratio: string;
   automatic_treasury_collection: boolean;
@@ -165,27 +166,27 @@ export interface FlowInfoSDKType {
 /** a structure for requesting a new flow's creation */
 export interface FlowCreationRequest {
   /** informational data about the flow */
-  flowInfo?: FlowInfo;
+  flowInfo: FlowInfo;
   /** the time that swap distribution starts */
-  startTime?: Timestamp;
+  startTime: Timestamp;
   /** the time that flow is ended */
-  endTime?: Timestamp;
+  endTime: Timestamp;
   /**
    * the interval in which the distribution index is updated and hence tokens are swapped
    * if dist_interval is 0, the flow is updated every time in or out tokens are increased or decreased
    * if dist_interval is equal to the duration of flow, it means that all of the tokens are swapped once after the flow ends
    */
-  distInterval?: Duration;
+  distInterval: Duration;
   /** the address that the swapped tokens are sent to after the flow ends */
   treasuryAddress: string;
   /** total amount creator provided to be swapped */
-  tokensOut?: Coin;
+  tokensOut: Coin;
   /** the accepted token to buy the out tokens */
   tokenInDenom: string;
   /** the time from then the flow buyers can claim their purchased tokens */
-  tokenOutClaimableAfter?: Timestamp;
+  tokenOutClaimableAfter: Timestamp;
   /** the time from then the flow creator can claim the swapped tokens */
-  tokenInClaimableAfter?: Timestamp;
+  tokenInClaimableAfter: Timestamp;
   /** whether the flow can be stopped by the flow's creator */
   stoppable: boolean;
   /** whether to allow buyers to claim their tokens immediately after the flow is stopped */
@@ -195,44 +196,44 @@ export interface FlowCreationRequest {
 }
 /** a structure for requesting a new flow's creation */
 export interface FlowCreationRequestSDKType {
-  flow_info?: FlowInfoSDKType;
-  start_time?: TimestampSDKType;
-  end_time?: TimestampSDKType;
-  dist_interval?: DurationSDKType;
+  flow_info: FlowInfoSDKType;
+  start_time: TimestampSDKType;
+  end_time: TimestampSDKType;
+  dist_interval: DurationSDKType;
   treasury_address: string;
-  tokens_out?: CoinSDKType;
+  tokens_out: CoinSDKType;
   token_in_denom: string;
-  token_out_claimable_after?: TimestampSDKType;
-  token_in_claimable_after?: TimestampSDKType;
+  token_out_claimable_after: TimestampSDKType;
+  token_in_claimable_after: TimestampSDKType;
   stoppable: boolean;
   allow_immediate_token_out_claim_if_stopped: boolean;
   allow_immediate_token_in_claim_if_stopped: boolean;
 }
 function createBaseFlow(): Flow {
   return {
-    id: Long.UZERO,
+    id: BigInt(0),
     creator: "",
-    flowInfo: undefined,
-    startTime: undefined,
-    endTime: undefined,
-    distInterval: undefined,
+    flowInfo: FlowInfo.fromPartial({}),
+    startTime: Timestamp.fromPartial({}),
+    endTime: Timestamp.fromPartial({}),
+    distInterval: Duration.fromPartial({}),
     treasuryAddress: "",
-    totalTokenOut: undefined,
+    totalTokenOut: Coin.fromPartial({}),
     tokenInDenom: "",
-    tokenOutClaimableAfter: undefined,
-    tokenInClaimableAfter: undefined,
+    tokenOutClaimableAfter: Timestamp.fromPartial({}),
+    tokenInClaimableAfter: Timestamp.fromPartial({}),
     stoppable: false,
     allowImmediateTokenOutClaimIfStopped: false,
     allowImmediateTokenInClaimIfStopped: false,
     distIndex: "",
-    lastDistUpdate: undefined,
+    lastDistUpdate: Timestamp.fromPartial({}),
     tokenOutBalance: "",
     tokenInBalance: "",
     spentTokenIn: "",
     totalShares: "",
     livePrice: "",
     status: 0,
-    creationDeposit: undefined,
+    creationDeposit: Coin.fromPartial({}),
     tokenOutFeeRatio: "",
     tokenInFeeRatio: "",
     automaticTreasuryCollection: false,
@@ -241,8 +242,8 @@ function createBaseFlow(): Flow {
   };
 }
 export const Flow = {
-  encode(message: Flow, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.id.isZero()) {
+  encode(message: Flow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     if (message.creator !== "") {
@@ -285,7 +286,7 @@ export const Flow = {
       writer.uint32(112).bool(message.allowImmediateTokenInClaimIfStopped);
     }
     if (message.distIndex !== "") {
-      writer.uint32(122).string(message.distIndex);
+      writer.uint32(122).string(Decimal.fromUserInput(message.distIndex, 18).atomics);
     }
     if (message.lastDistUpdate !== undefined) {
       Timestamp.encode(message.lastDistUpdate, writer.uint32(130).fork()).ldelim();
@@ -303,7 +304,7 @@ export const Flow = {
       writer.uint32(162).string(message.totalShares);
     }
     if (message.livePrice !== "") {
-      writer.uint32(170).string(message.livePrice);
+      writer.uint32(170).string(Decimal.fromUserInput(message.livePrice, 18).atomics);
     }
     if (message.status !== 0) {
       writer.uint32(176).int32(message.status);
@@ -312,10 +313,10 @@ export const Flow = {
       Coin.encode(message.creationDeposit, writer.uint32(186).fork()).ldelim();
     }
     if (message.tokenOutFeeRatio !== "") {
-      writer.uint32(194).string(message.tokenOutFeeRatio);
+      writer.uint32(194).string(Decimal.fromUserInput(message.tokenOutFeeRatio, 18).atomics);
     }
     if (message.tokenInFeeRatio !== "") {
-      writer.uint32(202).string(message.tokenInFeeRatio);
+      writer.uint32(202).string(Decimal.fromUserInput(message.tokenInFeeRatio, 18).atomics);
     }
     if (message.automaticTreasuryCollection === true) {
       writer.uint32(208).bool(message.automaticTreasuryCollection);
@@ -328,15 +329,15 @@ export const Flow = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Flow {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Flow {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFlow();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = (reader.uint64() as Long);
+          message.id = reader.uint64();
           break;
         case 2:
           message.creator = reader.string();
@@ -378,7 +379,7 @@ export const Flow = {
           message.allowImmediateTokenInClaimIfStopped = reader.bool();
           break;
         case 15:
-          message.distIndex = reader.string();
+          message.distIndex = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 16:
           message.lastDistUpdate = Timestamp.decode(reader, reader.uint32());
@@ -396,7 +397,7 @@ export const Flow = {
           message.totalShares = reader.string();
           break;
         case 21:
-          message.livePrice = reader.string();
+          message.livePrice = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 22:
           message.status = (reader.int32() as any);
@@ -405,10 +406,10 @@ export const Flow = {
           message.creationDeposit = Coin.decode(reader, reader.uint32());
           break;
         case 24:
-          message.tokenOutFeeRatio = reader.string();
+          message.tokenOutFeeRatio = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 25:
-          message.tokenInFeeRatio = reader.string();
+          message.tokenInFeeRatio = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 26:
           message.automaticTreasuryCollection = reader.bool();
@@ -428,7 +429,7 @@ export const Flow = {
   },
   fromJSON(object: any): Flow {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO,
+      id: isSet(object.id) ? BigInt(object.id.toString()) : BigInt(0),
       creator: isSet(object.creator) ? String(object.creator) : "",
       flowInfo: isSet(object.flowInfo) ? FlowInfo.fromJSON(object.flowInfo) : undefined,
       startTime: isSet(object.startTime) ? fromJsonTimestamp(object.startTime) : undefined,
@@ -449,7 +450,7 @@ export const Flow = {
       spentTokenIn: isSet(object.spentTokenIn) ? String(object.spentTokenIn) : "",
       totalShares: isSet(object.totalShares) ? String(object.totalShares) : "",
       livePrice: isSet(object.livePrice) ? String(object.livePrice) : "",
-      status: isSet(object.status) ? flowStatusFromJSON(object.status) : 0,
+      status: isSet(object.status) ? flowStatusFromJSON(object.status) : -1,
       creationDeposit: isSet(object.creationDeposit) ? Coin.fromJSON(object.creationDeposit) : undefined,
       tokenOutFeeRatio: isSet(object.tokenOutFeeRatio) ? String(object.tokenOutFeeRatio) : "",
       tokenInFeeRatio: isSet(object.tokenInFeeRatio) ? String(object.tokenInFeeRatio) : "",
@@ -460,7 +461,7 @@ export const Flow = {
   },
   toJSON(message: Flow): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = (message.id || Long.UZERO).toString());
+    message.id !== undefined && (obj.id = (message.id || BigInt(0)).toString());
     message.creator !== undefined && (obj.creator = message.creator);
     message.flowInfo !== undefined && (obj.flowInfo = message.flowInfo ? FlowInfo.toJSON(message.flowInfo) : undefined);
     message.startTime !== undefined && (obj.startTime = fromTimestamp(message.startTime).toISOString());
@@ -492,7 +493,7 @@ export const Flow = {
   },
   fromPartial(object: Partial<Flow>): Flow {
     const message = createBaseFlow();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     message.creator = object.creator ?? "";
     message.flowInfo = object.flowInfo !== undefined && object.flowInfo !== null ? FlowInfo.fromPartial(object.flowInfo) : undefined;
     message.startTime = object.startTime !== undefined && object.startTime !== null ? Timestamp.fromPartial(object.startTime) : undefined;
@@ -531,7 +532,7 @@ function createBaseFlowInfo(): FlowInfo {
   };
 }
 export const FlowInfo = {
-  encode(message: FlowInfo, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: FlowInfo, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -543,8 +544,8 @@ export const FlowInfo = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): FlowInfo {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): FlowInfo {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFlowInfo();
     while (reader.pos < end) {
@@ -590,22 +591,22 @@ export const FlowInfo = {
 };
 function createBaseFlowCreationRequest(): FlowCreationRequest {
   return {
-    flowInfo: undefined,
-    startTime: undefined,
-    endTime: undefined,
-    distInterval: undefined,
+    flowInfo: FlowInfo.fromPartial({}),
+    startTime: Timestamp.fromPartial({}),
+    endTime: Timestamp.fromPartial({}),
+    distInterval: Duration.fromPartial({}),
     treasuryAddress: "",
-    tokensOut: undefined,
+    tokensOut: Coin.fromPartial({}),
     tokenInDenom: "",
-    tokenOutClaimableAfter: undefined,
-    tokenInClaimableAfter: undefined,
+    tokenOutClaimableAfter: Timestamp.fromPartial({}),
+    tokenInClaimableAfter: Timestamp.fromPartial({}),
     stoppable: false,
     allowImmediateTokenOutClaimIfStopped: false,
     allowImmediateTokenInClaimIfStopped: false
   };
 }
 export const FlowCreationRequest = {
-  encode(message: FlowCreationRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: FlowCreationRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flowInfo !== undefined) {
       FlowInfo.encode(message.flowInfo, writer.uint32(10).fork()).ldelim();
     }
@@ -644,8 +645,8 @@ export const FlowCreationRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): FlowCreationRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): FlowCreationRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseFlowCreationRequest();
     while (reader.pos < end) {

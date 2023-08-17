@@ -1,6 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../base/query/v1beta1/pagination";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** QueryEvidenceRequest is the request type for the Query/Evidence RPC method. */
 export interface QueryEvidenceRequest {
@@ -9,7 +9,7 @@ export interface QueryEvidenceRequest {
    * Deprecated: Use hash, a HEX encoded string, instead.
    */
   /** @deprecated */
-  evidenceHash?: Uint8Array;
+  evidenceHash: Uint8Array;
   /**
    * hash defines the evidence hash of the requested evidence.
    * 
@@ -20,17 +20,17 @@ export interface QueryEvidenceRequest {
 /** QueryEvidenceRequest is the request type for the Query/Evidence RPC method. */
 export interface QueryEvidenceRequestSDKType {
   /** @deprecated */
-  evidence_hash?: Uint8Array;
+  evidence_hash: Uint8Array;
   hash: string;
 }
 /** QueryEvidenceResponse is the response type for the Query/Evidence RPC method. */
 export interface QueryEvidenceResponse {
   /** evidence returns the requested evidence. */
-  evidence?: Any;
+  evidence: Any;
 }
 /** QueryEvidenceResponse is the response type for the Query/Evidence RPC method. */
 export interface QueryEvidenceResponseSDKType {
-  evidence?: AnySDKType;
+  evidence: AnySDKType;
 }
 /**
  * QueryEvidenceRequest is the request type for the Query/AllEvidence RPC
@@ -38,14 +38,14 @@ export interface QueryEvidenceResponseSDKType {
  */
 export interface QueryAllEvidenceRequest {
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 /**
  * QueryEvidenceRequest is the request type for the Query/AllEvidence RPC
  * method.
  */
 export interface QueryAllEvidenceRequestSDKType {
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 /**
  * QueryAllEvidenceResponse is the response type for the Query/AllEvidence RPC
@@ -55,7 +55,7 @@ export interface QueryAllEvidenceResponse {
   /** evidence returns all evidences. */
   evidence: Any[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 /**
  * QueryAllEvidenceResponse is the response type for the Query/AllEvidence RPC
@@ -63,7 +63,7 @@ export interface QueryAllEvidenceResponse {
  */
 export interface QueryAllEvidenceResponseSDKType {
   evidence: AnySDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 function createBaseQueryEvidenceRequest(): QueryEvidenceRequest {
   return {
@@ -72,7 +72,7 @@ function createBaseQueryEvidenceRequest(): QueryEvidenceRequest {
   };
 }
 export const QueryEvidenceRequest = {
-  encode(message: QueryEvidenceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryEvidenceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.evidenceHash.length !== 0) {
       writer.uint32(10).bytes(message.evidenceHash);
     }
@@ -81,8 +81,8 @@ export const QueryEvidenceRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEvidenceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryEvidenceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEvidenceRequest();
     while (reader.pos < end) {
@@ -122,18 +122,18 @@ export const QueryEvidenceRequest = {
 };
 function createBaseQueryEvidenceResponse(): QueryEvidenceResponse {
   return {
-    evidence: undefined
+    evidence: Any.fromPartial({})
   };
 }
 export const QueryEvidenceResponse = {
-  encode(message: QueryEvidenceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryEvidenceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.evidence !== undefined) {
       Any.encode(message.evidence, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEvidenceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryEvidenceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEvidenceResponse();
     while (reader.pos < end) {
@@ -167,18 +167,18 @@ export const QueryEvidenceResponse = {
 };
 function createBaseQueryAllEvidenceRequest(): QueryAllEvidenceRequest {
   return {
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAllEvidenceRequest = {
-  encode(message: QueryAllEvidenceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllEvidenceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllEvidenceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllEvidenceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllEvidenceRequest();
     while (reader.pos < end) {
@@ -213,11 +213,11 @@ export const QueryAllEvidenceRequest = {
 function createBaseQueryAllEvidenceResponse(): QueryAllEvidenceResponse {
   return {
     evidence: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAllEvidenceResponse = {
-  encode(message: QueryAllEvidenceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllEvidenceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.evidence) {
       Any.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -226,8 +226,8 @@ export const QueryAllEvidenceResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllEvidenceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllEvidenceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllEvidenceResponse();
     while (reader.pos < end) {

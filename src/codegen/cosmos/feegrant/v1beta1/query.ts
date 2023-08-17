@@ -1,6 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../base/query/v1beta1/pagination";
 import { Grant, GrantSDKType } from "./feegrant";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet } from "../../../helpers";
 /** QueryAllowanceRequest is the request type for the Query/Allowance RPC method. */
 export interface QueryAllowanceRequest {
@@ -17,34 +17,34 @@ export interface QueryAllowanceRequestSDKType {
 /** QueryAllowanceResponse is the response type for the Query/Allowance RPC method. */
 export interface QueryAllowanceResponse {
   /** allowance is a allowance granted for grantee by granter. */
-  allowance?: Grant;
+  allowance: Grant;
 }
 /** QueryAllowanceResponse is the response type for the Query/Allowance RPC method. */
 export interface QueryAllowanceResponseSDKType {
-  allowance?: GrantSDKType;
+  allowance: GrantSDKType;
 }
 /** QueryAllowancesRequest is the request type for the Query/Allowances RPC method. */
 export interface QueryAllowancesRequest {
   grantee: string;
   /** pagination defines an pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 /** QueryAllowancesRequest is the request type for the Query/Allowances RPC method. */
 export interface QueryAllowancesRequestSDKType {
   grantee: string;
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 /** QueryAllowancesResponse is the response type for the Query/Allowances RPC method. */
 export interface QueryAllowancesResponse {
   /** allowances are allowance's granted for grantee by granter. */
   allowances: Grant[];
   /** pagination defines an pagination for the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 /** QueryAllowancesResponse is the response type for the Query/Allowances RPC method. */
 export interface QueryAllowancesResponseSDKType {
   allowances: GrantSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 /**
  * QueryAllowancesByGranterRequest is the request type for the Query/AllowancesByGranter RPC method.
@@ -54,7 +54,7 @@ export interface QueryAllowancesResponseSDKType {
 export interface QueryAllowancesByGranterRequest {
   granter: string;
   /** pagination defines an pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 /**
  * QueryAllowancesByGranterRequest is the request type for the Query/AllowancesByGranter RPC method.
@@ -63,7 +63,7 @@ export interface QueryAllowancesByGranterRequest {
  */
 export interface QueryAllowancesByGranterRequestSDKType {
   granter: string;
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 /**
  * QueryAllowancesByGranterResponse is the response type for the Query/AllowancesByGranter RPC method.
@@ -74,7 +74,7 @@ export interface QueryAllowancesByGranterResponse {
   /** allowances that have been issued by the granter. */
   allowances: Grant[];
   /** pagination defines an pagination for the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 /**
  * QueryAllowancesByGranterResponse is the response type for the Query/AllowancesByGranter RPC method.
@@ -83,7 +83,7 @@ export interface QueryAllowancesByGranterResponse {
  */
 export interface QueryAllowancesByGranterResponseSDKType {
   allowances: GrantSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 function createBaseQueryAllowanceRequest(): QueryAllowanceRequest {
   return {
@@ -92,7 +92,7 @@ function createBaseQueryAllowanceRequest(): QueryAllowanceRequest {
   };
 }
 export const QueryAllowanceRequest = {
-  encode(message: QueryAllowanceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowanceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -101,8 +101,8 @@ export const QueryAllowanceRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowanceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowanceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowanceRequest();
     while (reader.pos < end) {
@@ -142,18 +142,18 @@ export const QueryAllowanceRequest = {
 };
 function createBaseQueryAllowanceResponse(): QueryAllowanceResponse {
   return {
-    allowance: undefined
+    allowance: Grant.fromPartial({})
   };
 }
 export const QueryAllowanceResponse = {
-  encode(message: QueryAllowanceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowanceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.allowance !== undefined) {
       Grant.encode(message.allowance, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowanceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowanceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowanceResponse();
     while (reader.pos < end) {
@@ -188,11 +188,11 @@ export const QueryAllowanceResponse = {
 function createBaseQueryAllowancesRequest(): QueryAllowancesRequest {
   return {
     grantee: "",
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAllowancesRequest = {
-  encode(message: QueryAllowancesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowancesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.grantee !== "") {
       writer.uint32(10).string(message.grantee);
     }
@@ -201,8 +201,8 @@ export const QueryAllowancesRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowancesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowancesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowancesRequest();
     while (reader.pos < end) {
@@ -243,11 +243,11 @@ export const QueryAllowancesRequest = {
 function createBaseQueryAllowancesResponse(): QueryAllowancesResponse {
   return {
     allowances: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAllowancesResponse = {
-  encode(message: QueryAllowancesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowancesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.allowances) {
       Grant.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -256,8 +256,8 @@ export const QueryAllowancesResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowancesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowancesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowancesResponse();
     while (reader.pos < end) {
@@ -302,11 +302,11 @@ export const QueryAllowancesResponse = {
 function createBaseQueryAllowancesByGranterRequest(): QueryAllowancesByGranterRequest {
   return {
     granter: "",
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAllowancesByGranterRequest = {
-  encode(message: QueryAllowancesByGranterRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowancesByGranterRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -315,8 +315,8 @@ export const QueryAllowancesByGranterRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowancesByGranterRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowancesByGranterRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowancesByGranterRequest();
     while (reader.pos < end) {
@@ -357,11 +357,11 @@ export const QueryAllowancesByGranterRequest = {
 function createBaseQueryAllowancesByGranterResponse(): QueryAllowancesByGranterResponse {
   return {
     allowances: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAllowancesByGranterResponse = {
-  encode(message: QueryAllowancesByGranterResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllowancesByGranterResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.allowances) {
       Grant.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -370,8 +370,8 @@ export const QueryAllowancesByGranterResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllowancesByGranterResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllowancesByGranterResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllowancesByGranterResponse();
     while (reader.pos < end) {

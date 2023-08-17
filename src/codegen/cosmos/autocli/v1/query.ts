@@ -1,5 +1,5 @@
 import { ModuleOptions, ModuleOptionsSDKType } from "./options";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet, isObject } from "../../../helpers";
 /** AppOptionsRequest is the RemoteInfoService/AppOptions request type. */
 export interface AppOptionsRequest {}
@@ -7,22 +7,22 @@ export interface AppOptionsRequest {}
 export interface AppOptionsRequestSDKType {}
 export interface AppOptionsResponse_ModuleOptionsEntry {
   key: string;
-  value?: ModuleOptions;
+  value: ModuleOptions;
 }
 export interface AppOptionsResponse_ModuleOptionsEntrySDKType {
   key: string;
-  value?: ModuleOptionsSDKType;
+  value: ModuleOptionsSDKType;
 }
 /** AppOptionsResponse is the RemoteInfoService/AppOptions response type. */
 export interface AppOptionsResponse {
   /** module_options is a map of module name to autocli module options. */
-  moduleOptions?: {
+  moduleOptions: {
     [key: string]: ModuleOptions;
   };
 }
 /** AppOptionsResponse is the RemoteInfoService/AppOptions response type. */
 export interface AppOptionsResponseSDKType {
-  module_options?: {
+  module_options: {
     [key: string]: ModuleOptionsSDKType;
   };
 }
@@ -30,11 +30,11 @@ function createBaseAppOptionsRequest(): AppOptionsRequest {
   return {};
 }
 export const AppOptionsRequest = {
-  encode(_: AppOptionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: AppOptionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AppOptionsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AppOptionsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAppOptionsRequest();
     while (reader.pos < end) {
@@ -62,11 +62,11 @@ export const AppOptionsRequest = {
 function createBaseAppOptionsResponse_ModuleOptionsEntry(): AppOptionsResponse_ModuleOptionsEntry {
   return {
     key: "",
-    value: undefined
+    value: ModuleOptions.fromPartial({})
   };
 }
 export const AppOptionsResponse_ModuleOptionsEntry = {
-  encode(message: AppOptionsResponse_ModuleOptionsEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AppOptionsResponse_ModuleOptionsEntry, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -75,8 +75,8 @@ export const AppOptionsResponse_ModuleOptionsEntry = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AppOptionsResponse_ModuleOptionsEntry {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AppOptionsResponse_ModuleOptionsEntry {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAppOptionsResponse_ModuleOptionsEntry();
     while (reader.pos < end) {
@@ -120,7 +120,7 @@ function createBaseAppOptionsResponse(): AppOptionsResponse {
   };
 }
 export const AppOptionsResponse = {
-  encode(message: AppOptionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AppOptionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     Object.entries(message.moduleOptions).forEach(([key, value]) => {
       AppOptionsResponse_ModuleOptionsEntry.encode({
         key: (key as any),
@@ -129,8 +129,8 @@ export const AppOptionsResponse = {
     });
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AppOptionsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AppOptionsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAppOptionsResponse();
     while (reader.pos < end) {

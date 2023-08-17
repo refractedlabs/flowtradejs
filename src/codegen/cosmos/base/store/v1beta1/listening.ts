@@ -1,5 +1,5 @@
 import { RequestDeliverTx, RequestDeliverTxSDKType, ResponseDeliverTx, ResponseDeliverTxSDKType, RequestBeginBlock, RequestBeginBlockSDKType, ResponseBeginBlock, ResponseBeginBlockSDKType, RequestEndBlock, RequestEndBlockSDKType, ResponseEndBlock, ResponseEndBlockSDKType, ResponseCommit, ResponseCommitSDKType } from "../../../../tendermint/abci/types";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
 /**
  * StoreKVPair is a KVStore KVPair used for listening to state changes (Sets and Deletes)
@@ -34,34 +34,34 @@ export interface StoreKVPairSDKType {
  * the file streamer dump them into files together with the state changes.
  */
 export interface BlockMetadata {
-  requestBeginBlock?: RequestBeginBlock;
-  responseBeginBlock?: ResponseBeginBlock;
+  requestBeginBlock: RequestBeginBlock;
+  responseBeginBlock: ResponseBeginBlock;
   deliverTxs: BlockMetadata_DeliverTx[];
-  requestEndBlock?: RequestEndBlock;
-  responseEndBlock?: ResponseEndBlock;
-  responseCommit?: ResponseCommit;
+  requestEndBlock: RequestEndBlock;
+  responseEndBlock: ResponseEndBlock;
+  responseCommit: ResponseCommit;
 }
 /**
  * BlockMetadata contains all the abci event data of a block
  * the file streamer dump them into files together with the state changes.
  */
 export interface BlockMetadataSDKType {
-  request_begin_block?: RequestBeginBlockSDKType;
-  response_begin_block?: ResponseBeginBlockSDKType;
+  request_begin_block: RequestBeginBlockSDKType;
+  response_begin_block: ResponseBeginBlockSDKType;
   deliver_txs: BlockMetadata_DeliverTxSDKType[];
-  request_end_block?: RequestEndBlockSDKType;
-  response_end_block?: ResponseEndBlockSDKType;
-  response_commit?: ResponseCommitSDKType;
+  request_end_block: RequestEndBlockSDKType;
+  response_end_block: ResponseEndBlockSDKType;
+  response_commit: ResponseCommitSDKType;
 }
 /** DeliverTx encapulate deliver tx request and response. */
 export interface BlockMetadata_DeliverTx {
-  request?: RequestDeliverTx;
-  response?: ResponseDeliverTx;
+  request: RequestDeliverTx;
+  response: ResponseDeliverTx;
 }
 /** DeliverTx encapulate deliver tx request and response. */
 export interface BlockMetadata_DeliverTxSDKType {
-  request?: RequestDeliverTxSDKType;
-  response?: ResponseDeliverTxSDKType;
+  request: RequestDeliverTxSDKType;
+  response: ResponseDeliverTxSDKType;
 }
 function createBaseStoreKVPair(): StoreKVPair {
   return {
@@ -72,7 +72,7 @@ function createBaseStoreKVPair(): StoreKVPair {
   };
 }
 export const StoreKVPair = {
-  encode(message: StoreKVPair, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: StoreKVPair, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.storeKey !== "") {
       writer.uint32(10).string(message.storeKey);
     }
@@ -87,8 +87,8 @@ export const StoreKVPair = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): StoreKVPair {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): StoreKVPair {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseStoreKVPair();
     while (reader.pos < end) {
@@ -140,16 +140,16 @@ export const StoreKVPair = {
 };
 function createBaseBlockMetadata(): BlockMetadata {
   return {
-    requestBeginBlock: undefined,
-    responseBeginBlock: undefined,
+    requestBeginBlock: RequestBeginBlock.fromPartial({}),
+    responseBeginBlock: ResponseBeginBlock.fromPartial({}),
     deliverTxs: [],
-    requestEndBlock: undefined,
-    responseEndBlock: undefined,
-    responseCommit: undefined
+    requestEndBlock: RequestEndBlock.fromPartial({}),
+    responseEndBlock: ResponseEndBlock.fromPartial({}),
+    responseCommit: ResponseCommit.fromPartial({})
   };
 }
 export const BlockMetadata = {
-  encode(message: BlockMetadata, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: BlockMetadata, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.requestBeginBlock !== undefined) {
       RequestBeginBlock.encode(message.requestBeginBlock, writer.uint32(10).fork()).ldelim();
     }
@@ -170,8 +170,8 @@ export const BlockMetadata = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BlockMetadata {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BlockMetadata {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockMetadata();
     while (reader.pos < end) {
@@ -239,12 +239,12 @@ export const BlockMetadata = {
 };
 function createBaseBlockMetadata_DeliverTx(): BlockMetadata_DeliverTx {
   return {
-    request: undefined,
-    response: undefined
+    request: RequestDeliverTx.fromPartial({}),
+    response: ResponseDeliverTx.fromPartial({})
   };
 }
 export const BlockMetadata_DeliverTx = {
-  encode(message: BlockMetadata_DeliverTx, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: BlockMetadata_DeliverTx, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.request !== undefined) {
       RequestDeliverTx.encode(message.request, writer.uint32(10).fork()).ldelim();
     }
@@ -253,8 +253,8 @@ export const BlockMetadata_DeliverTx = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BlockMetadata_DeliverTx {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BlockMetadata_DeliverTx {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBlockMetadata_DeliverTx();
     while (reader.pos < end) {

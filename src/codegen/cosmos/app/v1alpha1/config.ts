@@ -1,5 +1,5 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet } from "../../../helpers";
 /**
  * Config represents the configuration for a Cosmos SDK ABCI app.
@@ -52,7 +52,7 @@ export interface ModuleConfig {
    * config is the config object for the module. Module config messages should
    * define a ModuleDescriptor using the cosmos.app.v1alpha1.is_module extension.
    */
-  config?: Any;
+  config: Any;
   /**
    * golang_bindings specifies explicit interface to implementation type bindings which
    * depinject uses to resolve interface inputs to provider functions.  The scope of this
@@ -63,7 +63,7 @@ export interface ModuleConfig {
 /** ModuleConfig is a module configuration for an app. */
 export interface ModuleConfigSDKType {
   name: string;
-  config?: AnySDKType;
+  config: AnySDKType;
   golang_bindings: GolangBindingSDKType[];
 }
 /** GolangBinding is an explicit interface type to implementing type binding for dependency injection. */
@@ -85,7 +85,7 @@ function createBaseConfig(): Config {
   };
 }
 export const Config = {
-  encode(message: Config, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Config, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.modules) {
       ModuleConfig.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -94,8 +94,8 @@ export const Config = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Config {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Config {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConfig();
     while (reader.pos < end) {
@@ -144,12 +144,12 @@ export const Config = {
 function createBaseModuleConfig(): ModuleConfig {
   return {
     name: "",
-    config: undefined,
+    config: Any.fromPartial({}),
     golangBindings: []
   };
 }
 export const ModuleConfig = {
-  encode(message: ModuleConfig, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ModuleConfig, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -161,8 +161,8 @@ export const ModuleConfig = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ModuleConfig {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ModuleConfig {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseModuleConfig();
     while (reader.pos < end) {
@@ -217,7 +217,7 @@ function createBaseGolangBinding(): GolangBinding {
   };
 }
 export const GolangBinding = {
-  encode(message: GolangBinding, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: GolangBinding, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.interfaceType !== "") {
       writer.uint32(10).string(message.interfaceType);
     }
@@ -226,8 +226,8 @@ export const GolangBinding = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GolangBinding {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GolangBinding {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGolangBinding();
     while (reader.pos < end) {

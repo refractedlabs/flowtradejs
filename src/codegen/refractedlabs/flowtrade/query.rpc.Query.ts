@@ -29,21 +29,21 @@ export class QueryClientImpl implements Query {
     return this.rpc.unary(QueryParamsDesc, QueryParamsRequest.fromPartial(request), metadata);
   }
   flow(request: DeepPartial<QueryGetFlowRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowResponse> {
-    return this.rpc.unary(QueryGetFlowDesc, QueryGetFlowRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowDesc, QueryGetFlowRequest.fromPartial(request), metadata);
   }
   flowAll(request: DeepPartial<QueryAllFlowRequest> = {
     pagination: undefined
   }, metadata?: grpc.Metadata): Promise<QueryAllFlowResponse> {
-    return this.rpc.unary(QueryAllFlowDesc, QueryAllFlowRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowAllDesc, QueryAllFlowRequest.fromPartial(request), metadata);
   }
   position(request: DeepPartial<QueryGetPositionRequest>, metadata?: grpc.Metadata): Promise<QueryGetPositionResponse> {
-    return this.rpc.unary(QueryGetPositionDesc, QueryGetPositionRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryPositionDesc, QueryGetPositionRequest.fromPartial(request), metadata);
   }
   flowPositions(request: DeepPartial<QueryGetFlowPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowPositionsResponse> {
-    return this.rpc.unary(QueryGetFlowPositionsDesc, QueryGetFlowPositionsRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowPositionsDesc, QueryGetFlowPositionsRequest.fromPartial(request), metadata);
   }
   userPositions(request: DeepPartial<QueryGetUserPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetUserPositionsResponse> {
-    return this.rpc.unary(QueryGetUserPositionsDesc, QueryGetUserPositionsRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryUserPositionsDesc, QueryGetUserPositionsRequest.fromPartial(request), metadata);
   }
 }
 export const QueryDesc = {
@@ -70,7 +70,7 @@ export const QueryParamsDesc: UnaryMethodDefinitionish = {
     }
   } as any)
 };
-export const QueryGetFlowDesc: UnaryMethodDefinitionish = {
+export const QueryFlowDesc: UnaryMethodDefinitionish = {
   methodName: "Flow",
   service: QueryDesc,
   requestStream: false,
@@ -91,7 +91,7 @@ export const QueryGetFlowDesc: UnaryMethodDefinitionish = {
     }
   } as any)
 };
-export const QueryAllFlowDesc: UnaryMethodDefinitionish = {
+export const QueryFlowAllDesc: UnaryMethodDefinitionish = {
   methodName: "FlowAll",
   service: QueryDesc,
   requestStream: false,
@@ -112,7 +112,7 @@ export const QueryAllFlowDesc: UnaryMethodDefinitionish = {
     }
   } as any)
 };
-export const QueryGetPositionDesc: UnaryMethodDefinitionish = {
+export const QueryPositionDesc: UnaryMethodDefinitionish = {
   methodName: "Position",
   service: QueryDesc,
   requestStream: false,
@@ -133,7 +133,7 @@ export const QueryGetPositionDesc: UnaryMethodDefinitionish = {
     }
   } as any)
 };
-export const QueryGetFlowPositionsDesc: UnaryMethodDefinitionish = {
+export const QueryFlowPositionsDesc: UnaryMethodDefinitionish = {
   methodName: "FlowPositions",
   service: QueryDesc,
   requestStream: false,
@@ -154,7 +154,7 @@ export const QueryGetFlowPositionsDesc: UnaryMethodDefinitionish = {
     }
   } as any)
 };
-export const QueryGetUserPositionsDesc: UnaryMethodDefinitionish = {
+export const QueryUserPositionsDesc: UnaryMethodDefinitionish = {
   methodName: "UserPositions",
   service: QueryDesc,
   requestStream: false,

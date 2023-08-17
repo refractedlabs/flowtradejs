@@ -2,7 +2,7 @@ import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
 /**
  * BasicAllowance implements Allowance with a one-time grant of coins
@@ -16,7 +16,7 @@ export interface BasicAllowance {
    */
   spendLimit: Coin[];
   /** expiration specifies an optional time when this allowance expires */
-  expiration?: Timestamp;
+  expiration: Timestamp;
 }
 /**
  * BasicAllowance implements Allowance with a one-time grant of coins
@@ -24,7 +24,7 @@ export interface BasicAllowance {
  */
 export interface BasicAllowanceSDKType {
   spend_limit: CoinSDKType[];
-  expiration?: TimestampSDKType;
+  expiration: TimestampSDKType;
 }
 /**
  * PeriodicAllowance extends Allowance to allow for both a maximum cap,
@@ -32,12 +32,12 @@ export interface BasicAllowanceSDKType {
  */
 export interface PeriodicAllowance {
   /** basic specifies a struct of `BasicAllowance` */
-  basic?: BasicAllowance;
+  basic: BasicAllowance;
   /**
    * period specifies the time duration in which period_spend_limit coins can
    * be spent before that allowance is reset
    */
-  period?: Duration;
+  period: Duration;
   /**
    * period_spend_limit specifies the maximum number of coins that can be spent
    * in the period
@@ -50,29 +50,29 @@ export interface PeriodicAllowance {
    * it is calculated from the start time of the first transaction after the
    * last period ended
    */
-  periodReset?: Timestamp;
+  periodReset: Timestamp;
 }
 /**
  * PeriodicAllowance extends Allowance to allow for both a maximum cap,
  * as well as a limit per time period.
  */
 export interface PeriodicAllowanceSDKType {
-  basic?: BasicAllowanceSDKType;
-  period?: DurationSDKType;
+  basic: BasicAllowanceSDKType;
+  period: DurationSDKType;
   period_spend_limit: CoinSDKType[];
   period_can_spend: CoinSDKType[];
-  period_reset?: TimestampSDKType;
+  period_reset: TimestampSDKType;
 }
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 export interface AllowedMsgAllowance {
   /** allowance can be any of basic and periodic fee allowance. */
-  allowance?: Any;
+  allowance: Any;
   /** allowed_messages are the messages for which the grantee has the access. */
   allowedMessages: string[];
 }
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 export interface AllowedMsgAllowanceSDKType {
-  allowance?: AnySDKType;
+  allowance: AnySDKType;
   allowed_messages: string[];
 }
 /** Grant is stored in the KVStore to record a grant with full context */
@@ -82,22 +82,22 @@ export interface Grant {
   /** grantee is the address of the user being granted an allowance of another user's funds. */
   grantee: string;
   /** allowance can be any of basic, periodic, allowed fee allowance. */
-  allowance?: Any;
+  allowance: Any;
 }
 /** Grant is stored in the KVStore to record a grant with full context */
 export interface GrantSDKType {
   granter: string;
   grantee: string;
-  allowance?: AnySDKType;
+  allowance: AnySDKType;
 }
 function createBaseBasicAllowance(): BasicAllowance {
   return {
     spendLimit: [],
-    expiration: undefined
+    expiration: Timestamp.fromPartial({})
   };
 }
 export const BasicAllowance = {
-  encode(message: BasicAllowance, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: BasicAllowance, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.spendLimit) {
       Coin.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -106,8 +106,8 @@ export const BasicAllowance = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): BasicAllowance {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): BasicAllowance {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBasicAllowance();
     while (reader.pos < end) {
@@ -151,15 +151,15 @@ export const BasicAllowance = {
 };
 function createBasePeriodicAllowance(): PeriodicAllowance {
   return {
-    basic: undefined,
-    period: undefined,
+    basic: BasicAllowance.fromPartial({}),
+    period: Duration.fromPartial({}),
     periodSpendLimit: [],
     periodCanSpend: [],
-    periodReset: undefined
+    periodReset: Timestamp.fromPartial({})
   };
 }
 export const PeriodicAllowance = {
-  encode(message: PeriodicAllowance, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: PeriodicAllowance, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.basic !== undefined) {
       BasicAllowance.encode(message.basic, writer.uint32(10).fork()).ldelim();
     }
@@ -177,8 +177,8 @@ export const PeriodicAllowance = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PeriodicAllowance {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PeriodicAllowance {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePeriodicAllowance();
     while (reader.pos < end) {
@@ -244,12 +244,12 @@ export const PeriodicAllowance = {
 };
 function createBaseAllowedMsgAllowance(): AllowedMsgAllowance {
   return {
-    allowance: undefined,
+    allowance: Any.fromPartial({}),
     allowedMessages: []
   };
 }
 export const AllowedMsgAllowance = {
-  encode(message: AllowedMsgAllowance, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AllowedMsgAllowance, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.allowance !== undefined) {
       Any.encode(message.allowance, writer.uint32(10).fork()).ldelim();
     }
@@ -258,8 +258,8 @@ export const AllowedMsgAllowance = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AllowedMsgAllowance {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AllowedMsgAllowance {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAllowedMsgAllowance();
     while (reader.pos < end) {
@@ -305,11 +305,11 @@ function createBaseGrant(): Grant {
   return {
     granter: "",
     grantee: "",
-    allowance: undefined
+    allowance: Any.fromPartial({})
   };
 }
 export const Grant = {
-  encode(message: Grant, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Grant, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.granter !== "") {
       writer.uint32(10).string(message.granter);
     }
@@ -321,8 +321,8 @@ export const Grant = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Grant {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Grant {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGrant();
     while (reader.pos < end) {

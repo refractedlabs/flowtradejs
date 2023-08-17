@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { AminoMsg } from "@cosmjs/amino";
-import { Long } from "../../helpers";
 import { MsgUpdateParams, MsgCreateFlow, MsgJoinFlow, MsgExitFlow, MsgSetOperator, MsgClaimTokenIn, MsgClaimTokenOut, MsgStopFlow } from "./tx";
 export interface MsgUpdateParamsAminoType extends AminoMsg {
   type: "/refractedlabs.flowtrade.MsgUpdateParams";
@@ -133,7 +132,7 @@ export const AminoConverter = {
         params: {
           flow_creation_deposit: {
             denom: params.flowCreationDeposit.denom,
-            amount: Long.fromValue(params.flowCreationDeposit.amount).toString()
+            amount: params.flowCreationDeposit.amount
           },
           min_flow_duration: (params.minFlowDuration * 1_000_000_000).toString(),
           min_duration_to_flow_start: (params.minDurationToFlowStart * 1_000_000_000).toString(),
@@ -154,11 +153,11 @@ export const AminoConverter = {
             amount: params.flow_creation_deposit.amount
           },
           minFlowDuration: {
-            seconds: Long.fromNumber(Math.floor(parseInt(params.min_flow_duration) / 1_000_000_000)),
+            seconds: BigInt(Math.floor(parseInt(params.min_flow_duration) / 1_000_000_000)),
             nanos: parseInt(params.min_flow_duration) % 1_000_000_000
           },
           minDurationToFlowStart: {
-            seconds: Long.fromNumber(Math.floor(parseInt(params.min_duration_to_flow_start) / 1_000_000_000)),
+            seconds: BigInt(Math.floor(parseInt(params.min_duration_to_flow_start) / 1_000_000_000)),
             nanos: parseInt(params.min_duration_to_flow_start) % 1_000_000_000
           },
           tokenOutFeeRatio: params.token_out_fee_ratio,
@@ -187,7 +186,7 @@ export const AminoConverter = {
           treasury_address: request.treasuryAddress,
           tokens_out: {
             denom: request.tokensOut.denom,
-            amount: Long.fromValue(request.tokensOut.amount).toString()
+            amount: request.tokensOut.amount
           },
           token_in_denom: request.tokenInDenom,
           token_out_claimable_after: request.tokenOutClaimableAfter,
@@ -213,7 +212,7 @@ export const AminoConverter = {
           startTime: request.start_time,
           endTime: request.end_time,
           distInterval: {
-            seconds: Long.fromNumber(Math.floor(parseInt(request.dist_interval) / 1_000_000_000)),
+            seconds: BigInt(Math.floor(parseInt(request.dist_interval) / 1_000_000_000)),
             nanos: parseInt(request.dist_interval) % 1_000_000_000
           },
           treasuryAddress: request.treasury_address,
@@ -244,7 +243,7 @@ export const AminoConverter = {
         address,
         amount: {
           denom: amount.denom,
-          amount: Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         },
         signer
       };
@@ -256,7 +255,7 @@ export const AminoConverter = {
       signer
     }: MsgJoinFlowAminoType["value"]): MsgJoinFlow => {
       return {
-        flow: Long.fromString(flow),
+        flow: BigInt(flow),
         address,
         amount: {
           denom: amount.denom,
@@ -279,7 +278,7 @@ export const AminoConverter = {
         address,
         amount: {
           denom: amount.denom,
-          amount: Long.fromValue(amount.amount).toString()
+          amount: amount.amount
         },
         signer
       };
@@ -291,7 +290,7 @@ export const AminoConverter = {
       signer
     }: MsgExitFlowAminoType["value"]): MsgExitFlow => {
       return {
-        flow: Long.fromString(flow),
+        flow: BigInt(flow),
         address,
         amount: {
           denom: amount.denom,
@@ -320,7 +319,7 @@ export const AminoConverter = {
       operator
     }: MsgSetOperatorAminoType["value"]): MsgSetOperator => {
       return {
-        flow: Long.fromString(flow),
+        flow: BigInt(flow),
         owner,
         operator
       };
@@ -346,7 +345,7 @@ export const AminoConverter = {
     }: MsgClaimTokenInAminoType["value"]): MsgClaimTokenIn => {
       return {
         creator,
-        flow: Long.fromString(flow),
+        flow: BigInt(flow),
         treasuryAddress: treasury_address
       };
     }
@@ -370,7 +369,7 @@ export const AminoConverter = {
       signer
     }: MsgClaimTokenOutAminoType["value"]): MsgClaimTokenOut => {
       return {
-        flow: Long.fromString(flow),
+        flow: BigInt(flow),
         address,
         signer
       };
@@ -392,7 +391,7 @@ export const AminoConverter = {
       creator
     }: MsgStopFlowAminoType["value"]): MsgStopFlow => {
       return {
-        flowId: Long.fromString(flow_id),
+        flowId: BigInt(flow_id),
         creator
       };
     }

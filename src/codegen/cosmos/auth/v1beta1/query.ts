@@ -1,8 +1,8 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../base/query/v1beta1/pagination";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Params, ParamsSDKType, BaseAccount, BaseAccountSDKType } from "./auth";
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 /**
  * QueryAccountsRequest is the request type for the Query/Accounts RPC method.
  * 
@@ -10,7 +10,7 @@ import * as _m0 from "protobufjs/minimal";
  */
 export interface QueryAccountsRequest {
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 /**
  * QueryAccountsRequest is the request type for the Query/Accounts RPC method.
@@ -18,7 +18,7 @@ export interface QueryAccountsRequest {
  * Since: cosmos-sdk 0.43
  */
 export interface QueryAccountsRequestSDKType {
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 /**
  * QueryAccountsResponse is the response type for the Query/Accounts RPC method.
@@ -29,7 +29,7 @@ export interface QueryAccountsResponse {
   /** accounts are the existing accounts */
   accounts: Any[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 /**
  * QueryAccountsResponse is the response type for the Query/Accounts RPC method.
@@ -38,7 +38,7 @@ export interface QueryAccountsResponse {
  */
 export interface QueryAccountsResponseSDKType {
   accounts: AnySDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 /** QueryAccountRequest is the request type for the Query/Account RPC method. */
 export interface QueryAccountRequest {
@@ -52,11 +52,11 @@ export interface QueryAccountRequestSDKType {
 /** QueryAccountResponse is the response type for the Query/Account RPC method. */
 export interface QueryAccountResponse {
   /** account defines the account of the corresponding address. */
-  account?: Any;
+  account: Any;
 }
 /** QueryAccountResponse is the response type for the Query/Account RPC method. */
 export interface QueryAccountResponseSDKType {
-  account?: AnySDKType;
+  account: AnySDKType;
 }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
@@ -65,11 +65,11 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
   /** params defines the parameters of the module. */
-  params?: Params;
+  params: Params;
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
 }
 /**
  * QueryModuleAccountsRequest is the request type for the Query/ModuleAccounts RPC method.
@@ -109,11 +109,11 @@ export interface QueryModuleAccountByNameRequestSDKType {
 }
 /** QueryModuleAccountByNameResponse is the response type for the Query/ModuleAccountByName RPC method. */
 export interface QueryModuleAccountByNameResponse {
-  account?: Any;
+  account: Any;
 }
 /** QueryModuleAccountByNameResponse is the response type for the Query/ModuleAccountByName RPC method. */
 export interface QueryModuleAccountByNameResponseSDKType {
-  account?: AnySDKType;
+  account: AnySDKType;
 }
 /**
  * Bech32PrefixRequest is the request type for Bech32Prefix rpc method.
@@ -221,13 +221,13 @@ export interface QueryAccountAddressByIDRequest {
    * updated to uint64 in a future version of the auth query.
    */
   /** @deprecated */
-  id: Long;
+  id: bigint;
   /**
    * account_id is the account number of the address to be queried.
    * 
    * Since: cosmos-sdk 0.47
    */
-  accountId?: Long;
+  accountId: bigint;
 }
 /**
  * QueryAccountAddressByIDRequest is the request type for AccountAddressByID rpc method
@@ -236,8 +236,8 @@ export interface QueryAccountAddressByIDRequest {
  */
 export interface QueryAccountAddressByIDRequestSDKType {
   /** @deprecated */
-  id: Long;
-  account_id?: Long;
+  id: bigint;
+  account_id: bigint;
 }
 /**
  * QueryAccountAddressByIDResponse is the response type for AccountAddressByID rpc method
@@ -279,7 +279,7 @@ export interface QueryAccountInfoRequestSDKType {
  */
 export interface QueryAccountInfoResponse {
   /** info is the account info which is represented by BaseAccount. */
-  info?: BaseAccount;
+  info: BaseAccount;
 }
 /**
  * QueryAccountInfoResponse is the Query/AccountInfo response type.
@@ -287,22 +287,22 @@ export interface QueryAccountInfoResponse {
  * Since: cosmos-sdk 0.47
  */
 export interface QueryAccountInfoResponseSDKType {
-  info?: BaseAccountSDKType;
+  info: BaseAccountSDKType;
 }
 function createBaseQueryAccountsRequest(): QueryAccountsRequest {
   return {
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAccountsRequest = {
-  encode(message: QueryAccountsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountsRequest();
     while (reader.pos < end) {
@@ -337,11 +337,11 @@ export const QueryAccountsRequest = {
 function createBaseQueryAccountsResponse(): QueryAccountsResponse {
   return {
     accounts: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAccountsResponse = {
-  encode(message: QueryAccountsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.accounts) {
       Any.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -350,8 +350,8 @@ export const QueryAccountsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountsResponse();
     while (reader.pos < end) {
@@ -399,14 +399,14 @@ function createBaseQueryAccountRequest(): QueryAccountRequest {
   };
 }
 export const QueryAccountRequest = {
-  encode(message: QueryAccountRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountRequest();
     while (reader.pos < end) {
@@ -440,18 +440,18 @@ export const QueryAccountRequest = {
 };
 function createBaseQueryAccountResponse(): QueryAccountResponse {
   return {
-    account: undefined
+    account: Any.fromPartial({})
   };
 }
 export const QueryAccountResponse = {
-  encode(message: QueryAccountResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.account !== undefined) {
       Any.encode(message.account, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountResponse();
     while (reader.pos < end) {
@@ -487,11 +487,11 @@ function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -518,18 +518,18 @@ export const QueryParamsRequest = {
 };
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -565,11 +565,11 @@ function createBaseQueryModuleAccountsRequest(): QueryModuleAccountsRequest {
   return {};
 }
 export const QueryModuleAccountsRequest = {
-  encode(_: QueryModuleAccountsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: QueryModuleAccountsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountsRequest();
     while (reader.pos < end) {
@@ -600,14 +600,14 @@ function createBaseQueryModuleAccountsResponse(): QueryModuleAccountsResponse {
   };
 }
 export const QueryModuleAccountsResponse = {
-  encode(message: QueryModuleAccountsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryModuleAccountsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.accounts) {
       Any.encode(v!, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountsResponse();
     while (reader.pos < end) {
@@ -649,14 +649,14 @@ function createBaseQueryModuleAccountByNameRequest(): QueryModuleAccountByNameRe
   };
 }
 export const QueryModuleAccountByNameRequest = {
-  encode(message: QueryModuleAccountByNameRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryModuleAccountByNameRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountByNameRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountByNameRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountByNameRequest();
     while (reader.pos < end) {
@@ -690,18 +690,18 @@ export const QueryModuleAccountByNameRequest = {
 };
 function createBaseQueryModuleAccountByNameResponse(): QueryModuleAccountByNameResponse {
   return {
-    account: undefined
+    account: Any.fromPartial({})
   };
 }
 export const QueryModuleAccountByNameResponse = {
-  encode(message: QueryModuleAccountByNameResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryModuleAccountByNameResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.account !== undefined) {
       Any.encode(message.account, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryModuleAccountByNameResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryModuleAccountByNameResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryModuleAccountByNameResponse();
     while (reader.pos < end) {
@@ -737,11 +737,11 @@ function createBaseBech32PrefixRequest(): Bech32PrefixRequest {
   return {};
 }
 export const Bech32PrefixRequest = {
-  encode(_: Bech32PrefixRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: Bech32PrefixRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Bech32PrefixRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Bech32PrefixRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBech32PrefixRequest();
     while (reader.pos < end) {
@@ -772,14 +772,14 @@ function createBaseBech32PrefixResponse(): Bech32PrefixResponse {
   };
 }
 export const Bech32PrefixResponse = {
-  encode(message: Bech32PrefixResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Bech32PrefixResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.bech32Prefix !== "") {
       writer.uint32(10).string(message.bech32Prefix);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Bech32PrefixResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Bech32PrefixResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseBech32PrefixResponse();
     while (reader.pos < end) {
@@ -817,14 +817,14 @@ function createBaseAddressBytesToStringRequest(): AddressBytesToStringRequest {
   };
 }
 export const AddressBytesToStringRequest = {
-  encode(message: AddressBytesToStringRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AddressBytesToStringRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.addressBytes.length !== 0) {
       writer.uint32(10).bytes(message.addressBytes);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AddressBytesToStringRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AddressBytesToStringRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddressBytesToStringRequest();
     while (reader.pos < end) {
@@ -862,14 +862,14 @@ function createBaseAddressBytesToStringResponse(): AddressBytesToStringResponse 
   };
 }
 export const AddressBytesToStringResponse = {
-  encode(message: AddressBytesToStringResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AddressBytesToStringResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.addressString !== "") {
       writer.uint32(10).string(message.addressString);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AddressBytesToStringResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AddressBytesToStringResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddressBytesToStringResponse();
     while (reader.pos < end) {
@@ -907,14 +907,14 @@ function createBaseAddressStringToBytesRequest(): AddressStringToBytesRequest {
   };
 }
 export const AddressStringToBytesRequest = {
-  encode(message: AddressStringToBytesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AddressStringToBytesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.addressString !== "") {
       writer.uint32(10).string(message.addressString);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AddressStringToBytesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AddressStringToBytesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddressStringToBytesRequest();
     while (reader.pos < end) {
@@ -952,14 +952,14 @@ function createBaseAddressStringToBytesResponse(): AddressStringToBytesResponse 
   };
 }
 export const AddressStringToBytesResponse = {
-  encode(message: AddressStringToBytesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: AddressStringToBytesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.addressBytes.length !== 0) {
       writer.uint32(10).bytes(message.addressBytes);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): AddressStringToBytesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): AddressStringToBytesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseAddressStringToBytesResponse();
     while (reader.pos < end) {
@@ -993,32 +993,32 @@ export const AddressStringToBytesResponse = {
 };
 function createBaseQueryAccountAddressByIDRequest(): QueryAccountAddressByIDRequest {
   return {
-    id: Long.ZERO,
-    accountId: Long.UZERO
+    id: BigInt(0),
+    accountId: BigInt(0)
   };
 }
 export const QueryAccountAddressByIDRequest = {
-  encode(message: QueryAccountAddressByIDRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.id.isZero()) {
+  encode(message: QueryAccountAddressByIDRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).int64(message.id);
     }
-    if (!message.accountId.isZero()) {
+    if (message.accountId !== BigInt(0)) {
       writer.uint32(16).uint64(message.accountId);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountAddressByIDRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountAddressByIDRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountAddressByIDRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = (reader.int64() as Long);
+          message.id = reader.int64();
           break;
         case 2:
-          message.accountId = (reader.uint64() as Long);
+          message.accountId = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1029,20 +1029,20 @@ export const QueryAccountAddressByIDRequest = {
   },
   fromJSON(object: any): QueryAccountAddressByIDRequest {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.ZERO,
-      accountId: isSet(object.accountId) ? Long.fromValue(object.accountId) : Long.UZERO
+      id: isSet(object.id) ? BigInt(object.id.toString()) : BigInt(0),
+      accountId: isSet(object.accountId) ? BigInt(object.accountId.toString()) : BigInt(0)
     };
   },
   toJSON(message: QueryAccountAddressByIDRequest): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = (message.id || Long.ZERO).toString());
-    message.accountId !== undefined && (obj.accountId = (message.accountId || Long.UZERO).toString());
+    message.id !== undefined && (obj.id = (message.id || BigInt(0)).toString());
+    message.accountId !== undefined && (obj.accountId = (message.accountId || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<QueryAccountAddressByIDRequest>): QueryAccountAddressByIDRequest {
     const message = createBaseQueryAccountAddressByIDRequest();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.ZERO;
-    message.accountId = object.accountId !== undefined && object.accountId !== null ? Long.fromValue(object.accountId) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    message.accountId = object.accountId !== undefined && object.accountId !== null ? BigInt(object.accountId.toString()) : BigInt(0);
     return message;
   }
 };
@@ -1052,14 +1052,14 @@ function createBaseQueryAccountAddressByIDResponse(): QueryAccountAddressByIDRes
   };
 }
 export const QueryAccountAddressByIDResponse = {
-  encode(message: QueryAccountAddressByIDResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountAddressByIDResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.accountAddress !== "") {
       writer.uint32(10).string(message.accountAddress);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountAddressByIDResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountAddressByIDResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountAddressByIDResponse();
     while (reader.pos < end) {
@@ -1097,14 +1097,14 @@ function createBaseQueryAccountInfoRequest(): QueryAccountInfoRequest {
   };
 }
 export const QueryAccountInfoRequest = {
-  encode(message: QueryAccountInfoRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountInfoRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.address !== "") {
       writer.uint32(10).string(message.address);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountInfoRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountInfoRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountInfoRequest();
     while (reader.pos < end) {
@@ -1138,18 +1138,18 @@ export const QueryAccountInfoRequest = {
 };
 function createBaseQueryAccountInfoResponse(): QueryAccountInfoResponse {
   return {
-    info: undefined
+    info: BaseAccount.fromPartial({})
   };
 }
 export const QueryAccountInfoResponse = {
-  encode(message: QueryAccountInfoResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAccountInfoResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.info !== undefined) {
       BaseAccount.encode(message.info, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAccountInfoResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAccountInfoResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAccountInfoResponse();
     while (reader.pos < end) {

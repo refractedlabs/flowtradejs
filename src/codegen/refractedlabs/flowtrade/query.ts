@@ -2,8 +2,8 @@ import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } fr
 import { Params, ParamsSDKType } from "./params";
 import { Flow, FlowSDKType } from "./flow";
 import { Position, PositionSDKType } from "./position";
-import { Long, isSet } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { isSet } from "../../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
@@ -11,93 +11,93 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
   /** params holds all the parameters of this module. */
-  params?: Params;
+  params: Params;
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
 }
 export interface QueryGetFlowRequest {
-  id: Long;
+  id: bigint;
 }
 export interface QueryGetFlowRequestSDKType {
-  id: Long;
+  id: bigint;
 }
 export interface QueryGetFlowResponse {
-  flow?: Flow;
+  flow: Flow;
 }
 export interface QueryGetFlowResponseSDKType {
-  flow?: FlowSDKType;
+  flow: FlowSDKType;
 }
 export interface QueryAllFlowRequest {
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 export interface QueryAllFlowRequestSDKType {
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 export interface QueryAllFlowResponse {
   flow: Flow[];
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 export interface QueryAllFlowResponseSDKType {
   flow: FlowSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 export interface QueryGetPositionRequest {
-  flow: Long;
+  flow: bigint;
   owner: string;
 }
 export interface QueryGetPositionRequestSDKType {
-  flow: Long;
+  flow: bigint;
   owner: string;
 }
 export interface QueryGetPositionResponse {
-  position?: Position;
+  position: Position;
 }
 export interface QueryGetPositionResponseSDKType {
-  position?: PositionSDKType;
+  position: PositionSDKType;
 }
 export interface QueryGetFlowPositionsRequest {
-  flow: Long;
-  pagination?: PageRequest;
+  flow: bigint;
+  pagination: PageRequest;
 }
 export interface QueryGetFlowPositionsRequestSDKType {
-  flow: Long;
-  pagination?: PageRequestSDKType;
+  flow: bigint;
+  pagination: PageRequestSDKType;
 }
 export interface QueryGetFlowPositionsResponse {
   position: Position[];
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 export interface QueryGetFlowPositionsResponseSDKType {
   position: PositionSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 export interface QueryGetUserPositionsRequest {
   owner: string;
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 export interface QueryGetUserPositionsRequestSDKType {
   owner: string;
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 export interface QueryGetUserPositionsResponse {
   position: Position[];
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 export interface QueryGetUserPositionsResponseSDKType {
   position: PositionSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -124,18 +124,18 @@ export const QueryParamsRequest = {
 };
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -169,25 +169,25 @@ export const QueryParamsResponse = {
 };
 function createBaseQueryGetFlowRequest(): QueryGetFlowRequest {
   return {
-    id: Long.UZERO
+    id: BigInt(0)
   };
 }
 export const QueryGetFlowRequest = {
-  encode(message: QueryGetFlowRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.id.isZero()) {
+  encode(message: QueryGetFlowRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = (reader.uint64() as Long);
+          message.id = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -198,34 +198,34 @@ export const QueryGetFlowRequest = {
   },
   fromJSON(object: any): QueryGetFlowRequest {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO
+      id: isSet(object.id) ? BigInt(object.id.toString()) : BigInt(0)
     };
   },
   toJSON(message: QueryGetFlowRequest): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = (message.id || Long.UZERO).toString());
+    message.id !== undefined && (obj.id = (message.id || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<QueryGetFlowRequest>): QueryGetFlowRequest {
     const message = createBaseQueryGetFlowRequest();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     return message;
   }
 };
 function createBaseQueryGetFlowResponse(): QueryGetFlowResponse {
   return {
-    flow: undefined
+    flow: Flow.fromPartial({})
   };
 }
 export const QueryGetFlowResponse = {
-  encode(message: QueryGetFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryGetFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== undefined) {
       Flow.encode(message.flow, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowResponse();
     while (reader.pos < end) {
@@ -259,18 +259,18 @@ export const QueryGetFlowResponse = {
 };
 function createBaseQueryAllFlowRequest(): QueryAllFlowRequest {
   return {
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryAllFlowRequest = {
-  encode(message: QueryAllFlowRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllFlowRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllFlowRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllFlowRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllFlowRequest();
     while (reader.pos < end) {
@@ -305,11 +305,11 @@ export const QueryAllFlowRequest = {
 function createBaseQueryAllFlowResponse(): QueryAllFlowResponse {
   return {
     flow: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryAllFlowResponse = {
-  encode(message: QueryAllFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryAllFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.flow) {
       Flow.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -318,8 +318,8 @@ export const QueryAllFlowResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryAllFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllFlowResponse();
     while (reader.pos < end) {
@@ -363,13 +363,13 @@ export const QueryAllFlowResponse = {
 };
 function createBaseQueryGetPositionRequest(): QueryGetPositionRequest {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     owner: ""
   };
 }
 export const QueryGetPositionRequest = {
-  encode(message: QueryGetPositionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: QueryGetPositionRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.owner !== "") {
@@ -377,15 +377,15 @@ export const QueryGetPositionRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPositionRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetPositionRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPositionRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.owner = reader.string();
@@ -399,37 +399,37 @@ export const QueryGetPositionRequest = {
   },
   fromJSON(object: any): QueryGetPositionRequest {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       owner: isSet(object.owner) ? String(object.owner) : ""
     };
   },
   toJSON(message: QueryGetPositionRequest): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.owner !== undefined && (obj.owner = message.owner);
     return obj;
   },
   fromPartial(object: Partial<QueryGetPositionRequest>): QueryGetPositionRequest {
     const message = createBaseQueryGetPositionRequest();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.owner = object.owner ?? "";
     return message;
   }
 };
 function createBaseQueryGetPositionResponse(): QueryGetPositionResponse {
   return {
-    position: undefined
+    position: Position.fromPartial({})
   };
 }
 export const QueryGetPositionResponse = {
-  encode(message: QueryGetPositionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryGetPositionResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.position !== undefined) {
       Position.encode(message.position, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetPositionResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetPositionResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPositionResponse();
     while (reader.pos < end) {
@@ -463,13 +463,13 @@ export const QueryGetPositionResponse = {
 };
 function createBaseQueryGetFlowPositionsRequest(): QueryGetFlowPositionsRequest {
   return {
-    flow: Long.UZERO,
-    pagination: undefined
+    flow: BigInt(0),
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryGetFlowPositionsRequest = {
-  encode(message: QueryGetFlowPositionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: QueryGetFlowPositionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.pagination !== undefined) {
@@ -477,15 +477,15 @@ export const QueryGetFlowPositionsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowPositionsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowPositionsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowPositionsRequest();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.pagination = PageRequest.decode(reader, reader.uint32());
@@ -499,19 +499,19 @@ export const QueryGetFlowPositionsRequest = {
   },
   fromJSON(object: any): QueryGetFlowPositionsRequest {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined
     };
   },
   toJSON(message: QueryGetFlowPositionsRequest): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.pagination !== undefined && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
     return obj;
   },
   fromPartial(object: Partial<QueryGetFlowPositionsRequest>): QueryGetFlowPositionsRequest {
     const message = createBaseQueryGetFlowPositionsRequest();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
   }
@@ -519,11 +519,11 @@ export const QueryGetFlowPositionsRequest = {
 function createBaseQueryGetFlowPositionsResponse(): QueryGetFlowPositionsResponse {
   return {
     position: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryGetFlowPositionsResponse = {
-  encode(message: QueryGetFlowPositionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryGetFlowPositionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.position) {
       Position.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -532,8 +532,8 @@ export const QueryGetFlowPositionsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetFlowPositionsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowPositionsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowPositionsResponse();
     while (reader.pos < end) {
@@ -578,11 +578,11 @@ export const QueryGetFlowPositionsResponse = {
 function createBaseQueryGetUserPositionsRequest(): QueryGetUserPositionsRequest {
   return {
     owner: "",
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryGetUserPositionsRequest = {
-  encode(message: QueryGetUserPositionsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryGetUserPositionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.owner !== "") {
       writer.uint32(10).string(message.owner);
     }
@@ -591,8 +591,8 @@ export const QueryGetUserPositionsRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUserPositionsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetUserPositionsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetUserPositionsRequest();
     while (reader.pos < end) {
@@ -633,11 +633,11 @@ export const QueryGetUserPositionsRequest = {
 function createBaseQueryGetUserPositionsResponse(): QueryGetUserPositionsResponse {
   return {
     position: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryGetUserPositionsResponse = {
-  encode(message: QueryGetUserPositionsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryGetUserPositionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.position) {
       Position.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -646,8 +646,8 @@ export const QueryGetUserPositionsResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryGetUserPositionsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetUserPositionsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetUserPositionsResponse();
     while (reader.pos < end) {

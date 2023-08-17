@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { GeneratedType, Registry } from "@cosmjs/proto-signing";
 import { MsgUpdateParams, MsgCreateFlow, MsgJoinFlow, MsgExitFlow, MsgSetOperator, MsgClaimTokenIn, MsgClaimTokenOut, MsgStopFlow } from "./tx";
 export const registry: ReadonlyArray<[string, GeneratedType]> = [["/refractedlabs.flowtrade.MsgUpdateParams", MsgUpdateParams], ["/refractedlabs.flowtrade.MsgCreateFlow", MsgCreateFlow], ["/refractedlabs.flowtrade.MsgJoinFlow", MsgJoinFlow], ["/refractedlabs.flowtrade.MsgExitFlow", MsgExitFlow], ["/refractedlabs.flowtrade.MsgSetOperator", MsgSetOperator], ["/refractedlabs.flowtrade.MsgClaimTokenIn", MsgClaimTokenIn], ["/refractedlabs.flowtrade.MsgClaimTokenOut", MsgClaimTokenOut], ["/refractedlabs.flowtrade.MsgStopFlow", MsgStopFlow]];

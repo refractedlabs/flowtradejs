@@ -1,8 +1,9 @@
-import { Long, isSet } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { Decimal } from "@cosmjs/math";
+import { isSet } from "../../helpers";
 export interface Position {
   /** the flow for which this position is created */
-  flow: Long;
+  flow: bigint;
   /** the address of the position's owner */
   owner: string;
   /**
@@ -26,7 +27,7 @@ export interface Position {
   claimedAmount: string;
 }
 export interface PositionSDKType {
-  flow: Long;
+  flow: bigint;
   owner: string;
   operator: string;
   dist_index: string;
@@ -39,7 +40,7 @@ export interface PositionSDKType {
 }
 function createBasePosition(): Position {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     owner: "",
     operator: "",
     distIndex: "",
@@ -52,8 +53,8 @@ function createBasePosition(): Position {
   };
 }
 export const Position = {
-  encode(message: Position, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: Position, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.owner !== "") {
@@ -63,7 +64,7 @@ export const Position = {
       writer.uint32(26).string(message.operator);
     }
     if (message.distIndex !== "") {
-      writer.uint32(34).string(message.distIndex);
+      writer.uint32(34).string(Decimal.fromUserInput(message.distIndex, 18).atomics);
     }
     if (message.tokenInBalance !== "") {
       writer.uint32(42).string(message.tokenInBalance);
@@ -78,22 +79,22 @@ export const Position = {
       writer.uint32(66).string(message.purchasedTokenOut);
     }
     if (message.pendingPurchase !== "") {
-      writer.uint32(74).string(message.pendingPurchase);
+      writer.uint32(74).string(Decimal.fromUserInput(message.pendingPurchase, 18).atomics);
     }
     if (message.claimedAmount !== "") {
       writer.uint32(82).string(message.claimedAmount);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Position {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Position {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePosition();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.owner = reader.string();
@@ -102,7 +103,7 @@ export const Position = {
           message.operator = reader.string();
           break;
         case 4:
-          message.distIndex = reader.string();
+          message.distIndex = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 5:
           message.tokenInBalance = reader.string();
@@ -117,7 +118,7 @@ export const Position = {
           message.purchasedTokenOut = reader.string();
           break;
         case 9:
-          message.pendingPurchase = reader.string();
+          message.pendingPurchase = Decimal.fromAtomics(reader.string(), 18).toString();
           break;
         case 10:
           message.claimedAmount = reader.string();
@@ -131,7 +132,7 @@ export const Position = {
   },
   fromJSON(object: any): Position {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       owner: isSet(object.owner) ? String(object.owner) : "",
       operator: isSet(object.operator) ? String(object.operator) : "",
       distIndex: isSet(object.distIndex) ? String(object.distIndex) : "",
@@ -145,7 +146,7 @@ export const Position = {
   },
   toJSON(message: Position): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.owner !== undefined && (obj.owner = message.owner);
     message.operator !== undefined && (obj.operator = message.operator);
     message.distIndex !== undefined && (obj.distIndex = message.distIndex);
@@ -159,7 +160,7 @@ export const Position = {
   },
   fromPartial(object: Partial<Position>): Position {
     const message = createBasePosition();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.owner = object.owner ?? "";
     message.operator = object.operator ?? "";
     message.distIndex = object.distIndex ?? "";

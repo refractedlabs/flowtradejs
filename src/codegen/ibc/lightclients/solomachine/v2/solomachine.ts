@@ -1,8 +1,8 @@
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { ConnectionEnd, ConnectionEndSDKType } from "../../../core/connection/v1/connection";
 import { Channel, ChannelSDKType } from "../../../core/channel/v1/channel";
-import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
+import { isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
 /**
  * DataType defines the type of solo machine proof being created. This is done
  * to preserve uniqueness of different data sign byte encodings.
@@ -102,10 +102,10 @@ export function dataTypeToJSON(object: DataType): string {
  */
 export interface ClientState {
   /** latest sequence of the client state */
-  sequence: Long;
+  sequence: bigint;
   /** frozen sequence of the solo machine */
   isFrozen: boolean;
-  consensusState?: ConsensusState;
+  consensusState: ConsensusState;
   /**
    * when set to true, will allow governance to update a solo machine client.
    * The client will be unfrozen if it is frozen.
@@ -117,9 +117,9 @@ export interface ClientState {
  * state and if the client is frozen.
  */
 export interface ClientStateSDKType {
-  sequence: Long;
+  sequence: bigint;
   is_frozen: boolean;
-  consensus_state?: ConsensusStateSDKType;
+  consensus_state: ConsensusStateSDKType;
   allow_update_after_proposal: boolean;
 }
 /**
@@ -129,14 +129,14 @@ export interface ClientStateSDKType {
  */
 export interface ConsensusState {
   /** public key of the solo machine */
-  publicKey?: Any;
+  publicKey: Any;
   /**
    * diversifier allows the same public key to be re-used across different solo
    * machine clients (potentially on different chains) without being considered
    * misbehaviour.
    */
   diversifier: string;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /**
  * ConsensusState defines a solo machine consensus state. The sequence of a
@@ -144,25 +144,25 @@ export interface ConsensusState {
  * consensus state.
  */
 export interface ConsensusStateSDKType {
-  public_key?: AnySDKType;
+  public_key: AnySDKType;
   diversifier: string;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /** Header defines a solo machine consensus header */
 export interface Header {
   /** sequence to update solo machine public key at */
-  sequence: Long;
-  timestamp: Long;
+  sequence: bigint;
+  timestamp: bigint;
   signature: Uint8Array;
-  newPublicKey?: Any;
+  newPublicKey: Any;
   newDiversifier: string;
 }
 /** Header defines a solo machine consensus header */
 export interface HeaderSDKType {
-  sequence: Long;
-  timestamp: Long;
+  sequence: bigint;
+  timestamp: bigint;
   signature: Uint8Array;
-  new_public_key?: AnySDKType;
+  new_public_key: AnySDKType;
   new_diversifier: string;
 }
 /**
@@ -171,9 +171,9 @@ export interface HeaderSDKType {
  */
 export interface Misbehaviour {
   clientId: string;
-  sequence: Long;
-  signatureOne?: SignatureAndData;
-  signatureTwo?: SignatureAndData;
+  sequence: bigint;
+  signatureOne: SignatureAndData;
+  signatureTwo: SignatureAndData;
 }
 /**
  * Misbehaviour defines misbehaviour for a solo machine which consists
@@ -181,9 +181,9 @@ export interface Misbehaviour {
  */
 export interface MisbehaviourSDKType {
   client_id: string;
-  sequence: Long;
-  signature_one?: SignatureAndDataSDKType;
-  signature_two?: SignatureAndDataSDKType;
+  sequence: bigint;
+  signature_one: SignatureAndDataSDKType;
+  signature_two: SignatureAndDataSDKType;
 }
 /**
  * SignatureAndData contains a signature and the data signed over to create that
@@ -193,7 +193,7 @@ export interface SignatureAndData {
   signature: Uint8Array;
   dataType: DataType;
   data: Uint8Array;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /**
  * SignatureAndData contains a signature and the data signed over to create that
@@ -203,7 +203,7 @@ export interface SignatureAndDataSDKType {
   signature: Uint8Array;
   data_type: DataType;
   data: Uint8Array;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /**
  * TimestampedSignatureData contains the signature data and the timestamp of the
@@ -211,7 +211,7 @@ export interface SignatureAndDataSDKType {
  */
 export interface TimestampedSignatureData {
   signatureData: Uint8Array;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /**
  * TimestampedSignatureData contains the signature data and the timestamp of the
@@ -219,12 +219,12 @@ export interface TimestampedSignatureData {
  */
 export interface TimestampedSignatureDataSDKType {
   signature_data: Uint8Array;
-  timestamp: Long;
+  timestamp: bigint;
 }
 /** SignBytes defines the signed bytes used for signature verification. */
 export interface SignBytes {
-  sequence: Long;
-  timestamp: Long;
+  sequence: bigint;
+  timestamp: bigint;
   diversifier: string;
   /** type of the data used */
   dataType: DataType;
@@ -233,8 +233,8 @@ export interface SignBytes {
 }
 /** SignBytes defines the signed bytes used for signature verification. */
 export interface SignBytesSDKType {
-  sequence: Long;
-  timestamp: Long;
+  sequence: bigint;
+  timestamp: bigint;
   diversifier: string;
   data_type: DataType;
   data: Uint8Array;
@@ -242,24 +242,24 @@ export interface SignBytesSDKType {
 /** HeaderData returns the SignBytes data for update verification. */
 export interface HeaderData {
   /** header public key */
-  newPubKey?: Any;
+  newPubKey: Any;
   /** header diversifier */
   newDiversifier: string;
 }
 /** HeaderData returns the SignBytes data for update verification. */
 export interface HeaderDataSDKType {
-  new_pub_key?: AnySDKType;
+  new_pub_key: AnySDKType;
   new_diversifier: string;
 }
 /** ClientStateData returns the SignBytes data for client state verification. */
 export interface ClientStateData {
   path: Uint8Array;
-  clientState?: Any;
+  clientState: Any;
 }
 /** ClientStateData returns the SignBytes data for client state verification. */
 export interface ClientStateDataSDKType {
   path: Uint8Array;
-  client_state?: AnySDKType;
+  client_state: AnySDKType;
 }
 /**
  * ConsensusStateData returns the SignBytes data for consensus state
@@ -267,7 +267,7 @@ export interface ClientStateDataSDKType {
  */
 export interface ConsensusStateData {
   path: Uint8Array;
-  consensusState?: Any;
+  consensusState: Any;
 }
 /**
  * ConsensusStateData returns the SignBytes data for consensus state
@@ -275,7 +275,7 @@ export interface ConsensusStateData {
  */
 export interface ConsensusStateDataSDKType {
   path: Uint8Array;
-  consensus_state?: AnySDKType;
+  consensus_state: AnySDKType;
 }
 /**
  * ConnectionStateData returns the SignBytes data for connection state
@@ -283,7 +283,7 @@ export interface ConsensusStateDataSDKType {
  */
 export interface ConnectionStateData {
   path: Uint8Array;
-  connection?: ConnectionEnd;
+  connection: ConnectionEnd;
 }
 /**
  * ConnectionStateData returns the SignBytes data for connection state
@@ -291,7 +291,7 @@ export interface ConnectionStateData {
  */
 export interface ConnectionStateDataSDKType {
   path: Uint8Array;
-  connection?: ConnectionEndSDKType;
+  connection: ConnectionEndSDKType;
 }
 /**
  * ChannelStateData returns the SignBytes data for channel state
@@ -299,7 +299,7 @@ export interface ConnectionStateDataSDKType {
  */
 export interface ChannelStateData {
   path: Uint8Array;
-  channel?: Channel;
+  channel: Channel;
 }
 /**
  * ChannelStateData returns the SignBytes data for channel state
@@ -307,7 +307,7 @@ export interface ChannelStateData {
  */
 export interface ChannelStateDataSDKType {
   path: Uint8Array;
-  channel?: ChannelSDKType;
+  channel: ChannelSDKType;
 }
 /**
  * PacketCommitmentData returns the SignBytes data for packet commitment
@@ -361,7 +361,7 @@ export interface PacketReceiptAbsenceDataSDKType {
  */
 export interface NextSequenceRecvData {
   path: Uint8Array;
-  nextSeqRecv: Long;
+  nextSeqRecv: bigint;
 }
 /**
  * NextSequenceRecvData returns the SignBytes data for verification of the next
@@ -369,19 +369,19 @@ export interface NextSequenceRecvData {
  */
 export interface NextSequenceRecvDataSDKType {
   path: Uint8Array;
-  next_seq_recv: Long;
+  next_seq_recv: bigint;
 }
 function createBaseClientState(): ClientState {
   return {
-    sequence: Long.UZERO,
+    sequence: BigInt(0),
     isFrozen: false,
-    consensusState: undefined,
+    consensusState: ConsensusState.fromPartial({}),
     allowUpdateAfterProposal: false
   };
 }
 export const ClientState = {
-  encode(message: ClientState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.sequence.isZero()) {
+  encode(message: ClientState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(8).uint64(message.sequence);
     }
     if (message.isFrozen === true) {
@@ -395,15 +395,15 @@ export const ClientState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ClientState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ClientState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientState();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sequence = (reader.uint64() as Long);
+          message.sequence = reader.uint64();
           break;
         case 2:
           message.isFrozen = reader.bool();
@@ -423,7 +423,7 @@ export const ClientState = {
   },
   fromJSON(object: any): ClientState {
     return {
-      sequence: isSet(object.sequence) ? Long.fromValue(object.sequence) : Long.UZERO,
+      sequence: isSet(object.sequence) ? BigInt(object.sequence.toString()) : BigInt(0),
       isFrozen: isSet(object.isFrozen) ? Boolean(object.isFrozen) : false,
       consensusState: isSet(object.consensusState) ? ConsensusState.fromJSON(object.consensusState) : undefined,
       allowUpdateAfterProposal: isSet(object.allowUpdateAfterProposal) ? Boolean(object.allowUpdateAfterProposal) : false
@@ -431,7 +431,7 @@ export const ClientState = {
   },
   toJSON(message: ClientState): unknown {
     const obj: any = {};
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
+    message.sequence !== undefined && (obj.sequence = (message.sequence || BigInt(0)).toString());
     message.isFrozen !== undefined && (obj.isFrozen = message.isFrozen);
     message.consensusState !== undefined && (obj.consensusState = message.consensusState ? ConsensusState.toJSON(message.consensusState) : undefined);
     message.allowUpdateAfterProposal !== undefined && (obj.allowUpdateAfterProposal = message.allowUpdateAfterProposal);
@@ -439,7 +439,7 @@ export const ClientState = {
   },
   fromPartial(object: Partial<ClientState>): ClientState {
     const message = createBaseClientState();
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
     message.isFrozen = object.isFrozen ?? false;
     message.consensusState = object.consensusState !== undefined && object.consensusState !== null ? ConsensusState.fromPartial(object.consensusState) : undefined;
     message.allowUpdateAfterProposal = object.allowUpdateAfterProposal ?? false;
@@ -448,26 +448,26 @@ export const ClientState = {
 };
 function createBaseConsensusState(): ConsensusState {
   return {
-    publicKey: undefined,
+    publicKey: Any.fromPartial({}),
     diversifier: "",
-    timestamp: Long.UZERO
+    timestamp: BigInt(0)
   };
 }
 export const ConsensusState = {
-  encode(message: ConsensusState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ConsensusState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.publicKey !== undefined) {
       Any.encode(message.publicKey, writer.uint32(10).fork()).ldelim();
     }
     if (message.diversifier !== "") {
       writer.uint32(18).string(message.diversifier);
     }
-    if (!message.timestamp.isZero()) {
+    if (message.timestamp !== BigInt(0)) {
       writer.uint32(24).uint64(message.timestamp);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ConsensusState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusState();
     while (reader.pos < end) {
@@ -480,7 +480,7 @@ export const ConsensusState = {
           message.diversifier = reader.string();
           break;
         case 3:
-          message.timestamp = (reader.uint64() as Long);
+          message.timestamp = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -493,39 +493,39 @@ export const ConsensusState = {
     return {
       publicKey: isSet(object.publicKey) ? Any.fromJSON(object.publicKey) : undefined,
       diversifier: isSet(object.diversifier) ? String(object.diversifier) : "",
-      timestamp: isSet(object.timestamp) ? Long.fromValue(object.timestamp) : Long.UZERO
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp.toString()) : BigInt(0)
     };
   },
   toJSON(message: ConsensusState): unknown {
     const obj: any = {};
     message.publicKey !== undefined && (obj.publicKey = message.publicKey ? Any.toJSON(message.publicKey) : undefined);
     message.diversifier !== undefined && (obj.diversifier = message.diversifier);
-    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || Long.UZERO).toString());
+    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<ConsensusState>): ConsensusState {
     const message = createBaseConsensusState();
     message.publicKey = object.publicKey !== undefined && object.publicKey !== null ? Any.fromPartial(object.publicKey) : undefined;
     message.diversifier = object.diversifier ?? "";
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
     return message;
   }
 };
 function createBaseHeader(): Header {
   return {
-    sequence: Long.UZERO,
-    timestamp: Long.UZERO,
+    sequence: BigInt(0),
+    timestamp: BigInt(0),
     signature: new Uint8Array(),
-    newPublicKey: undefined,
+    newPublicKey: Any.fromPartial({}),
     newDiversifier: ""
   };
 }
 export const Header = {
-  encode(message: Header, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.sequence.isZero()) {
+  encode(message: Header, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(8).uint64(message.sequence);
     }
-    if (!message.timestamp.isZero()) {
+    if (message.timestamp !== BigInt(0)) {
       writer.uint32(16).uint64(message.timestamp);
     }
     if (message.signature.length !== 0) {
@@ -539,18 +539,18 @@ export const Header = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Header {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Header {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeader();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sequence = (reader.uint64() as Long);
+          message.sequence = reader.uint64();
           break;
         case 2:
-          message.timestamp = (reader.uint64() as Long);
+          message.timestamp = reader.uint64();
           break;
         case 3:
           message.signature = reader.bytes();
@@ -570,8 +570,8 @@ export const Header = {
   },
   fromJSON(object: any): Header {
     return {
-      sequence: isSet(object.sequence) ? Long.fromValue(object.sequence) : Long.UZERO,
-      timestamp: isSet(object.timestamp) ? Long.fromValue(object.timestamp) : Long.UZERO,
+      sequence: isSet(object.sequence) ? BigInt(object.sequence.toString()) : BigInt(0),
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp.toString()) : BigInt(0),
       signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(),
       newPublicKey: isSet(object.newPublicKey) ? Any.fromJSON(object.newPublicKey) : undefined,
       newDiversifier: isSet(object.newDiversifier) ? String(object.newDiversifier) : ""
@@ -579,8 +579,8 @@ export const Header = {
   },
   toJSON(message: Header): unknown {
     const obj: any = {};
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || Long.UZERO).toString());
+    message.sequence !== undefined && (obj.sequence = (message.sequence || BigInt(0)).toString());
+    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || BigInt(0)).toString());
     message.signature !== undefined && (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     message.newPublicKey !== undefined && (obj.newPublicKey = message.newPublicKey ? Any.toJSON(message.newPublicKey) : undefined);
     message.newDiversifier !== undefined && (obj.newDiversifier = message.newDiversifier);
@@ -588,8 +588,8 @@ export const Header = {
   },
   fromPartial(object: Partial<Header>): Header {
     const message = createBaseHeader();
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
     message.signature = object.signature ?? new Uint8Array();
     message.newPublicKey = object.newPublicKey !== undefined && object.newPublicKey !== null ? Any.fromPartial(object.newPublicKey) : undefined;
     message.newDiversifier = object.newDiversifier ?? "";
@@ -599,17 +599,17 @@ export const Header = {
 function createBaseMisbehaviour(): Misbehaviour {
   return {
     clientId: "",
-    sequence: Long.UZERO,
-    signatureOne: undefined,
-    signatureTwo: undefined
+    sequence: BigInt(0),
+    signatureOne: SignatureAndData.fromPartial({}),
+    signatureTwo: SignatureAndData.fromPartial({})
   };
 }
 export const Misbehaviour = {
-  encode(message: Misbehaviour, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Misbehaviour, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.clientId !== "") {
       writer.uint32(10).string(message.clientId);
     }
-    if (!message.sequence.isZero()) {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(16).uint64(message.sequence);
     }
     if (message.signatureOne !== undefined) {
@@ -620,8 +620,8 @@ export const Misbehaviour = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Misbehaviour {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Misbehaviour {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMisbehaviour();
     while (reader.pos < end) {
@@ -631,7 +631,7 @@ export const Misbehaviour = {
           message.clientId = reader.string();
           break;
         case 2:
-          message.sequence = (reader.uint64() as Long);
+          message.sequence = reader.uint64();
           break;
         case 3:
           message.signatureOne = SignatureAndData.decode(reader, reader.uint32());
@@ -649,7 +649,7 @@ export const Misbehaviour = {
   fromJSON(object: any): Misbehaviour {
     return {
       clientId: isSet(object.clientId) ? String(object.clientId) : "",
-      sequence: isSet(object.sequence) ? Long.fromValue(object.sequence) : Long.UZERO,
+      sequence: isSet(object.sequence) ? BigInt(object.sequence.toString()) : BigInt(0),
       signatureOne: isSet(object.signatureOne) ? SignatureAndData.fromJSON(object.signatureOne) : undefined,
       signatureTwo: isSet(object.signatureTwo) ? SignatureAndData.fromJSON(object.signatureTwo) : undefined
     };
@@ -657,7 +657,7 @@ export const Misbehaviour = {
   toJSON(message: Misbehaviour): unknown {
     const obj: any = {};
     message.clientId !== undefined && (obj.clientId = message.clientId);
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
+    message.sequence !== undefined && (obj.sequence = (message.sequence || BigInt(0)).toString());
     message.signatureOne !== undefined && (obj.signatureOne = message.signatureOne ? SignatureAndData.toJSON(message.signatureOne) : undefined);
     message.signatureTwo !== undefined && (obj.signatureTwo = message.signatureTwo ? SignatureAndData.toJSON(message.signatureTwo) : undefined);
     return obj;
@@ -665,7 +665,7 @@ export const Misbehaviour = {
   fromPartial(object: Partial<Misbehaviour>): Misbehaviour {
     const message = createBaseMisbehaviour();
     message.clientId = object.clientId ?? "";
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
     message.signatureOne = object.signatureOne !== undefined && object.signatureOne !== null ? SignatureAndData.fromPartial(object.signatureOne) : undefined;
     message.signatureTwo = object.signatureTwo !== undefined && object.signatureTwo !== null ? SignatureAndData.fromPartial(object.signatureTwo) : undefined;
     return message;
@@ -676,11 +676,11 @@ function createBaseSignatureAndData(): SignatureAndData {
     signature: new Uint8Array(),
     dataType: 0,
     data: new Uint8Array(),
-    timestamp: Long.UZERO
+    timestamp: BigInt(0)
   };
 }
 export const SignatureAndData = {
-  encode(message: SignatureAndData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: SignatureAndData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.signature.length !== 0) {
       writer.uint32(10).bytes(message.signature);
     }
@@ -690,13 +690,13 @@ export const SignatureAndData = {
     if (message.data.length !== 0) {
       writer.uint32(26).bytes(message.data);
     }
-    if (!message.timestamp.isZero()) {
+    if (message.timestamp !== BigInt(0)) {
       writer.uint32(32).uint64(message.timestamp);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SignatureAndData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SignatureAndData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignatureAndData();
     while (reader.pos < end) {
@@ -712,7 +712,7 @@ export const SignatureAndData = {
           message.data = reader.bytes();
           break;
         case 4:
-          message.timestamp = (reader.uint64() as Long);
+          message.timestamp = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -724,9 +724,9 @@ export const SignatureAndData = {
   fromJSON(object: any): SignatureAndData {
     return {
       signature: isSet(object.signature) ? bytesFromBase64(object.signature) : new Uint8Array(),
-      dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : 0,
+      dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : -1,
       data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array(),
-      timestamp: isSet(object.timestamp) ? Long.fromValue(object.timestamp) : Long.UZERO
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp.toString()) : BigInt(0)
     };
   },
   toJSON(message: SignatureAndData): unknown {
@@ -734,7 +734,7 @@ export const SignatureAndData = {
     message.signature !== undefined && (obj.signature = base64FromBytes(message.signature !== undefined ? message.signature : new Uint8Array()));
     message.dataType !== undefined && (obj.dataType = dataTypeToJSON(message.dataType));
     message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
-    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || Long.UZERO).toString());
+    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<SignatureAndData>): SignatureAndData {
@@ -742,28 +742,28 @@ export const SignatureAndData = {
     message.signature = object.signature ?? new Uint8Array();
     message.dataType = object.dataType ?? 0;
     message.data = object.data ?? new Uint8Array();
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
     return message;
   }
 };
 function createBaseTimestampedSignatureData(): TimestampedSignatureData {
   return {
     signatureData: new Uint8Array(),
-    timestamp: Long.UZERO
+    timestamp: BigInt(0)
   };
 }
 export const TimestampedSignatureData = {
-  encode(message: TimestampedSignatureData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: TimestampedSignatureData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.signatureData.length !== 0) {
       writer.uint32(10).bytes(message.signatureData);
     }
-    if (!message.timestamp.isZero()) {
+    if (message.timestamp !== BigInt(0)) {
       writer.uint32(16).uint64(message.timestamp);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): TimestampedSignatureData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): TimestampedSignatureData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseTimestampedSignatureData();
     while (reader.pos < end) {
@@ -773,7 +773,7 @@ export const TimestampedSignatureData = {
           message.signatureData = reader.bytes();
           break;
         case 2:
-          message.timestamp = (reader.uint64() as Long);
+          message.timestamp = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -785,37 +785,37 @@ export const TimestampedSignatureData = {
   fromJSON(object: any): TimestampedSignatureData {
     return {
       signatureData: isSet(object.signatureData) ? bytesFromBase64(object.signatureData) : new Uint8Array(),
-      timestamp: isSet(object.timestamp) ? Long.fromValue(object.timestamp) : Long.UZERO
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp.toString()) : BigInt(0)
     };
   },
   toJSON(message: TimestampedSignatureData): unknown {
     const obj: any = {};
     message.signatureData !== undefined && (obj.signatureData = base64FromBytes(message.signatureData !== undefined ? message.signatureData : new Uint8Array()));
-    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || Long.UZERO).toString());
+    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<TimestampedSignatureData>): TimestampedSignatureData {
     const message = createBaseTimestampedSignatureData();
     message.signatureData = object.signatureData ?? new Uint8Array();
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
     return message;
   }
 };
 function createBaseSignBytes(): SignBytes {
   return {
-    sequence: Long.UZERO,
-    timestamp: Long.UZERO,
+    sequence: BigInt(0),
+    timestamp: BigInt(0),
     diversifier: "",
     dataType: 0,
     data: new Uint8Array()
   };
 }
 export const SignBytes = {
-  encode(message: SignBytes, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.sequence.isZero()) {
+  encode(message: SignBytes, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.sequence !== BigInt(0)) {
       writer.uint32(8).uint64(message.sequence);
     }
-    if (!message.timestamp.isZero()) {
+    if (message.timestamp !== BigInt(0)) {
       writer.uint32(16).uint64(message.timestamp);
     }
     if (message.diversifier !== "") {
@@ -829,18 +829,18 @@ export const SignBytes = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): SignBytes {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): SignBytes {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseSignBytes();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.sequence = (reader.uint64() as Long);
+          message.sequence = reader.uint64();
           break;
         case 2:
-          message.timestamp = (reader.uint64() as Long);
+          message.timestamp = reader.uint64();
           break;
         case 3:
           message.diversifier = reader.string();
@@ -860,17 +860,17 @@ export const SignBytes = {
   },
   fromJSON(object: any): SignBytes {
     return {
-      sequence: isSet(object.sequence) ? Long.fromValue(object.sequence) : Long.UZERO,
-      timestamp: isSet(object.timestamp) ? Long.fromValue(object.timestamp) : Long.UZERO,
+      sequence: isSet(object.sequence) ? BigInt(object.sequence.toString()) : BigInt(0),
+      timestamp: isSet(object.timestamp) ? BigInt(object.timestamp.toString()) : BigInt(0),
       diversifier: isSet(object.diversifier) ? String(object.diversifier) : "",
-      dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : 0,
+      dataType: isSet(object.dataType) ? dataTypeFromJSON(object.dataType) : -1,
       data: isSet(object.data) ? bytesFromBase64(object.data) : new Uint8Array()
     };
   },
   toJSON(message: SignBytes): unknown {
     const obj: any = {};
-    message.sequence !== undefined && (obj.sequence = (message.sequence || Long.UZERO).toString());
-    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || Long.UZERO).toString());
+    message.sequence !== undefined && (obj.sequence = (message.sequence || BigInt(0)).toString());
+    message.timestamp !== undefined && (obj.timestamp = (message.timestamp || BigInt(0)).toString());
     message.diversifier !== undefined && (obj.diversifier = message.diversifier);
     message.dataType !== undefined && (obj.dataType = dataTypeToJSON(message.dataType));
     message.data !== undefined && (obj.data = base64FromBytes(message.data !== undefined ? message.data : new Uint8Array()));
@@ -878,8 +878,8 @@ export const SignBytes = {
   },
   fromPartial(object: Partial<SignBytes>): SignBytes {
     const message = createBaseSignBytes();
-    message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
-    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? Long.fromValue(object.timestamp) : Long.UZERO;
+    message.sequence = object.sequence !== undefined && object.sequence !== null ? BigInt(object.sequence.toString()) : BigInt(0);
+    message.timestamp = object.timestamp !== undefined && object.timestamp !== null ? BigInt(object.timestamp.toString()) : BigInt(0);
     message.diversifier = object.diversifier ?? "";
     message.dataType = object.dataType ?? 0;
     message.data = object.data ?? new Uint8Array();
@@ -888,12 +888,12 @@ export const SignBytes = {
 };
 function createBaseHeaderData(): HeaderData {
   return {
-    newPubKey: undefined,
+    newPubKey: Any.fromPartial({}),
     newDiversifier: ""
   };
 }
 export const HeaderData = {
-  encode(message: HeaderData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: HeaderData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.newPubKey !== undefined) {
       Any.encode(message.newPubKey, writer.uint32(10).fork()).ldelim();
     }
@@ -902,8 +902,8 @@ export const HeaderData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): HeaderData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): HeaderData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHeaderData();
     while (reader.pos < end) {
@@ -944,11 +944,11 @@ export const HeaderData = {
 function createBaseClientStateData(): ClientStateData {
   return {
     path: new Uint8Array(),
-    clientState: undefined
+    clientState: Any.fromPartial({})
   };
 }
 export const ClientStateData = {
-  encode(message: ClientStateData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ClientStateData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -957,8 +957,8 @@ export const ClientStateData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ClientStateData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ClientStateData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseClientStateData();
     while (reader.pos < end) {
@@ -999,11 +999,11 @@ export const ClientStateData = {
 function createBaseConsensusStateData(): ConsensusStateData {
   return {
     path: new Uint8Array(),
-    consensusState: undefined
+    consensusState: Any.fromPartial({})
   };
 }
 export const ConsensusStateData = {
-  encode(message: ConsensusStateData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ConsensusStateData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -1012,8 +1012,8 @@ export const ConsensusStateData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ConsensusStateData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ConsensusStateData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConsensusStateData();
     while (reader.pos < end) {
@@ -1054,11 +1054,11 @@ export const ConsensusStateData = {
 function createBaseConnectionStateData(): ConnectionStateData {
   return {
     path: new Uint8Array(),
-    connection: undefined
+    connection: ConnectionEnd.fromPartial({})
   };
 }
 export const ConnectionStateData = {
-  encode(message: ConnectionStateData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ConnectionStateData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -1067,8 +1067,8 @@ export const ConnectionStateData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ConnectionStateData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ConnectionStateData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseConnectionStateData();
     while (reader.pos < end) {
@@ -1109,11 +1109,11 @@ export const ConnectionStateData = {
 function createBaseChannelStateData(): ChannelStateData {
   return {
     path: new Uint8Array(),
-    channel: undefined
+    channel: Channel.fromPartial({})
   };
 }
 export const ChannelStateData = {
-  encode(message: ChannelStateData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ChannelStateData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -1122,8 +1122,8 @@ export const ChannelStateData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ChannelStateData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ChannelStateData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseChannelStateData();
     while (reader.pos < end) {
@@ -1168,7 +1168,7 @@ function createBasePacketCommitmentData(): PacketCommitmentData {
   };
 }
 export const PacketCommitmentData = {
-  encode(message: PacketCommitmentData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: PacketCommitmentData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -1177,8 +1177,8 @@ export const PacketCommitmentData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PacketCommitmentData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PacketCommitmentData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketCommitmentData();
     while (reader.pos < end) {
@@ -1223,7 +1223,7 @@ function createBasePacketAcknowledgementData(): PacketAcknowledgementData {
   };
 }
 export const PacketAcknowledgementData = {
-  encode(message: PacketAcknowledgementData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: PacketAcknowledgementData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
@@ -1232,8 +1232,8 @@ export const PacketAcknowledgementData = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PacketAcknowledgementData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PacketAcknowledgementData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketAcknowledgementData();
     while (reader.pos < end) {
@@ -1277,14 +1277,14 @@ function createBasePacketReceiptAbsenceData(): PacketReceiptAbsenceData {
   };
 }
 export const PacketReceiptAbsenceData = {
-  encode(message: PacketReceiptAbsenceData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: PacketReceiptAbsenceData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): PacketReceiptAbsenceData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): PacketReceiptAbsenceData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBasePacketReceiptAbsenceData();
     while (reader.pos < end) {
@@ -1319,21 +1319,21 @@ export const PacketReceiptAbsenceData = {
 function createBaseNextSequenceRecvData(): NextSequenceRecvData {
   return {
     path: new Uint8Array(),
-    nextSeqRecv: Long.UZERO
+    nextSeqRecv: BigInt(0)
   };
 }
 export const NextSequenceRecvData = {
-  encode(message: NextSequenceRecvData, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: NextSequenceRecvData, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path.length !== 0) {
       writer.uint32(10).bytes(message.path);
     }
-    if (!message.nextSeqRecv.isZero()) {
+    if (message.nextSeqRecv !== BigInt(0)) {
       writer.uint32(16).uint64(message.nextSeqRecv);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): NextSequenceRecvData {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): NextSequenceRecvData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseNextSequenceRecvData();
     while (reader.pos < end) {
@@ -1343,7 +1343,7 @@ export const NextSequenceRecvData = {
           message.path = reader.bytes();
           break;
         case 2:
-          message.nextSeqRecv = (reader.uint64() as Long);
+          message.nextSeqRecv = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -1355,19 +1355,19 @@ export const NextSequenceRecvData = {
   fromJSON(object: any): NextSequenceRecvData {
     return {
       path: isSet(object.path) ? bytesFromBase64(object.path) : new Uint8Array(),
-      nextSeqRecv: isSet(object.nextSeqRecv) ? Long.fromValue(object.nextSeqRecv) : Long.UZERO
+      nextSeqRecv: isSet(object.nextSeqRecv) ? BigInt(object.nextSeqRecv.toString()) : BigInt(0)
     };
   },
   toJSON(message: NextSequenceRecvData): unknown {
     const obj: any = {};
     message.path !== undefined && (obj.path = base64FromBytes(message.path !== undefined ? message.path : new Uint8Array()));
-    message.nextSeqRecv !== undefined && (obj.nextSeqRecv = (message.nextSeqRecv || Long.UZERO).toString());
+    message.nextSeqRecv !== undefined && (obj.nextSeqRecv = (message.nextSeqRecv || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<NextSequenceRecvData>): NextSequenceRecvData {
     const message = createBaseNextSequenceRecvData();
     message.path = object.path ?? new Uint8Array();
-    message.nextSeqRecv = object.nextSeqRecv !== undefined && object.nextSeqRecv !== null ? Long.fromValue(object.nextSeqRecv) : Long.UZERO;
+    message.nextSeqRecv = object.nextSeqRecv !== undefined && object.nextSeqRecv !== null ? BigInt(object.nextSeqRecv.toString()) : BigInt(0);
     return message;
   }
 };

@@ -1,6 +1,10 @@
-import {refractedlabs} from "./codegen"
-import {Long, PageRequest} from "./codegen/helpers";
-import {BrowserHeaders} from "browser-headers";
+import { getSigningRefractedlabsClientOptions, refractedlabs } from "./codegen"
+import { PageRequest } from "./codegen/helpers";
+import { BrowserHeaders } from "browser-headers";
+import { OfflineSigner } from "@cosmjs/proto-signing";
+import { SigningStargateClient } from "@cosmjs/stargate";
+import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
+import { GasPrice } from "@cosmjs/stargate/build/fee";
 
 export type FlowtradeLCDClient = Awaited<ReturnType<typeof refractedlabs.ClientFactory.createLCDClient>>
 export type FlowtradeGrpcWebClient = Awaited<ReturnType<typeof refractedlabs.ClientFactory.createGrpcWebClient>>
@@ -11,9 +15,9 @@ export function defaultPageRequestProvider(): PageRequest {
     return {
         countTotal: false,
         key: new Uint8Array(),
-        offset: Long.ZERO,
+        offset: 0n,
         reverse: false,
-        limit: Long.fromNumber(50)
+        limit: 50n
     }
 }
 
@@ -67,4 +71,19 @@ export function getBrowsersHeadersForBlockHeight(height: number): BrowserHeaders
     const headers = new BrowserHeaders()
     headers.set("x-cosmos-block-height", `${height}`)
     return headers
+}
+
+export async function connectWithSigner(endpoint: string | HttpEndpoint, signer: OfflineSigner, broadcastTimeoutMs?: number, gasPrice?: GasPrice, broadcastPollIntervalMs?: number): Promise<SigningStargateClient> {
+    const {
+        registry,
+        aminoTypes
+    } = getSigningRefractedlabsClientOptions();
+
+    return SigningStargateClient.connectWithSigner(endpoint, signer, {
+        registry,
+        aminoTypes,
+        broadcastTimeoutMs,
+        gasPrice,
+        broadcastPollIntervalMs,
+    });
 }

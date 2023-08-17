@@ -1,5 +1,5 @@
 import {join} from 'path';
-import telescope from '@osmonauts/telescope';
+import telescope from '@cosmology/telescope';
 import {rimrafSync as rimraf} from 'rimraf';
 import {AMINO_MAP} from './aminos';
 
@@ -8,6 +8,7 @@ const outPath = join(__dirname, '../src/codegen');
 rimraf(outPath);
 
 telescope({
+    removeUnusedImports: true,
     protoDirs,
     outPath,
     options: {
@@ -24,6 +25,7 @@ telescope({
                 '**/*.lcd.ts',
                 '**/tx.rpc.msg.ts',
                 '**/query.rpc.Query.ts',
+                '**/tx.registry.ts',
             ]
         },
         prototypes: {
@@ -32,14 +34,18 @@ telescope({
                 useDeepPartial: false,
                 useExact: false,
                 timestamp: 'timestamp',
-                duration: 'duration'
+                duration: 'duration',
+                num64: 'bigint',
+                customTypes: {
+                    useCosmosSDKDec: true
+                }
             },
             methods: {
                 toJSON: true,
                 fromJSON: true
             },
-            optionalQueryParams: true,
-            optionalPageRequests: true
+            optionalPageRequests: true,
+            fieldDefaultIsOptional: true
         },
         aminoEncoding: {
             enabled: true,
@@ -56,7 +62,6 @@ telescope({
     }
 })
     .then(() => {
-        require("./fix-grpc-queries").correctDir('./src/codegen', /query.rpc.Query.ts/gm);
         console.log('✨ all done!');
     })
     .catch((e) => {

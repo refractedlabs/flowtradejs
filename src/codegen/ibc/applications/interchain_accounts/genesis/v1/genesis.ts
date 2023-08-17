@@ -2,45 +2,45 @@ import { Params as Params1 } from "../../controller/v1/controller";
 import { ParamsSDKType as Params1SDKType } from "../../controller/v1/controller";
 import { Params as Params2 } from "../../host/v1/host";
 import { ParamsSDKType as Params2SDKType } from "../../host/v1/host";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../../binary";
 import { isSet } from "../../../../../helpers";
 /** GenesisState defines the interchain accounts genesis state */
 export interface GenesisState {
-  controllerGenesisState?: ControllerGenesisState;
-  hostGenesisState?: HostGenesisState;
+  controllerGenesisState: ControllerGenesisState;
+  hostGenesisState: HostGenesisState;
 }
 /** GenesisState defines the interchain accounts genesis state */
 export interface GenesisStateSDKType {
-  controller_genesis_state?: ControllerGenesisStateSDKType;
-  host_genesis_state?: HostGenesisStateSDKType;
+  controller_genesis_state: ControllerGenesisStateSDKType;
+  host_genesis_state: HostGenesisStateSDKType;
 }
 /** ControllerGenesisState defines the interchain accounts controller genesis state */
 export interface ControllerGenesisState {
   activeChannels: ActiveChannel[];
   interchainAccounts: RegisteredInterchainAccount[];
   ports: string[];
-  params?: Params1;
+  params: Params1;
 }
 /** ControllerGenesisState defines the interchain accounts controller genesis state */
 export interface ControllerGenesisStateSDKType {
   active_channels: ActiveChannelSDKType[];
   interchain_accounts: RegisteredInterchainAccountSDKType[];
   ports: string[];
-  params?: Params1SDKType;
+  params: Params1SDKType;
 }
 /** HostGenesisState defines the interchain accounts host genesis state */
 export interface HostGenesisState {
   activeChannels: ActiveChannel[];
   interchainAccounts: RegisteredInterchainAccount[];
   port: string;
-  params?: Params2;
+  params: Params2;
 }
 /** HostGenesisState defines the interchain accounts host genesis state */
 export interface HostGenesisStateSDKType {
   active_channels: ActiveChannelSDKType[];
   interchain_accounts: RegisteredInterchainAccountSDKType[];
   port: string;
-  params?: Params2SDKType;
+  params: Params2SDKType;
 }
 /**
  * ActiveChannel contains a connection ID, port ID and associated active channel ID, as well as a boolean flag to
@@ -76,12 +76,12 @@ export interface RegisteredInterchainAccountSDKType {
 }
 function createBaseGenesisState(): GenesisState {
   return {
-    controllerGenesisState: undefined,
-    hostGenesisState: undefined
+    controllerGenesisState: ControllerGenesisState.fromPartial({}),
+    hostGenesisState: HostGenesisState.fromPartial({})
   };
 }
 export const GenesisState = {
-  encode(message: GenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: GenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.controllerGenesisState !== undefined) {
       ControllerGenesisState.encode(message.controllerGenesisState, writer.uint32(10).fork()).ldelim();
     }
@@ -90,8 +90,8 @@ export const GenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): GenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): GenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseGenesisState();
     while (reader.pos < end) {
@@ -134,11 +134,11 @@ function createBaseControllerGenesisState(): ControllerGenesisState {
     activeChannels: [],
     interchainAccounts: [],
     ports: [],
-    params: undefined
+    params: Params1.fromPartial({})
   };
 }
 export const ControllerGenesisState = {
-  encode(message: ControllerGenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ControllerGenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.activeChannels) {
       ActiveChannel.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -153,8 +153,8 @@ export const ControllerGenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ControllerGenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ControllerGenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseControllerGenesisState();
     while (reader.pos < end) {
@@ -221,11 +221,11 @@ function createBaseHostGenesisState(): HostGenesisState {
     activeChannels: [],
     interchainAccounts: [],
     port: "",
-    params: undefined
+    params: Params2.fromPartial({})
   };
 }
 export const HostGenesisState = {
-  encode(message: HostGenesisState, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: HostGenesisState, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.activeChannels) {
       ActiveChannel.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -240,8 +240,8 @@ export const HostGenesisState = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): HostGenesisState {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): HostGenesisState {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseHostGenesisState();
     while (reader.pos < end) {
@@ -308,7 +308,7 @@ function createBaseActiveChannel(): ActiveChannel {
   };
 }
 export const ActiveChannel = {
-  encode(message: ActiveChannel, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: ActiveChannel, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.connectionId !== "") {
       writer.uint32(10).string(message.connectionId);
     }
@@ -323,8 +323,8 @@ export const ActiveChannel = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): ActiveChannel {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): ActiveChannel {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseActiveChannel();
     while (reader.pos < end) {
@@ -382,7 +382,7 @@ function createBaseRegisteredInterchainAccount(): RegisteredInterchainAccount {
   };
 }
 export const RegisteredInterchainAccount = {
-  encode(message: RegisteredInterchainAccount, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: RegisteredInterchainAccount, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.connectionId !== "") {
       writer.uint32(10).string(message.connectionId);
     }
@@ -394,8 +394,8 @@ export const RegisteredInterchainAccount = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): RegisteredInterchainAccount {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): RegisteredInterchainAccount {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRegisteredInterchainAccount();
     while (reader.pos < end) {

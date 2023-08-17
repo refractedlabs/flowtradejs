@@ -1,67 +1,67 @@
 import { Params, ParamsSDKType } from "./params";
 import { FlowCreationRequest, FlowCreationRequestSDKType } from "./flow";
 import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
-import { Long, isSet } from "../../helpers";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../binary";
+import { isSet } from "../../helpers";
 export interface MsgUpdateParams {
   authority: string;
-  params?: Params;
+  params: Params;
 }
 export interface MsgUpdateParamsSDKType {
   authority: string;
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
 }
 export interface MsgUpdateParamsResponse {}
 export interface MsgUpdateParamsResponseSDKType {}
 export interface MsgCreateFlow {
   creator: string;
-  request?: FlowCreationRequest;
+  request: FlowCreationRequest;
 }
 export interface MsgCreateFlowSDKType {
   creator: string;
-  request?: FlowCreationRequestSDKType;
+  request: FlowCreationRequestSDKType;
 }
 export interface MsgCreateFlowResponse {
-  id: Long;
+  id: bigint;
 }
 export interface MsgCreateFlowResponseSDKType {
-  id: Long;
+  id: bigint;
 }
 export interface MsgJoinFlow {
-  flow: Long;
+  flow: bigint;
   address: string;
-  amount?: Coin;
+  amount: Coin;
   signer: string;
 }
 export interface MsgJoinFlowSDKType {
-  flow: Long;
+  flow: bigint;
   address: string;
-  amount?: CoinSDKType;
+  amount: CoinSDKType;
   signer: string;
 }
 export interface MsgJoinFlowResponse {}
 export interface MsgJoinFlowResponseSDKType {}
 export interface MsgExitFlow {
-  flow: Long;
+  flow: bigint;
   address: string;
-  amount?: Coin;
+  amount: Coin;
   signer: string;
 }
 export interface MsgExitFlowSDKType {
-  flow: Long;
+  flow: bigint;
   address: string;
-  amount?: CoinSDKType;
+  amount: CoinSDKType;
   signer: string;
 }
 export interface MsgExitFlowResponse {}
 export interface MsgExitFlowResponseSDKType {}
 export interface MsgSetOperator {
-  flow: Long;
+  flow: bigint;
   owner: string;
   operator: string;
 }
 export interface MsgSetOperatorSDKType {
-  flow: Long;
+  flow: bigint;
   owner: string;
   operator: string;
 }
@@ -69,46 +69,46 @@ export interface MsgSetOperatorResponse {}
 export interface MsgSetOperatorResponseSDKType {}
 export interface MsgClaimTokenIn {
   creator: string;
-  flow: Long;
+  flow: bigint;
   treasuryAddress: string;
 }
 export interface MsgClaimTokenInSDKType {
   creator: string;
-  flow: Long;
+  flow: bigint;
   treasury_address: string;
 }
 export interface MsgClaimTokenInResponse {
-  claimed?: Coin;
-  fee?: Coin;
+  claimed: Coin;
+  fee: Coin;
 }
 export interface MsgClaimTokenInResponseSDKType {
-  claimed?: CoinSDKType;
-  fee?: CoinSDKType;
+  claimed: CoinSDKType;
+  fee: CoinSDKType;
 }
 export interface MsgClaimTokenOut {
-  flow: Long;
+  flow: bigint;
   address: string;
   signer: string;
 }
 export interface MsgClaimTokenOutSDKType {
-  flow: Long;
+  flow: bigint;
   address: string;
   signer: string;
 }
 export interface MsgClaimTokenOutResponse {
-  claimed?: Coin;
-  fee?: Coin;
+  claimed: Coin;
+  fee: Coin;
 }
 export interface MsgClaimTokenOutResponseSDKType {
-  claimed?: CoinSDKType;
-  fee?: CoinSDKType;
+  claimed: CoinSDKType;
+  fee: CoinSDKType;
 }
 export interface MsgStopFlow {
-  flowId: Long;
+  flowId: bigint;
   creator: string;
 }
 export interface MsgStopFlowSDKType {
-  flow_id: Long;
+  flow_id: bigint;
   creator: string;
 }
 export interface MsgStopFlowResponse {}
@@ -116,11 +116,11 @@ export interface MsgStopFlowResponseSDKType {}
 function createBaseMsgUpdateParams(): MsgUpdateParams {
   return {
     authority: "",
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const MsgUpdateParams = {
-  encode(message: MsgUpdateParams, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
     }
@@ -129,8 +129,8 @@ export const MsgUpdateParams = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateParams {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParams {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParams();
     while (reader.pos < end) {
@@ -172,11 +172,11 @@ function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
   return {};
 }
 export const MsgUpdateParamsResponse = {
-  encode(_: MsgUpdateParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: MsgUpdateParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgUpdateParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParamsResponse();
     while (reader.pos < end) {
@@ -204,11 +204,11 @@ export const MsgUpdateParamsResponse = {
 function createBaseMsgCreateFlow(): MsgCreateFlow {
   return {
     creator: "",
-    request: undefined
+    request: FlowCreationRequest.fromPartial({})
   };
 }
 export const MsgCreateFlow = {
-  encode(message: MsgCreateFlow, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgCreateFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
@@ -217,8 +217,8 @@ export const MsgCreateFlow = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateFlow {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateFlow {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateFlow();
     while (reader.pos < end) {
@@ -258,25 +258,25 @@ export const MsgCreateFlow = {
 };
 function createBaseMsgCreateFlowResponse(): MsgCreateFlowResponse {
   return {
-    id: Long.UZERO
+    id: BigInt(0)
   };
 }
 export const MsgCreateFlowResponse = {
-  encode(message: MsgCreateFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.id.isZero()) {
+  encode(message: MsgCreateFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgCreateFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateFlowResponse();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = (reader.uint64() as Long);
+          message.id = reader.uint64();
           break;
         default:
           reader.skipType(tag & 7);
@@ -287,31 +287,31 @@ export const MsgCreateFlowResponse = {
   },
   fromJSON(object: any): MsgCreateFlowResponse {
     return {
-      id: isSet(object.id) ? Long.fromValue(object.id) : Long.UZERO
+      id: isSet(object.id) ? BigInt(object.id.toString()) : BigInt(0)
     };
   },
   toJSON(message: MsgCreateFlowResponse): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = (message.id || Long.UZERO).toString());
+    message.id !== undefined && (obj.id = (message.id || BigInt(0)).toString());
     return obj;
   },
   fromPartial(object: Partial<MsgCreateFlowResponse>): MsgCreateFlowResponse {
     const message = createBaseMsgCreateFlowResponse();
-    message.id = object.id !== undefined && object.id !== null ? Long.fromValue(object.id) : Long.UZERO;
+    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
     return message;
   }
 };
 function createBaseMsgJoinFlow(): MsgJoinFlow {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     address: "",
-    amount: undefined,
+    amount: Coin.fromPartial({}),
     signer: ""
   };
 }
 export const MsgJoinFlow = {
-  encode(message: MsgJoinFlow, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: MsgJoinFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.address !== "") {
@@ -325,15 +325,15 @@ export const MsgJoinFlow = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgJoinFlow {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgJoinFlow {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgJoinFlow();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.address = reader.string();
@@ -353,7 +353,7 @@ export const MsgJoinFlow = {
   },
   fromJSON(object: any): MsgJoinFlow {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       address: isSet(object.address) ? String(object.address) : "",
       amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
       signer: isSet(object.signer) ? String(object.signer) : ""
@@ -361,7 +361,7 @@ export const MsgJoinFlow = {
   },
   toJSON(message: MsgJoinFlow): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.address !== undefined && (obj.address = message.address);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
     message.signer !== undefined && (obj.signer = message.signer);
@@ -369,7 +369,7 @@ export const MsgJoinFlow = {
   },
   fromPartial(object: Partial<MsgJoinFlow>): MsgJoinFlow {
     const message = createBaseMsgJoinFlow();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.address = object.address ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     message.signer = object.signer ?? "";
@@ -380,11 +380,11 @@ function createBaseMsgJoinFlowResponse(): MsgJoinFlowResponse {
   return {};
 }
 export const MsgJoinFlowResponse = {
-  encode(_: MsgJoinFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: MsgJoinFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgJoinFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgJoinFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgJoinFlowResponse();
     while (reader.pos < end) {
@@ -411,15 +411,15 @@ export const MsgJoinFlowResponse = {
 };
 function createBaseMsgExitFlow(): MsgExitFlow {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     address: "",
-    amount: undefined,
+    amount: Coin.fromPartial({}),
     signer: ""
   };
 }
 export const MsgExitFlow = {
-  encode(message: MsgExitFlow, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: MsgExitFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.address !== "") {
@@ -433,15 +433,15 @@ export const MsgExitFlow = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgExitFlow {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgExitFlow {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExitFlow();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.address = reader.string();
@@ -461,7 +461,7 @@ export const MsgExitFlow = {
   },
   fromJSON(object: any): MsgExitFlow {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       address: isSet(object.address) ? String(object.address) : "",
       amount: isSet(object.amount) ? Coin.fromJSON(object.amount) : undefined,
       signer: isSet(object.signer) ? String(object.signer) : ""
@@ -469,7 +469,7 @@ export const MsgExitFlow = {
   },
   toJSON(message: MsgExitFlow): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.address !== undefined && (obj.address = message.address);
     message.amount !== undefined && (obj.amount = message.amount ? Coin.toJSON(message.amount) : undefined);
     message.signer !== undefined && (obj.signer = message.signer);
@@ -477,7 +477,7 @@ export const MsgExitFlow = {
   },
   fromPartial(object: Partial<MsgExitFlow>): MsgExitFlow {
     const message = createBaseMsgExitFlow();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.address = object.address ?? "";
     message.amount = object.amount !== undefined && object.amount !== null ? Coin.fromPartial(object.amount) : undefined;
     message.signer = object.signer ?? "";
@@ -488,11 +488,11 @@ function createBaseMsgExitFlowResponse(): MsgExitFlowResponse {
   return {};
 }
 export const MsgExitFlowResponse = {
-  encode(_: MsgExitFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: MsgExitFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgExitFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgExitFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExitFlowResponse();
     while (reader.pos < end) {
@@ -519,14 +519,14 @@ export const MsgExitFlowResponse = {
 };
 function createBaseMsgSetOperator(): MsgSetOperator {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     owner: "",
     operator: ""
   };
 }
 export const MsgSetOperator = {
-  encode(message: MsgSetOperator, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: MsgSetOperator, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.owner !== "") {
@@ -537,15 +537,15 @@ export const MsgSetOperator = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOperator {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetOperator {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOperator();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.owner = reader.string();
@@ -562,21 +562,21 @@ export const MsgSetOperator = {
   },
   fromJSON(object: any): MsgSetOperator {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       owner: isSet(object.owner) ? String(object.owner) : "",
       operator: isSet(object.operator) ? String(object.operator) : ""
     };
   },
   toJSON(message: MsgSetOperator): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.owner !== undefined && (obj.owner = message.owner);
     message.operator !== undefined && (obj.operator = message.operator);
     return obj;
   },
   fromPartial(object: Partial<MsgSetOperator>): MsgSetOperator {
     const message = createBaseMsgSetOperator();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.owner = object.owner ?? "";
     message.operator = object.operator ?? "";
     return message;
@@ -586,11 +586,11 @@ function createBaseMsgSetOperatorResponse(): MsgSetOperatorResponse {
   return {};
 }
 export const MsgSetOperatorResponse = {
-  encode(_: MsgSetOperatorResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: MsgSetOperatorResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgSetOperatorResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetOperatorResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOperatorResponse();
     while (reader.pos < end) {
@@ -618,16 +618,16 @@ export const MsgSetOperatorResponse = {
 function createBaseMsgClaimTokenIn(): MsgClaimTokenIn {
   return {
     creator: "",
-    flow: Long.UZERO,
+    flow: BigInt(0),
     treasuryAddress: ""
   };
 }
 export const MsgClaimTokenIn = {
-  encode(message: MsgClaimTokenIn, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgClaimTokenIn, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
     }
-    if (!message.flow.isZero()) {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(16).uint64(message.flow);
     }
     if (message.treasuryAddress !== "") {
@@ -635,8 +635,8 @@ export const MsgClaimTokenIn = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimTokenIn {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenIn {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenIn();
     while (reader.pos < end) {
@@ -646,7 +646,7 @@ export const MsgClaimTokenIn = {
           message.creator = reader.string();
           break;
         case 2:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 3:
           message.treasuryAddress = reader.string();
@@ -661,33 +661,33 @@ export const MsgClaimTokenIn = {
   fromJSON(object: any): MsgClaimTokenIn {
     return {
       creator: isSet(object.creator) ? String(object.creator) : "",
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       treasuryAddress: isSet(object.treasuryAddress) ? String(object.treasuryAddress) : ""
     };
   },
   toJSON(message: MsgClaimTokenIn): unknown {
     const obj: any = {};
     message.creator !== undefined && (obj.creator = message.creator);
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.treasuryAddress !== undefined && (obj.treasuryAddress = message.treasuryAddress);
     return obj;
   },
   fromPartial(object: Partial<MsgClaimTokenIn>): MsgClaimTokenIn {
     const message = createBaseMsgClaimTokenIn();
     message.creator = object.creator ?? "";
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.treasuryAddress = object.treasuryAddress ?? "";
     return message;
   }
 };
 function createBaseMsgClaimTokenInResponse(): MsgClaimTokenInResponse {
   return {
-    claimed: undefined,
-    fee: undefined
+    claimed: Coin.fromPartial({}),
+    fee: Coin.fromPartial({})
   };
 }
 export const MsgClaimTokenInResponse = {
-  encode(message: MsgClaimTokenInResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgClaimTokenInResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.claimed !== undefined) {
       Coin.encode(message.claimed, writer.uint32(10).fork()).ldelim();
     }
@@ -696,8 +696,8 @@ export const MsgClaimTokenInResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimTokenInResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenInResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenInResponse();
     while (reader.pos < end) {
@@ -737,14 +737,14 @@ export const MsgClaimTokenInResponse = {
 };
 function createBaseMsgClaimTokenOut(): MsgClaimTokenOut {
   return {
-    flow: Long.UZERO,
+    flow: BigInt(0),
     address: "",
     signer: ""
   };
 }
 export const MsgClaimTokenOut = {
-  encode(message: MsgClaimTokenOut, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flow.isZero()) {
+  encode(message: MsgClaimTokenOut, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
     }
     if (message.address !== "") {
@@ -755,15 +755,15 @@ export const MsgClaimTokenOut = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimTokenOut {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenOut {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenOut();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = (reader.uint64() as Long);
+          message.flow = reader.uint64();
           break;
         case 2:
           message.address = reader.string();
@@ -780,21 +780,21 @@ export const MsgClaimTokenOut = {
   },
   fromJSON(object: any): MsgClaimTokenOut {
     return {
-      flow: isSet(object.flow) ? Long.fromValue(object.flow) : Long.UZERO,
+      flow: isSet(object.flow) ? BigInt(object.flow.toString()) : BigInt(0),
       address: isSet(object.address) ? String(object.address) : "",
       signer: isSet(object.signer) ? String(object.signer) : ""
     };
   },
   toJSON(message: MsgClaimTokenOut): unknown {
     const obj: any = {};
-    message.flow !== undefined && (obj.flow = (message.flow || Long.UZERO).toString());
+    message.flow !== undefined && (obj.flow = (message.flow || BigInt(0)).toString());
     message.address !== undefined && (obj.address = message.address);
     message.signer !== undefined && (obj.signer = message.signer);
     return obj;
   },
   fromPartial(object: Partial<MsgClaimTokenOut>): MsgClaimTokenOut {
     const message = createBaseMsgClaimTokenOut();
-    message.flow = object.flow !== undefined && object.flow !== null ? Long.fromValue(object.flow) : Long.UZERO;
+    message.flow = object.flow !== undefined && object.flow !== null ? BigInt(object.flow.toString()) : BigInt(0);
     message.address = object.address ?? "";
     message.signer = object.signer ?? "";
     return message;
@@ -802,12 +802,12 @@ export const MsgClaimTokenOut = {
 };
 function createBaseMsgClaimTokenOutResponse(): MsgClaimTokenOutResponse {
   return {
-    claimed: undefined,
-    fee: undefined
+    claimed: Coin.fromPartial({}),
+    fee: Coin.fromPartial({})
   };
 }
 export const MsgClaimTokenOutResponse = {
-  encode(message: MsgClaimTokenOutResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: MsgClaimTokenOutResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.claimed !== undefined) {
       Coin.encode(message.claimed, writer.uint32(10).fork()).ldelim();
     }
@@ -816,8 +816,8 @@ export const MsgClaimTokenOutResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgClaimTokenOutResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenOutResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenOutResponse();
     while (reader.pos < end) {
@@ -857,13 +857,13 @@ export const MsgClaimTokenOutResponse = {
 };
 function createBaseMsgStopFlow(): MsgStopFlow {
   return {
-    flowId: Long.UZERO,
+    flowId: BigInt(0),
     creator: ""
   };
 }
 export const MsgStopFlow = {
-  encode(message: MsgStopFlow, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
-    if (!message.flowId.isZero()) {
+  encode(message: MsgStopFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.flowId !== BigInt(0)) {
       writer.uint32(8).uint64(message.flowId);
     }
     if (message.creator !== "") {
@@ -871,15 +871,15 @@ export const MsgStopFlow = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgStopFlow {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgStopFlow {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStopFlow();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flowId = (reader.uint64() as Long);
+          message.flowId = reader.uint64();
           break;
         case 2:
           message.creator = reader.string();
@@ -893,19 +893,19 @@ export const MsgStopFlow = {
   },
   fromJSON(object: any): MsgStopFlow {
     return {
-      flowId: isSet(object.flowId) ? Long.fromValue(object.flowId) : Long.UZERO,
+      flowId: isSet(object.flowId) ? BigInt(object.flowId.toString()) : BigInt(0),
       creator: isSet(object.creator) ? String(object.creator) : ""
     };
   },
   toJSON(message: MsgStopFlow): unknown {
     const obj: any = {};
-    message.flowId !== undefined && (obj.flowId = (message.flowId || Long.UZERO).toString());
+    message.flowId !== undefined && (obj.flowId = (message.flowId || BigInt(0)).toString());
     message.creator !== undefined && (obj.creator = message.creator);
     return obj;
   },
   fromPartial(object: Partial<MsgStopFlow>): MsgStopFlow {
     const message = createBaseMsgStopFlow();
-    message.flowId = object.flowId !== undefined && object.flowId !== null ? Long.fromValue(object.flowId) : Long.UZERO;
+    message.flowId = object.flowId !== undefined && object.flowId !== null ? BigInt(object.flowId.toString()) : BigInt(0);
     message.creator = object.creator ?? "";
     return message;
   }
@@ -914,11 +914,11 @@ function createBaseMsgStopFlowResponse(): MsgStopFlowResponse {
   return {};
 }
 export const MsgStopFlowResponse = {
-  encode(_: MsgStopFlowResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: MsgStopFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): MsgStopFlowResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): MsgStopFlowResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStopFlowResponse();
     while (reader.pos < end) {

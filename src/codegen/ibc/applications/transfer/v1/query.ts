@@ -1,6 +1,6 @@
 import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
 import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from "./transfer";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 import { isSet } from "../../../../helpers";
 /**
  * QueryDenomTraceRequest is the request type for the Query/DenomTrace RPC
@@ -8,14 +8,14 @@ import { isSet } from "../../../../helpers";
  */
 export interface QueryDenomTraceRequest {
   /** hash (in hex format) or denom (full denom with ibc prefix) of the denomination trace information. */
-  hash?: string;
+  hash: string;
 }
 /**
  * QueryDenomTraceRequest is the request type for the Query/DenomTrace RPC
  * method
  */
 export interface QueryDenomTraceRequestSDKType {
-  hash?: string;
+  hash: string;
 }
 /**
  * QueryDenomTraceResponse is the response type for the Query/DenomTrace RPC
@@ -23,14 +23,14 @@ export interface QueryDenomTraceRequestSDKType {
  */
 export interface QueryDenomTraceResponse {
   /** denom_trace returns the requested denomination trace information. */
-  denomTrace?: DenomTrace;
+  denomTrace: DenomTrace;
 }
 /**
  * QueryDenomTraceResponse is the response type for the Query/DenomTrace RPC
  * method.
  */
 export interface QueryDenomTraceResponseSDKType {
-  denom_trace?: DenomTraceSDKType;
+  denom_trace: DenomTraceSDKType;
 }
 /**
  * QueryConnectionsRequest is the request type for the Query/DenomTraces RPC
@@ -38,14 +38,14 @@ export interface QueryDenomTraceResponseSDKType {
  */
 export interface QueryDenomTracesRequest {
   /** pagination defines an optional pagination for the request. */
-  pagination?: PageRequest;
+  pagination: PageRequest;
 }
 /**
  * QueryConnectionsRequest is the request type for the Query/DenomTraces RPC
  * method
  */
 export interface QueryDenomTracesRequestSDKType {
-  pagination?: PageRequestSDKType;
+  pagination: PageRequestSDKType;
 }
 /**
  * QueryConnectionsResponse is the response type for the Query/DenomTraces RPC
@@ -55,7 +55,7 @@ export interface QueryDenomTracesResponse {
   /** denom_traces returns all denominations trace information. */
   denomTraces: DenomTrace[];
   /** pagination defines the pagination in the response. */
-  pagination?: PageResponse;
+  pagination: PageResponse;
 }
 /**
  * QueryConnectionsResponse is the response type for the Query/DenomTraces RPC
@@ -63,7 +63,7 @@ export interface QueryDenomTracesResponse {
  */
 export interface QueryDenomTracesResponseSDKType {
   denom_traces: DenomTraceSDKType[];
-  pagination?: PageResponseSDKType;
+  pagination: PageResponseSDKType;
 }
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
@@ -72,11 +72,11 @@ export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponse {
   /** params defines the parameters of the module. */
-  params?: Params;
+  params: Params;
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 export interface QueryParamsResponseSDKType {
-  params?: ParamsSDKType;
+  params: ParamsSDKType;
 }
 /**
  * QueryDenomHashRequest is the request type for the Query/DenomHash RPC
@@ -84,14 +84,14 @@ export interface QueryParamsResponseSDKType {
  */
 export interface QueryDenomHashRequest {
   /** The denomination trace ([port_id]/[channel_id])+/[denom] */
-  trace?: string;
+  trace: string;
 }
 /**
  * QueryDenomHashRequest is the request type for the Query/DenomHash RPC
  * method
  */
 export interface QueryDenomHashRequestSDKType {
-  trace?: string;
+  trace: string;
 }
 /**
  * QueryDenomHashResponse is the response type for the Query/DenomHash RPC
@@ -135,14 +135,14 @@ function createBaseQueryDenomTraceRequest(): QueryDenomTraceRequest {
   };
 }
 export const QueryDenomTraceRequest = {
-  encode(message: QueryDenomTraceRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomTraceRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.hash !== "") {
       writer.uint32(10).string(message.hash);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomTraceRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomTraceRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomTraceRequest();
     while (reader.pos < end) {
@@ -176,18 +176,18 @@ export const QueryDenomTraceRequest = {
 };
 function createBaseQueryDenomTraceResponse(): QueryDenomTraceResponse {
   return {
-    denomTrace: undefined
+    denomTrace: DenomTrace.fromPartial({})
   };
 }
 export const QueryDenomTraceResponse = {
-  encode(message: QueryDenomTraceResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomTraceResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.denomTrace !== undefined) {
       DenomTrace.encode(message.denomTrace, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomTraceResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomTraceResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomTraceResponse();
     while (reader.pos < end) {
@@ -221,18 +221,18 @@ export const QueryDenomTraceResponse = {
 };
 function createBaseQueryDenomTracesRequest(): QueryDenomTracesRequest {
   return {
-    pagination: undefined
+    pagination: PageRequest.fromPartial({})
   };
 }
 export const QueryDenomTracesRequest = {
-  encode(message: QueryDenomTracesRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomTracesRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomTracesRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomTracesRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomTracesRequest();
     while (reader.pos < end) {
@@ -267,11 +267,11 @@ export const QueryDenomTracesRequest = {
 function createBaseQueryDenomTracesResponse(): QueryDenomTracesResponse {
   return {
     denomTraces: [],
-    pagination: undefined
+    pagination: PageResponse.fromPartial({})
   };
 }
 export const QueryDenomTracesResponse = {
-  encode(message: QueryDenomTracesResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomTracesResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.denomTraces) {
       DenomTrace.encode(v!, writer.uint32(10).fork()).ldelim();
     }
@@ -280,8 +280,8 @@ export const QueryDenomTracesResponse = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomTracesResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomTracesResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomTracesResponse();
     while (reader.pos < end) {
@@ -327,11 +327,11 @@ function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
 export const QueryParamsRequest = {
-  encode(_: QueryParamsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
     while (reader.pos < end) {
@@ -358,18 +358,18 @@ export const QueryParamsRequest = {
 };
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
-    params: undefined
+    params: Params.fromPartial({})
   };
 }
 export const QueryParamsResponse = {
-  encode(message: QueryParamsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryParamsResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
     while (reader.pos < end) {
@@ -407,14 +407,14 @@ function createBaseQueryDenomHashRequest(): QueryDenomHashRequest {
   };
 }
 export const QueryDenomHashRequest = {
-  encode(message: QueryDenomHashRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomHashRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.trace !== "") {
       writer.uint32(10).string(message.trace);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomHashRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomHashRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomHashRequest();
     while (reader.pos < end) {
@@ -452,14 +452,14 @@ function createBaseQueryDenomHashResponse(): QueryDenomHashResponse {
   };
 }
 export const QueryDenomHashResponse = {
-  encode(message: QueryDenomHashResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryDenomHashResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.hash !== "") {
       writer.uint32(10).string(message.hash);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomHashResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryDenomHashResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryDenomHashResponse();
     while (reader.pos < end) {
@@ -498,7 +498,7 @@ function createBaseQueryEscrowAddressRequest(): QueryEscrowAddressRequest {
   };
 }
 export const QueryEscrowAddressRequest = {
-  encode(message: QueryEscrowAddressRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryEscrowAddressRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.portId !== "") {
       writer.uint32(10).string(message.portId);
     }
@@ -507,8 +507,8 @@ export const QueryEscrowAddressRequest = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEscrowAddressRequest {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryEscrowAddressRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEscrowAddressRequest();
     while (reader.pos < end) {
@@ -552,14 +552,14 @@ function createBaseQueryEscrowAddressResponse(): QueryEscrowAddressResponse {
   };
 }
 export const QueryEscrowAddressResponse = {
-  encode(message: QueryEscrowAddressResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: QueryEscrowAddressResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.escrowAddress !== "") {
       writer.uint32(10).string(message.escrowAddress);
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): QueryEscrowAddressResponse {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): QueryEscrowAddressResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryEscrowAddressResponse();
     while (reader.pos < end) {

@@ -1,13 +1,13 @@
 import { Any, AnySDKType } from "../../../../google/protobuf/any";
 import { BIP44Params, BIP44ParamsSDKType } from "../../hd/v1/hd";
-import * as _m0 from "protobufjs/minimal";
+import { BinaryReader, BinaryWriter } from "../../../../binary";
 import { isSet } from "../../../../helpers";
 /** Record is used for representing a key in the keyring. */
 export interface Record {
   /** name represents a name of Record */
   name: string;
   /** pub_key represents a public key in any format */
-  pubKey?: Any;
+  pubKey: Any;
   /** local stores the private key locally. */
   local?: Record_Local;
   /** ledger stores the information about a Ledger key. */
@@ -20,7 +20,7 @@ export interface Record {
 /** Record is used for representing a key in the keyring. */
 export interface RecordSDKType {
   name: string;
-  pub_key?: AnySDKType;
+  pub_key: AnySDKType;
   local?: Record_LocalSDKType;
   ledger?: Record_LedgerSDKType;
   multi?: Record_MultiSDKType;
@@ -31,22 +31,22 @@ export interface RecordSDKType {
  * Local item
  */
 export interface Record_Local {
-  privKey?: Any;
+  privKey: Any;
 }
 /**
  * Item is a keyring item stored in a keyring backend.
  * Local item
  */
 export interface Record_LocalSDKType {
-  priv_key?: AnySDKType;
+  priv_key: AnySDKType;
 }
 /** Ledger item */
 export interface Record_Ledger {
-  path?: BIP44Params;
+  path: BIP44Params;
 }
 /** Ledger item */
 export interface Record_LedgerSDKType {
-  path?: BIP44ParamsSDKType;
+  path: BIP44ParamsSDKType;
 }
 /** Multi item */
 export interface Record_Multi {}
@@ -59,7 +59,7 @@ export interface Record_OfflineSDKType {}
 function createBaseRecord(): Record {
   return {
     name: "",
-    pubKey: undefined,
+    pubKey: Any.fromPartial({}),
     local: undefined,
     ledger: undefined,
     multi: undefined,
@@ -67,7 +67,7 @@ function createBaseRecord(): Record {
   };
 }
 export const Record = {
-  encode(message: Record, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Record, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
@@ -88,8 +88,8 @@ export const Record = {
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Record {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Record {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord();
     while (reader.pos < end) {
@@ -153,18 +153,18 @@ export const Record = {
 };
 function createBaseRecord_Local(): Record_Local {
   return {
-    privKey: undefined
+    privKey: Any.fromPartial({})
   };
 }
 export const Record_Local = {
-  encode(message: Record_Local, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Record_Local, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.privKey !== undefined) {
       Any.encode(message.privKey, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Record_Local {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Record_Local {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Local();
     while (reader.pos < end) {
@@ -198,18 +198,18 @@ export const Record_Local = {
 };
 function createBaseRecord_Ledger(): Record_Ledger {
   return {
-    path: undefined
+    path: BIP44Params.fromPartial({})
   };
 }
 export const Record_Ledger = {
-  encode(message: Record_Ledger, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(message: Record_Ledger, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.path !== undefined) {
       BIP44Params.encode(message.path, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Record_Ledger {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Record_Ledger {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Ledger();
     while (reader.pos < end) {
@@ -245,11 +245,11 @@ function createBaseRecord_Multi(): Record_Multi {
   return {};
 }
 export const Record_Multi = {
-  encode(_: Record_Multi, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: Record_Multi, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Record_Multi {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Record_Multi {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Multi();
     while (reader.pos < end) {
@@ -278,11 +278,11 @@ function createBaseRecord_Offline(): Record_Offline {
   return {};
 }
 export const Record_Offline = {
-  encode(_: Record_Offline, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+  encode(_: Record_Offline, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: _m0.Reader | Uint8Array, length?: number): Record_Offline {
-    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  decode(input: BinaryReader | Uint8Array, length?: number): Record_Offline {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseRecord_Offline();
     while (reader.pos < end) {
