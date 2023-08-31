@@ -1,6 +1,7 @@
 import { Params, ParamsSDKType } from "./params";
-import { FlowCreationRequest, FlowCreationRequestSDKType } from "./flow";
+import { FlowCreationRequest, FlowCreationRequestSDKType, Flow, FlowSDKType } from "./flow";
 import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
+import { Position, PositionSDKType } from "./position";
 import { BinaryReader, BinaryWriter } from "../../binary";
 import { isSet } from "../../helpers";
 export interface MsgUpdateParams {
@@ -22,10 +23,10 @@ export interface MsgCreateFlowSDKType {
   request: FlowCreationRequestSDKType;
 }
 export interface MsgCreateFlowResponse {
-  id: bigint;
+  flow: Flow;
 }
 export interface MsgCreateFlowResponseSDKType {
-  id: bigint;
+  flow: FlowSDKType;
 }
 export interface MsgJoinFlow {
   flow: bigint;
@@ -39,8 +40,12 @@ export interface MsgJoinFlowSDKType {
   amount: CoinSDKType;
   signer: string;
 }
-export interface MsgJoinFlowResponse {}
-export interface MsgJoinFlowResponseSDKType {}
+export interface MsgJoinFlowResponse {
+  position: Position;
+}
+export interface MsgJoinFlowResponseSDKType {
+  position: PositionSDKType;
+}
 export interface MsgExitFlow {
   flow: bigint;
   address: string;
@@ -53,8 +58,12 @@ export interface MsgExitFlowSDKType {
   amount: CoinSDKType;
   signer: string;
 }
-export interface MsgExitFlowResponse {}
-export interface MsgExitFlowResponseSDKType {}
+export interface MsgExitFlowResponse {
+  position: Position;
+}
+export interface MsgExitFlowResponseSDKType {
+  position: PositionSDKType;
+}
 export interface MsgSetOperator {
   flow: bigint;
   owner: string;
@@ -258,13 +267,13 @@ export const MsgCreateFlow = {
 };
 function createBaseMsgCreateFlowResponse(): MsgCreateFlowResponse {
   return {
-    id: BigInt(0)
+    flow: Flow.fromPartial({})
   };
 }
 export const MsgCreateFlowResponse = {
   encode(message: MsgCreateFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
-    if (message.id !== BigInt(0)) {
-      writer.uint32(8).uint64(message.id);
+    if (message.flow !== undefined) {
+      Flow.encode(message.flow, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
@@ -276,7 +285,7 @@ export const MsgCreateFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.id = reader.uint64();
+          message.flow = Flow.decode(reader, reader.uint32());
           break;
         default:
           reader.skipType(tag & 7);
@@ -287,17 +296,17 @@ export const MsgCreateFlowResponse = {
   },
   fromJSON(object: any): MsgCreateFlowResponse {
     return {
-      id: isSet(object.id) ? BigInt(object.id.toString()) : BigInt(0)
+      flow: isSet(object.flow) ? Flow.fromJSON(object.flow) : undefined
     };
   },
   toJSON(message: MsgCreateFlowResponse): unknown {
     const obj: any = {};
-    message.id !== undefined && (obj.id = (message.id || BigInt(0)).toString());
+    message.flow !== undefined && (obj.flow = message.flow ? Flow.toJSON(message.flow) : undefined);
     return obj;
   },
   fromPartial(object: Partial<MsgCreateFlowResponse>): MsgCreateFlowResponse {
     const message = createBaseMsgCreateFlowResponse();
-    message.id = object.id !== undefined && object.id !== null ? BigInt(object.id.toString()) : BigInt(0);
+    message.flow = object.flow !== undefined && object.flow !== null ? Flow.fromPartial(object.flow) : undefined;
     return message;
   }
 };
@@ -377,10 +386,15 @@ export const MsgJoinFlow = {
   }
 };
 function createBaseMsgJoinFlowResponse(): MsgJoinFlowResponse {
-  return {};
+  return {
+    position: Position.fromPartial({})
+  };
 }
 export const MsgJoinFlowResponse = {
-  encode(_: MsgJoinFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+  encode(message: MsgJoinFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.position !== undefined) {
+      Position.encode(message.position, writer.uint32(10).fork()).ldelim();
+    }
     return writer;
   },
   decode(input: BinaryReader | Uint8Array, length?: number): MsgJoinFlowResponse {
@@ -390,6 +404,9 @@ export const MsgJoinFlowResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.position = Position.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -397,15 +414,19 @@ export const MsgJoinFlowResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgJoinFlowResponse {
-    return {};
+  fromJSON(object: any): MsgJoinFlowResponse {
+    return {
+      position: isSet(object.position) ? Position.fromJSON(object.position) : undefined
+    };
   },
-  toJSON(_: MsgJoinFlowResponse): unknown {
+  toJSON(message: MsgJoinFlowResponse): unknown {
     const obj: any = {};
+    message.position !== undefined && (obj.position = message.position ? Position.toJSON(message.position) : undefined);
     return obj;
   },
-  fromPartial(_: Partial<MsgJoinFlowResponse>): MsgJoinFlowResponse {
+  fromPartial(object: Partial<MsgJoinFlowResponse>): MsgJoinFlowResponse {
     const message = createBaseMsgJoinFlowResponse();
+    message.position = object.position !== undefined && object.position !== null ? Position.fromPartial(object.position) : undefined;
     return message;
   }
 };
@@ -485,10 +506,15 @@ export const MsgExitFlow = {
   }
 };
 function createBaseMsgExitFlowResponse(): MsgExitFlowResponse {
-  return {};
+  return {
+    position: Position.fromPartial({})
+  };
 }
 export const MsgExitFlowResponse = {
-  encode(_: MsgExitFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+  encode(message: MsgExitFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
+    if (message.position !== undefined) {
+      Position.encode(message.position, writer.uint32(10).fork()).ldelim();
+    }
     return writer;
   },
   decode(input: BinaryReader | Uint8Array, length?: number): MsgExitFlowResponse {
@@ -498,6 +524,9 @@ export const MsgExitFlowResponse = {
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
+        case 1:
+          message.position = Position.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -505,15 +534,19 @@ export const MsgExitFlowResponse = {
     }
     return message;
   },
-  fromJSON(_: any): MsgExitFlowResponse {
-    return {};
+  fromJSON(object: any): MsgExitFlowResponse {
+    return {
+      position: isSet(object.position) ? Position.fromJSON(object.position) : undefined
+    };
   },
-  toJSON(_: MsgExitFlowResponse): unknown {
+  toJSON(message: MsgExitFlowResponse): unknown {
     const obj: any = {};
+    message.position !== undefined && (obj.position = message.position ? Position.toJSON(message.position) : undefined);
     return obj;
   },
-  fromPartial(_: Partial<MsgExitFlowResponse>): MsgExitFlowResponse {
+  fromPartial(object: Partial<MsgExitFlowResponse>): MsgExitFlowResponse {
     const message = createBaseMsgExitFlowResponse();
+    message.position = object.position !== undefined && object.position !== null ? Position.fromPartial(object.position) : undefined;
     return message;
   }
 };

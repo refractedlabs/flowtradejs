@@ -6,6 +6,7 @@ import "cosmos/base/v1beta1/coin.proto";
 import "gogoproto/gogo.proto";
 import "refractedlabs/flowtrade/params.proto";
 import "refractedlabs/flowtrade/flow.proto";
+import "refractedlabs/flowtrade/position.proto";
 
 option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
 
@@ -33,7 +34,7 @@ message MsgCreateFlow {
 }
 
 message MsgCreateFlowResponse {
-  uint64 id = 1;
+  Flow flow = 1 [(gogoproto.nullable) = false];
 }
 
 message MsgJoinFlow {
@@ -43,7 +44,9 @@ message MsgJoinFlow {
   string signer = 4;
 }
 
-message MsgJoinFlowResponse {}
+message MsgJoinFlowResponse {
+  Position position = 1 [(gogoproto.nullable) = false];
+}
 
 message MsgExitFlow {
   uint64 flow = 1;
@@ -52,7 +55,9 @@ message MsgExitFlow {
   string signer = 4;
 }
 
-message MsgExitFlowResponse {}
+message MsgExitFlowResponse {
+  Position position = 1 [(gogoproto.nullable) = false];
+}
 
 message MsgSetOperator {
   uint64 flow = 1;
