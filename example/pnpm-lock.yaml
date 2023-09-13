@@ -1,19 +1,19 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.1.4
+  '@refractedlabs/flowtradejs': 0.1.5
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.1.4_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.1.5_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.1.6
 
 packages:
 
-  /@babel/runtime/7.22.11:
-    resolution: {integrity: sha512-ee7jVNlWN09+KftVOu9n7S8gQzD/Z6hN/I8VBRXW4P1+Xe7kJGXMwu8vds4aGIMHZnNbdpSWCfZZtinytpcAvA==}
+  /@babel/runtime/7.22.15:
+    resolution: {integrity: sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
@@ -145,7 +145,7 @@ packages:
   /@cosmology/lcd/0.12.0:
     resolution: {integrity: sha512-f2mcySYO1xdislAhuWtNFmg4q/bzY3Aem2UkDzYzI0ZELVev5i2Pi0bQrYUNTeNg1isAo0Kyrdqj/4YPqEwjGA==}
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.22.15
       axios: 0.27.2
     transitivePeerDependencies:
       - debug
@@ -216,10 +216,10 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@refractedlabs/flowtradejs/0.1.4_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-OjlCHw8p3/5XX5t2RHdkirovFsoyzDCA0HSMmKsAega8O5jDxDqKzUFe5ACrPHm9BIvJG0A9t0Hym8jEYYesxw==, tarball: download/@refractedlabs/flowtradejs/0.1.4/957fa3d9d0d52e2ae5dc2353d3d555139c8af506}
+  /@refractedlabs/flowtradejs/0.1.5_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-VQ5TrW/p/ebkM8nUBFWgINWrjl75BHWS2KC2T+WvJp/bF2BvhLeWNOWX3qaNagBkZCepq9fCLM5UOsJf7ny8IA==, tarball: download/@refractedlabs/flowtradejs/0.1.5/0d7de11114bddb0f9ee6aafce21ead42e3206feb}
     dependencies:
-      '@babel/runtime': 7.22.11
+      '@babel/runtime': 7.22.15
       '@cosmjs/amino': 0.31.0
       '@cosmjs/proto-signing': 0.31.0
       '@cosmjs/stargate': 0.31.0
@@ -240,8 +240,8 @@ packages:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
 
-  /@types/node/20.5.7:
-    resolution: {integrity: sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==}
+  /@types/node/20.6.0:
+    resolution: {integrity: sha512-najjVq5KN2vsH2U/xyh2opaSEz6cZMR2SetLIlxlj08nOcmPOemJmUK2o4kUzfLqfrWE0PIrNeE16XhYDd3nqg==}
     dev: false
 
   /asynckit/0.4.0:
@@ -303,10 +303,20 @@ packages:
       protobufjs: 6.11.4
     dev: false
 
-  /define-properties/1.2.0:
-    resolution: {integrity: sha512-xvqAVKGfT1+UAvPwKTVw/njhdQ8ZhXK4lI0bCIuCMrp2up9nPnaDftrLtmpTazqd1o+UY4zgzU+avtMbDP+ldA==}
+  /define-data-property/1.0.1:
+    resolution: {integrity: sha512-22M+6zEspQHx10bfFQl2ET39IvfuQ7+rZIH7+ard8fCC4hPmkOSy+8JhKxBRLaWUziJ0O63NTYT97LR8zUfPTw==}
     engines: {node: '>= 0.4'}
     dependencies:
+      get-intrinsic: 1.2.1
+      gopd: 1.0.1
+      has-property-descriptors: 1.0.0
+    dev: false
+
+  /define-properties/1.2.1:
+    resolution: {integrity: sha512-8QmQKqEASLd5nx0U1B1okLElbUuuttJ/AnYmRXbbbGDWh6uS208EjD4Xqq/I9wK7u0v6O08XhTWnt5XtEbR6Dg==}
+    engines: {node: '>= 0.4'}
+    dependencies:
+      define-data-property: 1.0.1
       has-property-descriptors: 1.0.0
       object-keys: 1.1.1
     dev: false
@@ -364,11 +374,17 @@ packages:
     resolution: {integrity: sha512-sFdI5LyBiNTHjRd7cGPWapiHWMOXKyuBNX/cWJ3NfzrZQVa8GI/8cofCl74AOVqq9W5kNmguTIzJ/1s2gyI9wA==}
     engines: {node: '>= 0.4'}
     dependencies:
-      define-properties: 1.2.0
+      define-properties: 1.2.1
     dev: false
 
   /google-protobuf/3.21.2:
     resolution: {integrity: sha512-3MSOYFO5U9mPGikIYCzK0SaThypfGgS6bHqrUGXG3DPHCrb+txNqeEcns1W0lkGfk0rCyNXm7xB9rMxnCiZOoA==}
+    dev: false
+
+  /gopd/1.0.1:
+    resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
+    dependencies:
+      get-intrinsic: 1.2.1
     dev: false
 
   /has-property-descriptors/1.0.0:
@@ -476,7 +492,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.5.7
+      '@types/node': 20.6.0
       long: 4.0.0
     dev: false
 
