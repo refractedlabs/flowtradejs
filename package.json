@@ -1,24 +1,19 @@
 {
   "name": "@refractedlabs/flowtradejs",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Javascript SDK for Flowtrade",
-  "author": "amin <amin@prismprotocol.app>",
+  "author": "amin <amin@refractedlabs.com>",
   "homepage": "https://github.com/refractedlabs/flowtradejs#readme",
-  "license": "GPL Version 2.0 or a later version",
+  "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "compile": "rm -rf lib && tsc",
     "codegen": "cross-env NODE_ENV=development babel-node scripts/codegen.js"
   },
-  "licenses": [
-    {
-      "type": "GPL Version 2.0 or a later version",
-      "url": "https://github.com/prism-finance/prism-contracts/blob/main/LICENSE.md"
-    }
-  ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
-    "lib/**/*"
+    "lib/**/*",
+    "LICENSE.md"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",

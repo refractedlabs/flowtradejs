@@ -1,11 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.1.5
+  '@refractedlabs/flowtradejs': 0.1.6
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.1.5_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.1.6_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.1.6
@@ -44,7 +44,7 @@ packages:
       '@noble/hashes': 1.3.2
       bn.js: 5.2.1
       elliptic: 6.5.4
-      libsodium-wrappers-sumo: 0.7.11
+      libsodium-wrappers-sumo: 0.7.13
     dev: false
 
   /@cosmjs/encoding/0.31.1:
@@ -216,8 +216,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@refractedlabs/flowtradejs/0.1.5_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-VQ5TrW/p/ebkM8nUBFWgINWrjl75BHWS2KC2T+WvJp/bF2BvhLeWNOWX3qaNagBkZCepq9fCLM5UOsJf7ny8IA==, tarball: download/@refractedlabs/flowtradejs/0.1.5/0d7de11114bddb0f9ee6aafce21ead42e3206feb}
+  /@refractedlabs/flowtradejs/0.1.6_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-IelZkl+mNseyjIE7CEeRyvxqzTSKgY38GRB3XnU+kVskC9vp+uk8dOw4c1ATTM1g0xVBmDalV4dQ/zXWW6nnbA==, tarball: download/@refractedlabs/flowtradejs/0.1.6/c64414a51eda46ce2816f14d65ba1a6ce2df11e1}
     dependencies:
       '@babel/runtime': 7.22.15
       '@cosmjs/amino': 0.31.0
@@ -240,8 +240,8 @@ packages:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
 
-  /@types/node/20.6.0:
-    resolution: {integrity: sha512-najjVq5KN2vsH2U/xyh2opaSEz6cZMR2SetLIlxlj08nOcmPOemJmUK2o4kUzfLqfrWE0PIrNeE16XhYDd3nqg==}
+  /@types/node/20.6.2:
+    resolution: {integrity: sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==}
     dev: false
 
   /asynckit/0.4.0:
@@ -303,8 +303,8 @@ packages:
       protobufjs: 6.11.4
     dev: false
 
-  /define-data-property/1.0.1:
-    resolution: {integrity: sha512-22M+6zEspQHx10bfFQl2ET39IvfuQ7+rZIH7+ard8fCC4hPmkOSy+8JhKxBRLaWUziJ0O63NTYT97LR8zUfPTw==}
+  /define-data-property/1.1.0:
+    resolution: {integrity: sha512-UzGwzcjyv3OtAvolTj1GoyNYzfFR+iqbGjcnBEENZVCpM4/Ng1yhGNvS3lR/xDS74Tb2wGG9WzNSNIOS9UVb2g==}
     engines: {node: '>= 0.4'}
     dependencies:
       get-intrinsic: 1.2.1
@@ -316,7 +316,7 @@ packages:
     resolution: {integrity: sha512-8QmQKqEASLd5nx0U1B1okLElbUuuttJ/AnYmRXbbbGDWh6uS208EjD4Xqq/I9wK7u0v6O08XhTWnt5XtEbR6Dg==}
     engines: {node: '>= 0.4'}
     dependencies:
-      define-data-property: 1.0.1
+      define-data-property: 1.1.0
       has-property-descriptors: 1.0.0
       object-keys: 1.1.1
     dev: false
@@ -437,14 +437,14 @@ packages:
       ws: 7.5.9
     dev: false
 
-  /libsodium-sumo/0.7.11:
-    resolution: {integrity: sha512-bY+7ph7xpk51Ez2GbE10lXAQ5sJma6NghcIDaSPbM/G9elfrjLa0COHl/7P6Wb/JizQzl5UQontOOP1z0VwbLA==}
+  /libsodium-sumo/0.7.13:
+    resolution: {integrity: sha512-zTGdLu4b9zSNLfovImpBCbdAA4xkpkZbMnSQjP8HShyOutnGjRHmSOKlsylh1okao6QhLiz7nG98EGn+04cZjQ==}
     dev: false
 
-  /libsodium-wrappers-sumo/0.7.11:
-    resolution: {integrity: sha512-DGypHOmJbB1nZn89KIfGOAkDgfv5N6SBGC3Qvmy/On0P0WD1JQvNRS/e3UL3aFF+xC0m+MYz5M+MnRnK2HMrKQ==}
+  /libsodium-wrappers-sumo/0.7.13:
+    resolution: {integrity: sha512-lz4YdplzDRh6AhnLGF2Dj2IUj94xRN6Bh8T0HLNwzYGwPehQJX6c7iYVrFUPZ3QqxE0bqC+K0IIqqZJYWumwSQ==}
     dependencies:
-      libsodium-sumo: 0.7.11
+      libsodium-sumo: 0.7.13
     dev: false
 
   /long/4.0.0:
@@ -492,7 +492,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.6.0
+      '@types/node': 20.6.2
       long: 4.0.0
     dev: false
 

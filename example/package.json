@@ -1,17 +1,10 @@
 {
   "name": "example",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "compile": "rm -rf lib && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "rm -rf lib && tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@refractedlabs/flowtradejs": "0.1.5"
+    "@refractedlabs/flowtradejs": "0.1.6"
   },
   "devDependencies": {
     "typescript": "^5.1.6"
