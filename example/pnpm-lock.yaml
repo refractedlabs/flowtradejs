@@ -1,19 +1,19 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.1.6
+  '@refractedlabs/flowtradejs': 0.1.8
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.1.6_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.1.8_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.1.6
 
 packages:
 
-  /@babel/runtime/7.22.15:
-    resolution: {integrity: sha512-T0O+aa+4w0u06iNmapipJXMV4HoUir03hpx3/YqXXhu9xim3w+dVphjFWl1OH8NbZHw5Lbm9k45drDkgq2VNNA==}
+  /@babel/runtime/7.23.1:
+    resolution: {integrity: sha512-hC2v6p8ZSI/W0HUzh3V8C5g+NwSKzKPtJwSpTjwl0o297GP9+ZLQSkdvHz46CM3LqyoXxq+5G9komY+eSqSO0g==}
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.14.0
@@ -145,7 +145,7 @@ packages:
   /@cosmology/lcd/0.12.0:
     resolution: {integrity: sha512-f2mcySYO1xdislAhuWtNFmg4q/bzY3Aem2UkDzYzI0ZELVev5i2Pi0bQrYUNTeNg1isAo0Kyrdqj/4YPqEwjGA==}
     dependencies:
-      '@babel/runtime': 7.22.15
+      '@babel/runtime': 7.23.1
       axios: 0.27.2
     transitivePeerDependencies:
       - debug
@@ -216,10 +216,10 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@refractedlabs/flowtradejs/0.1.6_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-IelZkl+mNseyjIE7CEeRyvxqzTSKgY38GRB3XnU+kVskC9vp+uk8dOw4c1ATTM1g0xVBmDalV4dQ/zXWW6nnbA==, tarball: download/@refractedlabs/flowtradejs/0.1.6/c64414a51eda46ce2816f14d65ba1a6ce2df11e1}
+  /@refractedlabs/flowtradejs/0.1.8_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-Qf51VTxhwglVXN+F5asuAjQJI43YCT8/gjhqoHjwCTOON+YrEhx+XxAFOh1sfUP5oolWsFfhbFxQKSlXdfA3Yg==, tarball: download/@refractedlabs/flowtradejs/0.1.8/da75eb2811a64db6221e2106eb7107e9790a44dd}
     dependencies:
-      '@babel/runtime': 7.22.15
+      '@babel/runtime': 7.23.1
       '@cosmjs/amino': 0.31.0
       '@cosmjs/proto-signing': 0.31.0
       '@cosmjs/stargate': 0.31.0
@@ -240,8 +240,8 @@ packages:
     resolution: {integrity: sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==}
     dev: false
 
-  /@types/node/20.6.2:
-    resolution: {integrity: sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==}
+  /@types/node/20.8.0:
+    resolution: {integrity: sha512-LzcWltT83s1bthcvjBmiBvGJiiUe84NWRHkw+ZV6Fr41z2FbIzvc815dk2nQ3RAKMuN2fkenM/z3Xv2QzEpYxQ==}
     dev: false
 
   /asynckit/0.4.0:
@@ -251,7 +251,7 @@ packages:
   /axios/0.21.4:
     resolution: {integrity: sha512-ut5vewkiu8jjGBdqpM44XxjuCjq9LAKeHVmoVfHVzy8eHgxxq8SbAVQNovDA8mVi05kP0Ea/n/UzcSHcTJQfNg==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.3
     transitivePeerDependencies:
       - debug
     dev: false
@@ -259,7 +259,7 @@ packages:
   /axios/0.27.2:
     resolution: {integrity: sha512-t+yRIyySRTp/wua5xEr+z1q60QmLq8ABsS5O9Me1AsE5dfKqgnCFzwiCZZ/cGNd1lq4/7akDWMxdhVlucjmnOQ==}
     dependencies:
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.3
       form-data: 4.0.0
     transitivePeerDependencies:
       - debug
@@ -338,8 +338,8 @@ packages:
       minimalistic-crypto-utils: 1.0.1
     dev: false
 
-  /follow-redirects/1.15.2:
-    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+  /follow-redirects/1.15.3:
+    resolution: {integrity: sha512-1VzOtuEM8pC9SFU1E+8KfTjZyMztRsgEfwQl44z8A25uy13jSzTj6dyK2Df52iV0vgHCfBwLhDWevLn95w5v6Q==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -492,7 +492,7 @@ packages:
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
       '@types/long': 4.0.2
-      '@types/node': 20.6.2
+      '@types/node': 20.8.0
       long: 4.0.0
     dev: false
 

@@ -45,7 +45,7 @@ const {
 
 ### Example Project
 
-[example](/example) is a sample project that depends on `@refractedlabs/flowtradejs` and contains example on how to query data or sign and send messages.
+[example](https://github.com/refractedlabs/flowtradejs/tree/main/example) is a sample project that depends on `@refractedlabs/flowtradejs` and contains example on how to query data or sign and send messages.
 
 ## Connecting with Wallets and Signing Messages
 
@@ -198,7 +198,7 @@ pnpm publish
 
 # Credits
 
-🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://cosmology.tech/validator)
+🛠 Built by Cosmology — if you like our tools, please consider delegating to [our validator ⚛️](https://cosmology.tech/validator)
 
 Code built with the help of these related projects:
 

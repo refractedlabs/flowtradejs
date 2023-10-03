@@ -1,6 +1,6 @@
 {
   "name": "@refractedlabs/flowtradejs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Javascript SDK for Flowtrade",
   "author": "amin <amin@refractedlabs.com>",
   "homepage": "https://github.com/refractedlabs/flowtradejs#readme",
@@ -13,7 +13,8 @@
   "types": "lib/index.d.ts",
   "files": [
     "lib/**/*",
-    "LICENSE.md"
+    "LICENSE.md",
+    "README.md"
   ],
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
