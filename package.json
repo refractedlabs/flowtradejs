@@ -1,6 +1,6 @@
 {
   "name": "@refractedlabs/flowtradejs",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "Javascript SDK for Flowtrade",
   "author": "amin <amin@refractedlabs.com>",
   "homepage": "https://github.com/refractedlabs/flowtradejs#readme",

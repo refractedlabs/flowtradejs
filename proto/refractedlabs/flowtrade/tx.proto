@@ -3,15 +3,19 @@ syntax = "proto3";
 package refractedlabs.flowtrade;
 
 import "cosmos/base/v1beta1/coin.proto";
+import "cosmos/msg/v1/msg.proto";
+import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
-import "refractedlabs/flowtrade/params.proto";
 import "refractedlabs/flowtrade/flow.proto";
+import "refractedlabs/flowtrade/params.proto";
 import "refractedlabs/flowtrade/position.proto";
 
 option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
 
 // Msg defines the Msg service.
 service Msg {
+  option (cosmos.msg.v1.service) = true;
+
   rpc UpdateParams(MsgUpdateParams) returns (MsgUpdateParamsResponse);
   rpc CreateFlow(MsgCreateFlow) returns (MsgCreateFlowResponse);
   rpc JoinFlow(MsgJoinFlow) returns (MsgJoinFlowResponse);
@@ -22,6 +26,8 @@ service Msg {
   rpc StopFlow(MsgStopFlow) returns (MsgStopFlowResponse);
 }
 message MsgUpdateParams {
+  option (cosmos.msg.v1.signer) = "authority";
+
   string authority = 1;
   Params params = 2 [(gogoproto.nullable) = false];
 }
@@ -29,7 +35,9 @@ message MsgUpdateParams {
 message MsgUpdateParamsResponse {}
 
 message MsgCreateFlow {
-  string creator = 1;
+  option (cosmos.msg.v1.signer) = "creator";
+
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   FlowCreationRequest request = 2 [(gogoproto.nullable) = false];
 }
 
@@ -38,10 +46,12 @@ message MsgCreateFlowResponse {
 }
 
 message MsgJoinFlow {
+  option (cosmos.msg.v1.signer) = "signer";
+
   uint64 flow = 1;
-  string address = 2;
+  string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
-  string signer = 4;
+  string signer = 4 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgJoinFlowResponse {
@@ -49,10 +59,12 @@ message MsgJoinFlowResponse {
 }
 
 message MsgExitFlow {
+  option (cosmos.msg.v1.signer) = "signer";
+
   uint64 flow = 1;
-  string address = 2;
+  string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   cosmos.base.v1beta1.Coin amount = 3 [(gogoproto.nullable) = false];
-  string signer = 4;
+  string signer = 4 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgExitFlowResponse {
@@ -60,17 +72,21 @@ message MsgExitFlowResponse {
 }
 
 message MsgSetOperator {
+  option (cosmos.msg.v1.signer) = "owner";
+
   uint64 flow = 1;
-  string owner = 2;
-  string operator = 3;
+  string owner = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string operator = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgSetOperatorResponse {}
 
 message MsgClaimTokenIn {
-  string creator = 1;
+  option (cosmos.msg.v1.signer) = "creator";
+
+  string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   uint64 flow = 2;
-  string treasury_address = 3;
+  string treasury_address = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgClaimTokenInResponse {
@@ -79,9 +95,11 @@ message MsgClaimTokenInResponse {
 }
 
 message MsgClaimTokenOut {
+  option (cosmos.msg.v1.signer) = "signer";
+
   uint64 flow = 1;
-  string address = 2;
-  string signer = 3;
+  string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  string signer = 3 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgClaimTokenOutResponse {
@@ -90,8 +108,10 @@ message MsgClaimTokenOutResponse {
 }
 
 message MsgStopFlow {
+  option (cosmos.msg.v1.signer) = "creator";
+
   uint64 flow_id = 1;
-  string creator = 2;
+  string creator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message MsgStopFlowResponse {}

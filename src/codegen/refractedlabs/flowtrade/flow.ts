@@ -97,12 +97,12 @@ export interface Flow {
   spentTokenIn: string;
   /** the total number of users shares */
   totalShares: string;
-  /** the last swap price */
+  /** the latest price of token-out in terms of token-in */
   livePrice: string;
   /** the current status of flow */
   status: FlowStatus;
   /** the amount of creation deposit that should be revenue to the flow creator */
-  creationDeposit: Coin;
+  creationDeposit?: Coin;
   /** the fee ratio taken from token-out, this is copied from module params at the time of flow creation */
   tokenOutFeeRatio: string;
   /** the fee ratio taken from token-in, this is copied from module params at the time of flow creation */
@@ -116,6 +116,18 @@ export interface Flow {
   claimedTokenIn: string;
   /** whether the flow is checked out, meaning the creation deposit and any remaining out tokens are transferred back to the creator */
   checkedOut: boolean;
+  /**
+   * the minimum price for the token-out in terms of token-in.
+   * in each swap interval, if the calculated price is less than this limit, the swap doesn't happen in that turn
+   * Since: v0.4
+   */
+  limitPrice: string;
+  /**
+   * the duration of the exit window before swap interval, in which users can only exit the flow and joining is not permitted
+   * this duration is used to protect joiners from buying the token-out with a higher price when someone joins with a huge amount of token-in
+   * Since: v0.4
+   */
+  exitWindowDuration: Duration;
 }
 /** Flow holds information and price calculations for a flow trade */
 export interface FlowSDKType {
@@ -123,7 +135,7 @@ export interface FlowSDKType {
   creator: string;
   flow_info: FlowInfoSDKType;
   start_time: TimestampSDKType;
-  endTime: TimestampSDKType;
+  end_time: TimestampSDKType;
   dist_interval: DurationSDKType;
   treasury_address: string;
   total_token_out: CoinSDKType;
@@ -141,12 +153,14 @@ export interface FlowSDKType {
   total_shares: string;
   live_price: string;
   status: FlowStatus;
-  creation_deposit: CoinSDKType;
+  creation_deposit?: CoinSDKType;
   token_out_fee_ratio: string;
   token_in_fee_ratio: string;
   automatic_treasury_collection: boolean;
   claimed_token_in: string;
   checked_out: boolean;
+  limit_price: string;
+  exit_window_duration: DurationSDKType;
 }
 /** Informational data about the flow */
 export interface FlowInfo {
@@ -193,6 +207,18 @@ export interface FlowCreationRequest {
   allowImmediateTokenOutClaimIfStopped: boolean;
   /** whether to allow flow's creator to claim tokens immediately after the flow is stopped */
   allowImmediateTokenInClaimIfStopped: boolean;
+  /**
+   * the minimum price for the token-out in terms of token-in.
+   * in each swap interval, if the calculated price is less than this limit, the swap doesn't happen in that turn
+   * Since: v0.4
+   */
+  limitPrice: string;
+  /**
+   * the duration of the exit window before swap interval, in which users can only exit the flow and joining is not permitted
+   * this duration is used to protect joiners from buying the token-out with a higher price when someone joins with a huge amount of token-in
+   * Since: v0.4
+   */
+  exitWindowDuration: Duration;
 }
 /** a structure for requesting a new flow's creation */
 export interface FlowCreationRequestSDKType {
@@ -208,6 +234,8 @@ export interface FlowCreationRequestSDKType {
   stoppable: boolean;
   allow_immediate_token_out_claim_if_stopped: boolean;
   allow_immediate_token_in_claim_if_stopped: boolean;
+  limit_price: string;
+  exit_window_duration: DurationSDKType;
 }
 function createBaseFlow(): Flow {
   return {
@@ -233,12 +261,14 @@ function createBaseFlow(): Flow {
     totalShares: "",
     livePrice: "",
     status: 0,
-    creationDeposit: Coin.fromPartial({}),
+    creationDeposit: undefined,
     tokenOutFeeRatio: "",
     tokenInFeeRatio: "",
     automaticTreasuryCollection: false,
     claimedTokenIn: "",
-    checkedOut: false
+    checkedOut: false,
+    limitPrice: "",
+    exitWindowDuration: Duration.fromPartial({})
   };
 }
 export const Flow = {
@@ -326,6 +356,12 @@ export const Flow = {
     }
     if (message.checkedOut === true) {
       writer.uint32(224).bool(message.checkedOut);
+    }
+    if (message.limitPrice !== "") {
+      writer.uint32(234).string(Decimal.fromUserInput(message.limitPrice, 18).atomics);
+    }
+    if (message.exitWindowDuration !== undefined) {
+      Duration.encode(message.exitWindowDuration, writer.uint32(242).fork()).ldelim();
     }
     return writer;
   },
@@ -420,6 +456,12 @@ export const Flow = {
         case 28:
           message.checkedOut = reader.bool();
           break;
+        case 29:
+          message.limitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 30:
+          message.exitWindowDuration = Duration.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -456,7 +498,9 @@ export const Flow = {
       tokenInFeeRatio: isSet(object.tokenInFeeRatio) ? String(object.tokenInFeeRatio) : "",
       automaticTreasuryCollection: isSet(object.automaticTreasuryCollection) ? Boolean(object.automaticTreasuryCollection) : false,
       claimedTokenIn: isSet(object.claimedTokenIn) ? String(object.claimedTokenIn) : "",
-      checkedOut: isSet(object.checkedOut) ? Boolean(object.checkedOut) : false
+      checkedOut: isSet(object.checkedOut) ? Boolean(object.checkedOut) : false,
+      limitPrice: isSet(object.limitPrice) ? String(object.limitPrice) : "",
+      exitWindowDuration: isSet(object.exitWindowDuration) ? Duration.fromJSON(object.exitWindowDuration) : undefined
     };
   },
   toJSON(message: Flow): unknown {
@@ -489,6 +533,8 @@ export const Flow = {
     message.automaticTreasuryCollection !== undefined && (obj.automaticTreasuryCollection = message.automaticTreasuryCollection);
     message.claimedTokenIn !== undefined && (obj.claimedTokenIn = message.claimedTokenIn);
     message.checkedOut !== undefined && (obj.checkedOut = message.checkedOut);
+    message.limitPrice !== undefined && (obj.limitPrice = message.limitPrice);
+    message.exitWindowDuration !== undefined && (obj.exitWindowDuration = message.exitWindowDuration ? Duration.toJSON(message.exitWindowDuration) : undefined);
     return obj;
   },
   fromPartial(object: Partial<Flow>): Flow {
@@ -521,6 +567,8 @@ export const Flow = {
     message.automaticTreasuryCollection = object.automaticTreasuryCollection ?? false;
     message.claimedTokenIn = object.claimedTokenIn ?? "";
     message.checkedOut = object.checkedOut ?? false;
+    message.limitPrice = object.limitPrice ?? "";
+    message.exitWindowDuration = object.exitWindowDuration !== undefined && object.exitWindowDuration !== null ? Duration.fromPartial(object.exitWindowDuration) : undefined;
     return message;
   }
 };
@@ -602,7 +650,9 @@ function createBaseFlowCreationRequest(): FlowCreationRequest {
     tokenInClaimableAfter: Timestamp.fromPartial({}),
     stoppable: false,
     allowImmediateTokenOutClaimIfStopped: false,
-    allowImmediateTokenInClaimIfStopped: false
+    allowImmediateTokenInClaimIfStopped: false,
+    limitPrice: "",
+    exitWindowDuration: Duration.fromPartial({})
   };
 }
 export const FlowCreationRequest = {
@@ -642,6 +692,12 @@ export const FlowCreationRequest = {
     }
     if (message.allowImmediateTokenInClaimIfStopped === true) {
       writer.uint32(96).bool(message.allowImmediateTokenInClaimIfStopped);
+    }
+    if (message.limitPrice !== "") {
+      writer.uint32(106).string(Decimal.fromUserInput(message.limitPrice, 18).atomics);
+    }
+    if (message.exitWindowDuration !== undefined) {
+      Duration.encode(message.exitWindowDuration, writer.uint32(114).fork()).ldelim();
     }
     return writer;
   },
@@ -688,6 +744,12 @@ export const FlowCreationRequest = {
         case 12:
           message.allowImmediateTokenInClaimIfStopped = reader.bool();
           break;
+        case 13:
+          message.limitPrice = Decimal.fromAtomics(reader.string(), 18).toString();
+          break;
+        case 14:
+          message.exitWindowDuration = Duration.decode(reader, reader.uint32());
+          break;
         default:
           reader.skipType(tag & 7);
           break;
@@ -708,7 +770,9 @@ export const FlowCreationRequest = {
       tokenInClaimableAfter: isSet(object.tokenInClaimableAfter) ? fromJsonTimestamp(object.tokenInClaimableAfter) : undefined,
       stoppable: isSet(object.stoppable) ? Boolean(object.stoppable) : false,
       allowImmediateTokenOutClaimIfStopped: isSet(object.allowImmediateTokenOutClaimIfStopped) ? Boolean(object.allowImmediateTokenOutClaimIfStopped) : false,
-      allowImmediateTokenInClaimIfStopped: isSet(object.allowImmediateTokenInClaimIfStopped) ? Boolean(object.allowImmediateTokenInClaimIfStopped) : false
+      allowImmediateTokenInClaimIfStopped: isSet(object.allowImmediateTokenInClaimIfStopped) ? Boolean(object.allowImmediateTokenInClaimIfStopped) : false,
+      limitPrice: isSet(object.limitPrice) ? String(object.limitPrice) : "",
+      exitWindowDuration: isSet(object.exitWindowDuration) ? Duration.fromJSON(object.exitWindowDuration) : undefined
     };
   },
   toJSON(message: FlowCreationRequest): unknown {
@@ -725,6 +789,8 @@ export const FlowCreationRequest = {
     message.stoppable !== undefined && (obj.stoppable = message.stoppable);
     message.allowImmediateTokenOutClaimIfStopped !== undefined && (obj.allowImmediateTokenOutClaimIfStopped = message.allowImmediateTokenOutClaimIfStopped);
     message.allowImmediateTokenInClaimIfStopped !== undefined && (obj.allowImmediateTokenInClaimIfStopped = message.allowImmediateTokenInClaimIfStopped);
+    message.limitPrice !== undefined && (obj.limitPrice = message.limitPrice);
+    message.exitWindowDuration !== undefined && (obj.exitWindowDuration = message.exitWindowDuration ? Duration.toJSON(message.exitWindowDuration) : undefined);
     return obj;
   },
   fromPartial(object: Partial<FlowCreationRequest>): FlowCreationRequest {
@@ -741,6 +807,8 @@ export const FlowCreationRequest = {
     message.stoppable = object.stoppable ?? false;
     message.allowImmediateTokenOutClaimIfStopped = object.allowImmediateTokenOutClaimIfStopped ?? false;
     message.allowImmediateTokenInClaimIfStopped = object.allowImmediateTokenInClaimIfStopped ?? false;
+    message.limitPrice = object.limitPrice ?? "";
+    message.exitWindowDuration = object.exitWindowDuration !== undefined && object.exitWindowDuration !== null ? Duration.fromPartial(object.exitWindowDuration) : undefined;
     return message;
   }
 };

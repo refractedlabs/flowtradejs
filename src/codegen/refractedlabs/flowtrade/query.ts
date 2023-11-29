@@ -30,18 +30,18 @@ export interface QueryGetFlowResponseSDKType {
   flow: FlowSDKType;
 }
 export interface QueryAllFlowRequest {
-  pagination: PageRequest;
+  pagination?: PageRequest;
 }
 export interface QueryAllFlowRequestSDKType {
-  pagination: PageRequestSDKType;
+  pagination?: PageRequestSDKType;
 }
 export interface QueryAllFlowResponse {
   flow: Flow[];
-  pagination: PageResponse;
+  pagination?: PageResponse;
 }
 export interface QueryAllFlowResponseSDKType {
   flow: FlowSDKType[];
-  pagination: PageResponseSDKType;
+  pagination?: PageResponseSDKType;
 }
 export interface QueryGetPositionRequest {
   flow: bigint;
@@ -59,35 +59,35 @@ export interface QueryGetPositionResponseSDKType {
 }
 export interface QueryGetFlowPositionsRequest {
   flow: bigint;
-  pagination: PageRequest;
+  pagination?: PageRequest;
 }
 export interface QueryGetFlowPositionsRequestSDKType {
   flow: bigint;
-  pagination: PageRequestSDKType;
+  pagination?: PageRequestSDKType;
 }
 export interface QueryGetFlowPositionsResponse {
   position: Position[];
-  pagination: PageResponse;
+  pagination?: PageResponse;
 }
 export interface QueryGetFlowPositionsResponseSDKType {
   position: PositionSDKType[];
-  pagination: PageResponseSDKType;
+  pagination?: PageResponseSDKType;
 }
 export interface QueryGetUserPositionsRequest {
   owner: string;
-  pagination: PageRequest;
+  pagination?: PageRequest;
 }
 export interface QueryGetUserPositionsRequestSDKType {
   owner: string;
-  pagination: PageRequestSDKType;
+  pagination?: PageRequestSDKType;
 }
 export interface QueryGetUserPositionsResponse {
   position: Position[];
-  pagination: PageResponse;
+  pagination?: PageResponse;
 }
 export interface QueryGetUserPositionsResponseSDKType {
   position: PositionSDKType[];
-  pagination: PageResponseSDKType;
+  pagination?: PageResponseSDKType;
 }
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
@@ -259,7 +259,7 @@ export const QueryGetFlowResponse = {
 };
 function createBaseQueryAllFlowRequest(): QueryAllFlowRequest {
   return {
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAllFlowRequest = {
@@ -305,7 +305,7 @@ export const QueryAllFlowRequest = {
 function createBaseQueryAllFlowResponse(): QueryAllFlowResponse {
   return {
     flow: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryAllFlowResponse = {
@@ -464,7 +464,7 @@ export const QueryGetPositionResponse = {
 function createBaseQueryGetFlowPositionsRequest(): QueryGetFlowPositionsRequest {
   return {
     flow: BigInt(0),
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryGetFlowPositionsRequest = {
@@ -519,7 +519,7 @@ export const QueryGetFlowPositionsRequest = {
 function createBaseQueryGetFlowPositionsResponse(): QueryGetFlowPositionsResponse {
   return {
     position: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryGetFlowPositionsResponse = {
@@ -578,7 +578,7 @@ export const QueryGetFlowPositionsResponse = {
 function createBaseQueryGetUserPositionsRequest(): QueryGetUserPositionsRequest {
   return {
     owner: "",
-    pagination: PageRequest.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryGetUserPositionsRequest = {
@@ -633,7 +633,7 @@ export const QueryGetUserPositionsRequest = {
 function createBaseQueryGetUserPositionsResponse(): QueryGetUserPositionsResponse {
   return {
     position: [],
-    pagination: PageResponse.fromPartial({})
+    pagination: undefined
   };
 }
 export const QueryGetUserPositionsResponse = {

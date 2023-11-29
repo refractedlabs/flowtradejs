@@ -62,6 +62,11 @@ export interface MsgCreateFlowAminoType extends AminoMsg {
       stoppable: boolean;
       allow_immediate_token_out_claim_if_stopped: boolean;
       allow_immediate_token_in_claim_if_stopped: boolean;
+      limit_price: string;
+      exit_window_duration: {
+        seconds: string;
+        nanos: number;
+      };
     };
   };
 }
@@ -193,7 +198,9 @@ export const AminoConverter = {
           token_in_claimable_after: request.tokenInClaimableAfter,
           stoppable: request.stoppable,
           allow_immediate_token_out_claim_if_stopped: request.allowImmediateTokenOutClaimIfStopped,
-          allow_immediate_token_in_claim_if_stopped: request.allowImmediateTokenInClaimIfStopped
+          allow_immediate_token_in_claim_if_stopped: request.allowImmediateTokenInClaimIfStopped,
+          limit_price: request.limitPrice,
+          exit_window_duration: (request.exitWindowDuration * 1_000_000_000).toString()
         }
       };
     },
@@ -225,7 +232,12 @@ export const AminoConverter = {
           tokenInClaimableAfter: request.token_in_claimable_after,
           stoppable: request.stoppable,
           allowImmediateTokenOutClaimIfStopped: request.allow_immediate_token_out_claim_if_stopped,
-          allowImmediateTokenInClaimIfStopped: request.allow_immediate_token_in_claim_if_stopped
+          allowImmediateTokenInClaimIfStopped: request.allow_immediate_token_in_claim_if_stopped,
+          limitPrice: request.limit_price,
+          exitWindowDuration: {
+            seconds: BigInt(Math.floor(parseInt(request.exit_window_duration) / 1_000_000_000)),
+            nanos: parseInt(request.exit_window_duration) % 1_000_000_000
+          }
         }
       };
     }

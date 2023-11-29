@@ -3,11 +3,12 @@ syntax = "proto3";
 package refractedlabs.flowtrade;
 
 import "cosmos/base/query/v1beta1/pagination.proto";
+import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
+import "refractedlabs/flowtrade/flow.proto";
 import "refractedlabs/flowtrade/params.proto";
 import "refractedlabs/flowtrade/position.proto";
-import "refractedlabs/flowtrade/flow.proto";
 
 option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
 
@@ -57,17 +58,17 @@ message QueryGetFlowResponse {
 }
 
 message QueryAllFlowRequest {
-  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+  cosmos.base.query.v1beta1.PageRequest pagination = 1 [(gogoproto.nullable) = true];
 }
 
 message QueryAllFlowResponse {
   repeated Flow flow = 1 [(gogoproto.nullable) = false];
-  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2 [(gogoproto.nullable) = true];
 }
 
 message QueryGetPositionRequest {
   uint64 flow = 1;
-  string owner = 2;
+  string owner = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 }
 
 message QueryGetPositionResponse {
@@ -76,20 +77,20 @@ message QueryGetPositionResponse {
 
 message QueryGetFlowPositionsRequest {
   uint64 flow = 1;
-  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+  cosmos.base.query.v1beta1.PageRequest pagination = 2 [(gogoproto.nullable) = true];
 }
 
 message QueryGetFlowPositionsResponse {
   repeated Position position = 1 [(gogoproto.nullable) = false];
-  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2 [(gogoproto.nullable) = true];
 }
 
 message QueryGetUserPositionsRequest {
-  string owner = 1;
-  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+  string owner = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
+  cosmos.base.query.v1beta1.PageRequest pagination = 2 [(gogoproto.nullable) = true];
 }
 
 message QueryGetUserPositionsResponse {
   repeated Position position = 1 [(gogoproto.nullable) = false];
-  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2 [(gogoproto.nullable) = true];
 }

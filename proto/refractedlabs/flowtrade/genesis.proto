@@ -3,9 +3,9 @@ syntax = "proto3";
 package refractedlabs.flowtrade;
 
 import "gogoproto/gogo.proto";
+import "refractedlabs/flowtrade/flow.proto";
 import "refractedlabs/flowtrade/params.proto";
 import "refractedlabs/flowtrade/position.proto";
-import "refractedlabs/flowtrade/flow.proto";
 
 option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
 

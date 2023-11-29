@@ -15,7 +15,7 @@ message Flow {
   uint64 id = 1;
 
   // the address of flow creator and owner
-  string creator = 2;
+  string creator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // informational data about the flow
   FlowInfo flow_info = 3 [(gogoproto.nullable) = false];
@@ -27,7 +27,7 @@ message Flow {
   ];
 
   // the time that flow is ended
-  google.protobuf.Timestamp endTime = 5 [
+  google.protobuf.Timestamp end_time = 5 [
     (gogoproto.stdtime) = true,
     (gogoproto.nullable) = false
   ];
@@ -41,7 +41,7 @@ message Flow {
   ];
 
   // the address that the swapped tokens are sent to after the flow ends
-  string treasury_address = 7;
+  string treasury_address = 7 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // total amount creator provided to be swapped
   cosmos.base.v1beta1.Coin total_token_out = 8 [(gogoproto.nullable) = false];
@@ -109,7 +109,7 @@ message Flow {
     (gogoproto.nullable) = false
   ];
 
-  // the last swap price
+  // the latest price of token-out in terms of token-in
   string live_price = 21 [
     (cosmos_proto.scalar) = "cosmos.Dec",
     (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
@@ -120,7 +120,7 @@ message Flow {
   FlowStatus status = 22;
 
   // the amount of creation deposit that should be revenue to the flow creator
-  cosmos.base.v1beta1.Coin creation_deposit = 23;
+  cosmos.base.v1beta1.Coin creation_deposit = 23 [(gogoproto.nullable) = true];
 
   // the fee ratio taken from token-out, this is copied from module params at the time of flow creation
   string token_out_fee_ratio = 24 [
@@ -149,6 +149,23 @@ message Flow {
 
   // whether the flow is checked out, meaning the creation deposit and any remaining out tokens are transferred back to the creator
   bool checked_out = 28;
+
+  // the minimum price for the token-out in terms of token-in.
+  // in each swap interval, if the calculated price is less than this limit, the swap doesn't happen in that turn
+  // Since: v0.4
+  string limit_price = 29 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // the duration of the exit window before swap interval, in which users can only exit the flow and joining is not permitted
+  // this duration is used to protect joiners from buying the token-out with a higher price when someone joins with a huge amount of token-in
+  // Since: v0.4
+  google.protobuf.Duration exit_window_duration = 30 [
+    (gogoproto.stdduration) = true,
+    (gogoproto.nullable) = false
+  ];
 }
 
 // Informational data about the flow
@@ -200,7 +217,7 @@ message FlowCreationRequest {
   ];
 
   // the address that the swapped tokens are sent to after the flow ends
-  string treasury_address = 5;
+  string treasury_address = 5 [(cosmos_proto.scalar) = "cosmos.AddressString"];
 
   // total amount creator provided to be swapped
   cosmos.base.v1beta1.Coin tokens_out = 6 [(gogoproto.nullable) = false];
@@ -225,4 +242,21 @@ message FlowCreationRequest {
   bool allow_immediate_token_out_claim_if_stopped = 11;
   // whether to allow flow's creator to claim tokens immediately after the flow is stopped
   bool allow_immediate_token_in_claim_if_stopped = 12;
+
+  // the minimum price for the token-out in terms of token-in.
+  // in each swap interval, if the calculated price is less than this limit, the swap doesn't happen in that turn
+  // Since: v0.4
+  string limit_price = 13 [
+    (cosmos_proto.scalar) = "cosmos.Dec",
+    (gogoproto.customtype) = "github.com/cosmos/cosmos-sdk/types.Dec",
+    (gogoproto.nullable) = false
+  ];
+
+  // the duration of the exit window before swap interval, in which users can only exit the flow and joining is not permitted
+  // this duration is used to protect joiners from buying the token-out with a higher price when someone joins with a huge amount of token-in
+  // Since: v0.4
+  google.protobuf.Duration exit_window_duration = 14 [
+    (gogoproto.stdduration) = true,
+    (gogoproto.nullable) = false
+  ];
 }
