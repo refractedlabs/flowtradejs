@@ -1,8 +1,8 @@
-import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
-import { Duration, DurationSDKType } from "../../google/protobuf/duration";
-import { BinaryReader, BinaryWriter } from "../../binary";
+import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { Decimal } from "@cosmjs/math";
-import { isSet } from "../../helpers";
+import { isSet } from "../../../helpers";
 /** Params defines the parameters for the module. */
 export interface Params {
   /** The deposit amount taken from flow creator and transferred back after the flow ends */

@@ -1,16 +1,17 @@
 syntax = "proto3";
 
-package refractedlabs.flowtrade;
+package refractedlabs.flowtrade.v1;
 
+import "amino/amino.proto";
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos/msg/v1/msg.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
-import "refractedlabs/flowtrade/flow.proto";
-import "refractedlabs/flowtrade/params.proto";
-import "refractedlabs/flowtrade/position.proto";
+import "refractedlabs/flowtrade/v1/flow.proto";
+import "refractedlabs/flowtrade/v1/params.proto";
+import "refractedlabs/flowtrade/v1/position.proto";
 
-option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types/v1";
 
 // Msg defines the Msg service.
 service Msg {
@@ -27,6 +28,7 @@ service Msg {
 }
 message MsgUpdateParams {
   option (cosmos.msg.v1.signer) = "authority";
+  option (amino.name) = "refractedlabs/flowtrade/v1/UpdateParams";
 
   string authority = 1;
   Params params = 2 [(gogoproto.nullable) = false];
@@ -36,6 +38,7 @@ message MsgUpdateParamsResponse {}
 
 message MsgCreateFlow {
   option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "refractedlabs/flowtrade/v1/CreateFlow";
 
   string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   FlowCreationRequest request = 2 [(gogoproto.nullable) = false];
@@ -47,6 +50,7 @@ message MsgCreateFlowResponse {
 
 message MsgJoinFlow {
   option (cosmos.msg.v1.signer) = "signer";
+  option (amino.name) = "refractedlabs/flowtrade/v1/JoinFlow";
 
   uint64 flow = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
@@ -60,6 +64,7 @@ message MsgJoinFlowResponse {
 
 message MsgExitFlow {
   option (cosmos.msg.v1.signer) = "signer";
+  option (amino.name) = "refractedlabs/flowtrade/v1/ExitFlow";
 
   uint64 flow = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
@@ -73,6 +78,7 @@ message MsgExitFlowResponse {
 
 message MsgSetOperator {
   option (cosmos.msg.v1.signer) = "owner";
+  option (amino.name) = "refractedlabs/flowtrade/v1/SetOperator";
 
   uint64 flow = 1;
   string owner = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
@@ -83,6 +89,7 @@ message MsgSetOperatorResponse {}
 
 message MsgClaimTokenIn {
   option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "refractedlabs/flowtrade/v1/ClaimTokenIn";
 
   string creator = 1 [(cosmos_proto.scalar) = "cosmos.AddressString"];
   uint64 flow = 2;
@@ -96,6 +103,7 @@ message MsgClaimTokenInResponse {
 
 message MsgClaimTokenOut {
   option (cosmos.msg.v1.signer) = "signer";
+  option (amino.name) = "refractedlabs/flowtrade/v1/ClaimTokenOut";
 
   uint64 flow = 1;
   string address = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];
@@ -109,6 +117,7 @@ message MsgClaimTokenOutResponse {
 
 message MsgStopFlow {
   option (cosmos.msg.v1.signer) = "creator";
+  option (amino.name) = "refractedlabs/flowtrade/v1/StopFlow";
 
   uint64 flow_id = 1;
   string creator = 2 [(cosmos_proto.scalar) = "cosmos.AddressString"];

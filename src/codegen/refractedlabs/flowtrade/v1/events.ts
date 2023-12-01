@@ -1,9 +1,9 @@
 import { Params, ParamsSDKType } from "./params";
 import { Flow, FlowSDKType } from "./flow";
-import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
+import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Position, PositionSDKType } from "./position";
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { isSet } from "../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 export interface EventSetParams {
   params: Params;
 }

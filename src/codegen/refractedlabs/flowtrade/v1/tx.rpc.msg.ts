@@ -1,6 +1,6 @@
 //@ts-nocheck
-import { UnaryMethodDefinitionish } from "../../grpc-web";
-import { DeepPartial } from "../../helpers";
+import { UnaryMethodDefinitionish } from "../../../grpc-web";
+import { DeepPartial } from "../../../helpers";
 import { grpc } from "@improbable-eng/grpc-web";
 import { BrowserHeaders } from "browser-headers";
 import { MsgUpdateParams, MsgUpdateParamsResponse, MsgCreateFlow, MsgCreateFlowResponse, MsgJoinFlow, MsgJoinFlowResponse, MsgExitFlow, MsgExitFlowResponse, MsgSetOperator, MsgSetOperatorResponse, MsgClaimTokenIn, MsgClaimTokenInResponse, MsgClaimTokenOut, MsgClaimTokenOutResponse, MsgStopFlow, MsgStopFlowResponse } from "./tx";
@@ -54,7 +54,7 @@ export class MsgClientImpl implements Msg {
   }
 }
 export const MsgDesc = {
-  serviceName: "refractedlabs.flowtrade.Msg"
+  serviceName: "refractedlabs.flowtrade.v1.Msg"
 };
 export const MsgUpdateParamsDesc: UnaryMethodDefinitionish = {
   methodName: "UpdateParams",

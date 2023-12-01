@@ -2,7 +2,7 @@
 import { AminoMsg } from "@cosmjs/amino";
 import { MsgUpdateParams, MsgCreateFlow, MsgJoinFlow, MsgExitFlow, MsgSetOperator, MsgClaimTokenIn, MsgClaimTokenOut, MsgStopFlow } from "./tx";
 export interface MsgUpdateParamsAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgUpdateParams";
+  type: "refractedlabs/flowtrade/v1/UpdateParams";
   value: {
     authority: string;
     params: {
@@ -24,7 +24,7 @@ export interface MsgUpdateParamsAminoType extends AminoMsg {
   };
 }
 export interface MsgCreateFlowAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgCreateFlow";
+  type: "refractedlabs/flowtrade/v1/CreateFlow";
   value: {
     creator: string;
     request: {
@@ -71,7 +71,7 @@ export interface MsgCreateFlowAminoType extends AminoMsg {
   };
 }
 export interface MsgJoinFlowAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgJoinFlow";
+  type: "refractedlabs/flowtrade/v1/JoinFlow";
   value: {
     flow: string;
     address: string;
@@ -83,7 +83,7 @@ export interface MsgJoinFlowAminoType extends AminoMsg {
   };
 }
 export interface MsgExitFlowAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgExitFlow";
+  type: "refractedlabs/flowtrade/v1/ExitFlow";
   value: {
     flow: string;
     address: string;
@@ -95,7 +95,7 @@ export interface MsgExitFlowAminoType extends AminoMsg {
   };
 }
 export interface MsgSetOperatorAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgSetOperator";
+  type: "refractedlabs/flowtrade/v1/SetOperator";
   value: {
     flow: string;
     owner: string;
@@ -103,7 +103,7 @@ export interface MsgSetOperatorAminoType extends AminoMsg {
   };
 }
 export interface MsgClaimTokenInAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgClaimTokenIn";
+  type: "refractedlabs/flowtrade/v1/ClaimTokenIn";
   value: {
     creator: string;
     flow: string;
@@ -111,7 +111,7 @@ export interface MsgClaimTokenInAminoType extends AminoMsg {
   };
 }
 export interface MsgClaimTokenOutAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgClaimTokenOut";
+  type: "refractedlabs/flowtrade/v1/ClaimTokenOut";
   value: {
     flow: string;
     address: string;
@@ -119,15 +119,15 @@ export interface MsgClaimTokenOutAminoType extends AminoMsg {
   };
 }
 export interface MsgStopFlowAminoType extends AminoMsg {
-  type: "/refractedlabs.flowtrade.MsgStopFlow";
+  type: "refractedlabs/flowtrade/v1/StopFlow";
   value: {
     flow_id: string;
     creator: string;
   };
 }
 export const AminoConverter = {
-  "/refractedlabs.flowtrade.MsgUpdateParams": {
-    aminoType: "/refractedlabs.flowtrade.MsgUpdateParams",
+  "/refractedlabs.flowtrade.v1.MsgUpdateParams": {
+    aminoType: "refractedlabs/flowtrade/v1/UpdateParams",
     toAmino: ({
       authority,
       params
@@ -171,8 +171,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgCreateFlow": {
-    aminoType: "/refractedlabs.flowtrade.MsgCreateFlow",
+  "/refractedlabs.flowtrade.v1.MsgCreateFlow": {
+    aminoType: "refractedlabs/flowtrade/v1/CreateFlow",
     toAmino: ({
       creator,
       request
@@ -242,8 +242,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgJoinFlow": {
-    aminoType: "/refractedlabs.flowtrade.MsgJoinFlow",
+  "/refractedlabs.flowtrade.v1.MsgJoinFlow": {
+    aminoType: "refractedlabs/flowtrade/v1/JoinFlow",
     toAmino: ({
       flow,
       address,
@@ -277,8 +277,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgExitFlow": {
-    aminoType: "/refractedlabs.flowtrade.MsgExitFlow",
+  "/refractedlabs.flowtrade.v1.MsgExitFlow": {
+    aminoType: "refractedlabs/flowtrade/v1/ExitFlow",
     toAmino: ({
       flow,
       address,
@@ -312,8 +312,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgSetOperator": {
-    aminoType: "/refractedlabs.flowtrade.MsgSetOperator",
+  "/refractedlabs.flowtrade.v1.MsgSetOperator": {
+    aminoType: "refractedlabs/flowtrade/v1/SetOperator",
     toAmino: ({
       flow,
       owner,
@@ -337,8 +337,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgClaimTokenIn": {
-    aminoType: "/refractedlabs.flowtrade.MsgClaimTokenIn",
+  "/refractedlabs.flowtrade.v1.MsgClaimTokenIn": {
+    aminoType: "refractedlabs/flowtrade/v1/ClaimTokenIn",
     toAmino: ({
       creator,
       flow,
@@ -362,8 +362,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgClaimTokenOut": {
-    aminoType: "/refractedlabs.flowtrade.MsgClaimTokenOut",
+  "/refractedlabs.flowtrade.v1.MsgClaimTokenOut": {
+    aminoType: "refractedlabs/flowtrade/v1/ClaimTokenOut",
     toAmino: ({
       flow,
       address,
@@ -387,8 +387,8 @@ export const AminoConverter = {
       };
     }
   },
-  "/refractedlabs.flowtrade.MsgStopFlow": {
-    aminoType: "/refractedlabs.flowtrade.MsgStopFlow",
+  "/refractedlabs.flowtrade.v1.MsgStopFlow": {
+    aminoType: "refractedlabs/flowtrade/v1/StopFlow",
     toAmino: ({
       flowId,
       creator

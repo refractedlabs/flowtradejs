@@ -1,42 +1,42 @@
 syntax = "proto3";
 
-package refractedlabs.flowtrade;
+package refractedlabs.flowtrade.v1;
 
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
-import "refractedlabs/flowtrade/flow.proto";
-import "refractedlabs/flowtrade/params.proto";
-import "refractedlabs/flowtrade/position.proto";
+import "refractedlabs/flowtrade/v1/flow.proto";
+import "refractedlabs/flowtrade/v1/params.proto";
+import "refractedlabs/flowtrade/v1/position.proto";
 
-option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types/v1";
 
 // Query defines the gRPC querier service.
 service Query {
   // Parameters queries the parameters of the module.
   rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
-    option (google.api.http).get = "/flowtrade/flowtrade/params";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/params";
   }
 
   rpc Flow(QueryGetFlowRequest) returns (QueryGetFlowResponse) {
-    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow/{id}";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/flow/{id}";
   }
 
   rpc FlowAll(QueryAllFlowRequest) returns (QueryAllFlowResponse) {
-    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/flow";
   }
 
   rpc Position(QueryGetPositionRequest) returns (QueryGetPositionResponse) {
-    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/position/{flow}/{owner}";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/position/{flow}/{owner}";
   }
 
   rpc FlowPositions(QueryGetFlowPositionsRequest) returns (QueryGetFlowPositionsResponse) {
-    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/flow-positions/{flow}";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/flow-positions/{flow}";
   }
 
   rpc UserPositions(QueryGetUserPositionsRequest) returns (QueryGetUserPositionsResponse) {
-    option (google.api.http).get = "/refractedlabs/flowtrade/flowtrade/user-positions/{owner}";
+    option (google.api.http).get = "/refractedlabs/flowtrade/v1/user-positions/{owner}";
   }
 }
 

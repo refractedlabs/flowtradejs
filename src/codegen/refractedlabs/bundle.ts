@@ -1,36 +1,38 @@
-import * as _154 from "./flowtrade/events";
-import * as _155 from "./flowtrade/flow";
-import * as _156 from "./flowtrade/genesis";
-import * as _157 from "./flowtrade/params";
-import * as _158 from "./flowtrade/position";
-import * as _159 from "./flowtrade/query";
-import * as _160 from "./flowtrade/tx";
-import * as _296 from "./flowtrade/tx.amino";
-import * as _297 from "./flowtrade/tx.registry";
-import * as _298 from "./flowtrade/query.lcd";
-import * as _299 from "./flowtrade/query.rpc.Query";
-import * as _300 from "./flowtrade/tx.rpc.msg";
-import * as _307 from "./lcd";
-import * as _308 from "./rpc.query";
-import * as _309 from "./rpc.tx";
+import * as _175 from "./flowtrade/v1/events";
+import * as _176 from "./flowtrade/v1/flow";
+import * as _177 from "./flowtrade/v1/genesis";
+import * as _178 from "./flowtrade/v1/params";
+import * as _179 from "./flowtrade/v1/position";
+import * as _180 from "./flowtrade/v1/query";
+import * as _181 from "./flowtrade/v1/tx";
+import * as _318 from "./flowtrade/v1/tx.amino";
+import * as _319 from "./flowtrade/v1/tx.registry";
+import * as _320 from "./flowtrade/v1/query.lcd";
+import * as _321 from "./flowtrade/v1/query.rpc.Query";
+import * as _322 from "./flowtrade/v1/tx.rpc.msg";
+import * as _329 from "./lcd";
+import * as _330 from "./rpc.query";
+import * as _331 from "./rpc.tx";
 export namespace refractedlabs {
-  export const flowtrade = {
-    ..._154,
-    ..._155,
-    ..._156,
-    ..._157,
-    ..._158,
-    ..._159,
-    ..._160,
-    ..._296,
-    ..._297,
-    ..._298,
-    ..._299,
-    ..._300
-  };
+  export namespace flowtrade {
+    export const v1 = {
+      ..._175,
+      ..._176,
+      ..._177,
+      ..._178,
+      ..._179,
+      ..._180,
+      ..._181,
+      ..._318,
+      ..._319,
+      ..._320,
+      ..._321,
+      ..._322
+    };
+  }
   export const ClientFactory = {
-    ..._307,
-    ..._308,
-    ..._309
+    ..._329,
+    ..._330,
+    ..._331
   };
 }

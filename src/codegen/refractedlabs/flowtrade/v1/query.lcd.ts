@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { setPaginationParams } from "../../helpers";
+import { setPaginationParams } from "../../../helpers";
 import { LCDClient } from "@cosmology/lcd";
 import { QueryParamsRequest, QueryParamsResponseSDKType, QueryGetFlowRequest, QueryGetFlowResponseSDKType, QueryAllFlowRequest, QueryAllFlowResponseSDKType, QueryGetPositionRequest, QueryGetPositionResponseSDKType, QueryGetFlowPositionsRequest, QueryGetFlowPositionsResponseSDKType, QueryGetUserPositionsRequest, QueryGetUserPositionsResponseSDKType } from "./query";
 export class LCDQueryClient {
@@ -19,12 +19,12 @@ export class LCDQueryClient {
   }
   /* Parameters queries the parameters of the module. */
   async params(_params: QueryParamsRequest = {}): Promise<QueryParamsResponseSDKType> {
-    const endpoint = `flowtrade/flowtrade/params`;
+    const endpoint = `refractedlabs/flowtrade/v1/params`;
     return await this.req.get<QueryParamsResponseSDKType>(endpoint);
   }
   /* Flow */
   async flow(params: QueryGetFlowRequest): Promise<QueryGetFlowResponseSDKType> {
-    const endpoint = `refractedlabs/flowtrade/flowtrade/flow/${params.id}`;
+    const endpoint = `refractedlabs/flowtrade/v1/flow/${params.id}`;
     return await this.req.get<QueryGetFlowResponseSDKType>(endpoint);
   }
   /* FlowAll */
@@ -37,12 +37,12 @@ export class LCDQueryClient {
     if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
-    const endpoint = `refractedlabs/flowtrade/flowtrade/flow`;
+    const endpoint = `refractedlabs/flowtrade/v1/flow`;
     return await this.req.get<QueryAllFlowResponseSDKType>(endpoint, options);
   }
   /* Position */
   async position(params: QueryGetPositionRequest): Promise<QueryGetPositionResponseSDKType> {
-    const endpoint = `refractedlabs/flowtrade/flowtrade/position/${params.flow}/${params.owner}`;
+    const endpoint = `refractedlabs/flowtrade/v1/position/${params.flow}/${params.owner}`;
     return await this.req.get<QueryGetPositionResponseSDKType>(endpoint);
   }
   /* FlowPositions */
@@ -53,7 +53,7 @@ export class LCDQueryClient {
     if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
-    const endpoint = `refractedlabs/flowtrade/flowtrade/flow-positions/${params.flow}`;
+    const endpoint = `refractedlabs/flowtrade/v1/flow-positions/${params.flow}`;
     return await this.req.get<QueryGetFlowPositionsResponseSDKType>(endpoint, options);
   }
   /* UserPositions */
@@ -64,7 +64,7 @@ export class LCDQueryClient {
     if (typeof params?.pagination !== "undefined") {
       setPaginationParams(options, params.pagination);
     }
-    const endpoint = `refractedlabs/flowtrade/flowtrade/user-positions/${params.owner}`;
+    const endpoint = `refractedlabs/flowtrade/v1/user-positions/${params.owner}`;
     return await this.req.get<QueryGetUserPositionsResponseSDKType>(endpoint, options);
   }
 }

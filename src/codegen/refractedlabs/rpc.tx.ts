@@ -78,7 +78,9 @@ export const createRPCMsgClient = async ({
       }
     },
     refractedlabs: {
-      flowtrade: new (await import("./flowtrade/tx.rpc.msg")).MsgClientImpl(grpcWeb)
+      flowtrade: {
+        v1: new (await import("./flowtrade/v1/tx.rpc.msg")).MsgClientImpl(grpcWeb)
+      }
     }
   };
 };

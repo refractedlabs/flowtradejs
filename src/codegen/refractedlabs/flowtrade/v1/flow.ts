@@ -1,9 +1,9 @@
-import { Timestamp, TimestampSDKType } from "../../google/protobuf/timestamp";
-import { Duration, DurationSDKType } from "../../google/protobuf/duration";
-import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
-import { BinaryReader, BinaryWriter } from "../../binary";
+import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
+import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { Decimal } from "@cosmjs/math";
-import { isSet, fromJsonTimestamp, fromTimestamp } from "../../helpers";
+import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
 export enum FlowStatus {
   /** WAITING - the flow is waiting to be started */
   WAITING = 0,

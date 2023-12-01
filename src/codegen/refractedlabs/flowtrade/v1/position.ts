@@ -1,6 +1,6 @@
-import { BinaryReader, BinaryWriter } from "../../binary";
+import { BinaryReader, BinaryWriter } from "../../../binary";
 import { Decimal } from "@cosmjs/math";
-import { isSet } from "../../helpers";
+import { isSet } from "../../../helpers";
 export interface Position {
   /** the flow for which this position is created */
   flow: bigint;

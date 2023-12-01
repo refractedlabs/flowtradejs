@@ -1,8 +1,8 @@
 import { Params, ParamsSDKType } from "./params";
 import { Flow, FlowSDKType } from "./flow";
 import { Position, PositionSDKType } from "./position";
-import { BinaryReader, BinaryWriter } from "../../binary";
-import { isSet } from "../../helpers";
+import { BinaryReader, BinaryWriter } from "../../../binary";
+import { isSet } from "../../../helpers";
 /** GenesisState defines the flowtrade module's genesis state. */
 export interface GenesisState {
   params: Params;

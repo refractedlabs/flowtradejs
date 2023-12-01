@@ -1,8 +1,8 @@
 import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
-import * as refractedlabsFlowtradeTxRegistry from "./flowtrade/tx.registry";
-import * as refractedlabsFlowtradeTxAmino from "./flowtrade/tx.amino";
+import * as refractedlabsFlowtradeTxRegistry from "./flowtrade/v1/tx.registry";
+import * as refractedlabsFlowtradeTxAmino from "./flowtrade/v1/tx.amino";
 import { cosmosAminoConverters, cosmosProtoRegistry } from "../cosmos/client";
 export const refractedlabsAminoConverters = {
   ...refractedlabsFlowtradeTxAmino.AminoConverter

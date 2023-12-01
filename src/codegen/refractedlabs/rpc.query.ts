@@ -97,7 +97,9 @@ export const createGrpcWebClient = async ({
       }
     },
     refractedlabs: {
-      flowtrade: new (await import("./flowtrade/query.rpc.Query")).QueryClientImpl(grpcWeb)
+      flowtrade: {
+        v1: new (await import("./flowtrade/v1/query.rpc.Query")).QueryClientImpl(grpcWeb)
+      }
     }
   };
 };

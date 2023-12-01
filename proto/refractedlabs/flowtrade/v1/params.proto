@@ -1,12 +1,12 @@
 syntax = "proto3";
-package refractedlabs.flowtrade;
+package refractedlabs.flowtrade.v1;
 
 import "cosmos/base/v1beta1/coin.proto";
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/duration.proto";
 
-option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types/v1";
 
 // Params defines the parameters for the module.
 message Params {

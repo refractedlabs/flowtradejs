@@ -1,11 +1,11 @@
 syntax = "proto3";
-package refractedlabs.flowtrade;
+package refractedlabs.flowtrade.v1;
 
 import "cosmos_proto/cosmos.proto";
 import "gogoproto/gogo.proto";
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types/v1";
 
 message Position {
   // the flow for which this position is created

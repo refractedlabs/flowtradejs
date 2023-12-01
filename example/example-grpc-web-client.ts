@@ -3,7 +3,7 @@ import * as console from "console";
 
 async function main() {
     const client = await refractedlabs.ClientFactory.createGrpcWebClient({endpoint: "http://0.0.0.0:9091"});
-    const data = await client.refractedlabs.flowtrade.params();
+    const data = await client.refractedlabs.flowtrade.v1.params();
     console.log(data.params)
 }
 

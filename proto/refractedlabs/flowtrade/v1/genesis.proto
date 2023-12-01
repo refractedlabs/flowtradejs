@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package refractedlabs.flowtrade;
+package refractedlabs.flowtrade.v1;
 
 import "gogoproto/gogo.proto";
-import "refractedlabs/flowtrade/flow.proto";
-import "refractedlabs/flowtrade/params.proto";
-import "refractedlabs/flowtrade/position.proto";
+import "refractedlabs/flowtrade/v1/flow.proto";
+import "refractedlabs/flowtrade/v1/params.proto";
+import "refractedlabs/flowtrade/v1/position.proto";
 
-option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types";
+option go_package = "github.com/refractedlabs/flowtrade/x/flowtrade/types/v1";
 
 // GenesisState defines the flowtrade module's genesis state.
 message GenesisState {

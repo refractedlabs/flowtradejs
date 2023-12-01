@@ -106,9 +106,11 @@ export const createLCDClient = async ({
       }
     },
     refractedlabs: {
-      flowtrade: new (await import("./flowtrade/query.lcd")).LCDQueryClient({
-        requestClient
-      })
+      flowtrade: {
+        v1: new (await import("./flowtrade/v1/query.lcd")).LCDQueryClient({
+          requestClient
+        })
+      }
     }
   };
 };
