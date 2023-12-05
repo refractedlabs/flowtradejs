@@ -18,7 +18,7 @@ import { refractedlabs } from '@refractedlabs/flowtradejs';
 const client = await refractedlabs.ClientFactory.createGrpcWebClient({endpoint: GRPC_ENDPOINT});
 
 // now you can query the flowtrade module
-const params = await client.refractedlabs.flowtrade.params();
+const params = await client.refractedlabs.flowtrade.v1.params();
 
 // you can also query the cosmos modules
 const balance = await client.cosmos.bank.v1beta1.allBalances({ address: 'refractedlabs1addresshere' });
@@ -39,7 +39,7 @@ const {
     claimTokenIn,
     claimTokenOut,
     stopFlow
-} = refractedlabs.flowtrade.MessageComposer.withTypeUrl;
+} = refractedlabs.flowtrade.v1.MessageComposer.withTypeUrl;
 
 ```
 
@@ -106,7 +106,7 @@ const signer = await getOfflineSigner({
 Now that you have your `stargateClient`, you can broadcast messages:
 
 ```tsx
-const { createFlow } = refractedlabs.flowtrade.MessageComposer.withTypeUrl;
+const { createFlow } = refractedlabs.flowtrade.v1.MessageComposer.withTypeUrl;
 
 const msg = createFlow({
     creator: "creator",
