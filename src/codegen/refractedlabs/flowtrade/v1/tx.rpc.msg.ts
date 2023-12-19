@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { UnaryMethodDefinitionish } from "../../../grpc-web";
 import { DeepPartial } from "../../../helpers";
 import { grpc } from "@improbable-eng/grpc-web";
@@ -29,28 +28,28 @@ export class MsgClientImpl implements Msg {
     this.stopFlow = this.stopFlow.bind(this);
   }
   updateParams(request: DeepPartial<MsgUpdateParams>, metadata?: grpc.Metadata): Promise<MsgUpdateParamsResponse> {
-    return this.rpc.unary(MsgUpdateParamsDesc, MsgUpdateParams.fromPartial(request), metadata);
+    return this.rpc.unary(MsgUpdateParamsDesc, MsgUpdateParams.fromPartial(request as any), metadata);
   }
   createFlow(request: DeepPartial<MsgCreateFlow>, metadata?: grpc.Metadata): Promise<MsgCreateFlowResponse> {
-    return this.rpc.unary(MsgCreateFlowDesc, MsgCreateFlow.fromPartial(request), metadata);
+    return this.rpc.unary(MsgCreateFlowDesc, MsgCreateFlow.fromPartial(request as any), metadata);
   }
   joinFlow(request: DeepPartial<MsgJoinFlow>, metadata?: grpc.Metadata): Promise<MsgJoinFlowResponse> {
-    return this.rpc.unary(MsgJoinFlowDesc, MsgJoinFlow.fromPartial(request), metadata);
+    return this.rpc.unary(MsgJoinFlowDesc, MsgJoinFlow.fromPartial(request as any), metadata);
   }
   exitFlow(request: DeepPartial<MsgExitFlow>, metadata?: grpc.Metadata): Promise<MsgExitFlowResponse> {
-    return this.rpc.unary(MsgExitFlowDesc, MsgExitFlow.fromPartial(request), metadata);
+    return this.rpc.unary(MsgExitFlowDesc, MsgExitFlow.fromPartial(request as any), metadata);
   }
   setOperator(request: DeepPartial<MsgSetOperator>, metadata?: grpc.Metadata): Promise<MsgSetOperatorResponse> {
-    return this.rpc.unary(MsgSetOperatorDesc, MsgSetOperator.fromPartial(request), metadata);
+    return this.rpc.unary(MsgSetOperatorDesc, MsgSetOperator.fromPartial(request as any), metadata);
   }
   claimTokenIn(request: DeepPartial<MsgClaimTokenIn>, metadata?: grpc.Metadata): Promise<MsgClaimTokenInResponse> {
-    return this.rpc.unary(MsgClaimTokenInDesc, MsgClaimTokenIn.fromPartial(request), metadata);
+    return this.rpc.unary(MsgClaimTokenInDesc, MsgClaimTokenIn.fromPartial(request as any), metadata);
   }
   claimTokenOut(request: DeepPartial<MsgClaimTokenOut>, metadata?: grpc.Metadata): Promise<MsgClaimTokenOutResponse> {
-    return this.rpc.unary(MsgClaimTokenOutDesc, MsgClaimTokenOut.fromPartial(request), metadata);
+    return this.rpc.unary(MsgClaimTokenOutDesc, MsgClaimTokenOut.fromPartial(request as any), metadata);
   }
   stopFlow(request: DeepPartial<MsgStopFlow>, metadata?: grpc.Metadata): Promise<MsgStopFlowResponse> {
-    return this.rpc.unary(MsgStopFlowDesc, MsgStopFlow.fromPartial(request), metadata);
+    return this.rpc.unary(MsgStopFlowDesc, MsgStopFlow.fromPartial(request as any), metadata);
   }
 }
 export const MsgDesc = {

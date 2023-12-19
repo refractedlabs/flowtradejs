@@ -1,13 +1,12 @@
-import { getSigningRefractedlabsClientOptions, refractedlabs } from "./codegen"
-import { PageRequest } from "./codegen/helpers";
-import { BrowserHeaders } from "browser-headers";
-import { OfflineSigner } from "@cosmjs/proto-signing";
-import { SigningStargateClient } from "@cosmjs/stargate";
+import { getSigningRefractedlabsClientOptions } from "./codegen"
+import { GasPrice, SigningStargateClient } from "@cosmjs/stargate";
 import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
-import { GasPrice } from "@cosmjs/stargate/build/fee";
+import { OfflineSigner } from "@cosmjs/proto-signing";
+import { createGrpcWebClient } from "./codegen/refractedlabs/rpc.query";
+import { PageRequest } from "./codegen/cosmos/base/query/v1beta1/pagination";
 
-export type FlowtradeLCDClient = Awaited<ReturnType<typeof refractedlabs.ClientFactory.createLCDClient>>
-export type FlowtradeGrpcWebClient = Awaited<ReturnType<typeof refractedlabs.ClientFactory.createGrpcWebClient>>
+export type FlowtradeGrpcWebClient = Awaited<ReturnType<typeof createGrpcWebClient>>
+export { createGrpcWebClient }
 
 export * from './codegen';
 
@@ -22,34 +21,11 @@ export function defaultPageRequestProvider(): PageRequest {
 }
 
 /**
- * example:
- * ```ts
- *    const balances = await lcdFetchAll(lcdClient, async (client, pageRequest) => {
- *         const result = await client.cosmos.bank.v1beta1.allBalances({
- *             address: "prism156pcgs3faegfte0vuaykr9az3hh9kx2e2qfwvu",
- *             pagination: pageRequest
- *         })
- *         return [result.pagination.next_key, result.balances]
- *     })
- * ```
- */
-export async function lcdFetchAll<Type>(client: FlowtradeLCDClient, fetch: (client: FlowtradeLCDClient, request: PageRequest) =>
-    Promise<[Uint8Array, Type[]]>, pageRequest = defaultPageRequestProvider()): Promise<Type[]> {
-    const result: Type[] = []
-    do {
-        const [nextKey, r] = await fetch(client, pageRequest);
-        if (r) result.push(...r)
-        pageRequest.key = nextKey ? new Uint8Array(Buffer.from(nextKey as any, 'base64')) : null
-    } while (pageRequest.key)
-    return result;
-}
-
-/**
  * ```ts
  * example:
  *     const balances = await grpcFetchAll(grpcClient, async (client, pageRequest) => {
  *         const result = await client.cosmos.bank.v1beta1.allBalances({
- *             address: "prism156pcgs3faegfte0vuaykr9az3hh9kx2e2qfwvu",
+ *             address: "pryzm156pcgs3faegfte0vuaykr9az3hh9kx2e2qfwvu",
  *             pagination: pageRequest
  *         })
  *         return [result.pagination.nextKey, result.balances]
@@ -61,23 +37,14 @@ export async function grpcFetchAll<Type>(client: FlowtradeGrpcWebClient, fetch: 
     const result: Type[] = []
     do {
         const [nextKey, r] = await fetch(client, pageRequest);
-        if (r) result.push(...r)
+        result.push(...r)
         pageRequest.key = nextKey
     } while (pageRequest.key && pageRequest.key.length != 0)
     return result;
 }
 
-export function getBrowsersHeadersForBlockHeight(height: number): BrowserHeaders {
-    const headers = new BrowserHeaders()
-    headers.set("x-cosmos-block-height", `${height}`)
-    return headers
-}
-
 export async function connectWithSigner(endpoint: string | HttpEndpoint, signer: OfflineSigner, broadcastTimeoutMs?: number, gasPrice?: GasPrice, broadcastPollIntervalMs?: number): Promise<SigningStargateClient> {
-    const {
-        registry,
-        aminoTypes
-    } = getSigningRefractedlabsClientOptions();
+    const { registry, aminoTypes } = getSigningRefractedlabsClientOptions();
 
     return SigningStargateClient.connectWithSigner(endpoint, signer, {
         registry,

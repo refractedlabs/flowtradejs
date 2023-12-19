@@ -1,51 +1,7 @@
-//@ts-nocheck
-import { UnaryMethodDefinitionish } from "../../../grpc-web";
-import { DeepPartial } from "../../../helpers";
 import { grpc } from "@improbable-eng/grpc-web";
+import { UnaryMethodDefinitionish } from "./codegen";
 import { BrowserHeaders } from "browser-headers";
-import { MsgSend, MsgSendResponse } from "./tx";
-/** Msg defines the nft Msg service. */
-export interface Msg {
-  /** Send defines a method to send a nft from one account to another account. */
-  send(request: DeepPartial<MsgSend>, metadata?: grpc.Metadata): Promise<MsgSendResponse>;
-}
-export class MsgClientImpl implements Msg {
-  private readonly rpc: Rpc;
-  constructor(rpc: Rpc) {
-    this.rpc = rpc;
-    this.send = this.send.bind(this);
-  }
-  send(request: DeepPartial<MsgSend>, metadata?: grpc.Metadata): Promise<MsgSendResponse> {
-    return this.rpc.unary(MsgSendDesc, MsgSend.fromPartial(request), metadata);
-  }
-}
-export const MsgDesc = {
-  serviceName: "cosmos.nft.v1beta1.Msg"
-};
-export const MsgSendDesc: UnaryMethodDefinitionish = {
-  methodName: "Send",
-  service: MsgDesc,
-  requestStream: false,
-  responseStream: false,
-  requestType: ({
-    serializeBinary() {
-      return MsgSend.encode(this).finish();
-    }
-  } as any),
-  responseType: ({
-    deserializeBinary(data: Uint8Array) {
-      return {
-        ...MsgSendResponse.decode(data),
-        toObject() {
-          return this;
-        }
-      };
-    }
-  } as any)
-};
-export interface Rpc {
-  unary<T extends UnaryMethodDefinitionish>(methodDesc: T, request: any, metadata: grpc.Metadata | undefined): Promise<any>;
-}
+
 export class GrpcWebImpl {
   host: string;
   options: {

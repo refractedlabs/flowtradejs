@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { grpc } from "@improbable-eng/grpc-web";
 import { UnaryMethodDefinitionish } from "../../../grpc-web";
 import { DeepPartial } from "../../../helpers";
@@ -26,24 +25,24 @@ export class QueryClientImpl implements Query {
     this.userPositions = this.userPositions.bind(this);
   }
   params(request: DeepPartial<QueryParamsRequest> = {}, metadata?: grpc.Metadata): Promise<QueryParamsResponse> {
-    return this.rpc.unary(QueryParamsDesc, QueryParamsRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryParamsDesc, QueryParamsRequest.fromPartial(request as any), metadata);
   }
   flow(request: DeepPartial<QueryGetFlowRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowResponse> {
-    return this.rpc.unary(QueryFlowDesc, QueryGetFlowRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowDesc, QueryGetFlowRequest.fromPartial(request as any), metadata);
   }
   flowAll(request: DeepPartial<QueryAllFlowRequest> = {
     pagination: undefined
   }, metadata?: grpc.Metadata): Promise<QueryAllFlowResponse> {
-    return this.rpc.unary(QueryFlowAllDesc, QueryAllFlowRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowAllDesc, QueryAllFlowRequest.fromPartial(request as any), metadata);
   }
   position(request: DeepPartial<QueryGetPositionRequest>, metadata?: grpc.Metadata): Promise<QueryGetPositionResponse> {
-    return this.rpc.unary(QueryPositionDesc, QueryGetPositionRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryPositionDesc, QueryGetPositionRequest.fromPartial(request as any), metadata);
   }
   flowPositions(request: DeepPartial<QueryGetFlowPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetFlowPositionsResponse> {
-    return this.rpc.unary(QueryFlowPositionsDesc, QueryGetFlowPositionsRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryFlowPositionsDesc, QueryGetFlowPositionsRequest.fromPartial(request as any), metadata);
   }
   userPositions(request: DeepPartial<QueryGetUserPositionsRequest>, metadata?: grpc.Metadata): Promise<QueryGetUserPositionsResponse> {
-    return this.rpc.unary(QueryUserPositionsDesc, QueryGetUserPositionsRequest.fromPartial(request), metadata);
+    return this.rpc.unary(QueryUserPositionsDesc, QueryGetUserPositionsRequest.fromPartial(request as any), metadata);
   }
 }
 export const QueryDesc = {

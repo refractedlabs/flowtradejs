@@ -1,15 +1,15 @@
 import { GeneratedType, Registry, OfflineSigner } from "@cosmjs/proto-signing";
 import { AminoTypes, SigningStargateClient } from "@cosmjs/stargate";
+import { cosmosProtoRegistry as defaultRegistryTypes, cosmosAminoConverters } from "../cosmos/client";
 import { HttpEndpoint } from "@cosmjs/tendermint-rpc";
-import * as refractedlabsFlowtradeTxRegistry from "./flowtrade/v1/tx.registry";
-import * as refractedlabsFlowtradeTxAmino from "./flowtrade/v1/tx.amino";
-import { cosmosAminoConverters, cosmosProtoRegistry } from "../cosmos/client";
+import * as refractedlabsFlowtradeV1TxRegistry from "./flowtrade/v1/tx.registry";
+import * as refractedlabsFlowtradeV1TxAmino from "./flowtrade/v1/tx.amino";
 export const refractedlabsAminoConverters = {
-  ...refractedlabsFlowtradeTxAmino.AminoConverter
+  ...refractedlabsFlowtradeV1TxAmino.AminoConverter
 };
-export const refractedlabsProtoRegistry: ReadonlyArray<[string, GeneratedType]> = [...refractedlabsFlowtradeTxRegistry.registry];
+export const refractedlabsProtoRegistry: ReadonlyArray<[string, GeneratedType]> = [...refractedlabsFlowtradeV1TxRegistry.registry];
 export const getSigningRefractedlabsClientOptions = ({
-  defaultTypes = cosmosProtoRegistry
+  defaultTypes = defaultRegistryTypes
 }: {
   defaultTypes?: ReadonlyArray<[string, GeneratedType]>;
 } = {}): {
@@ -18,8 +18,8 @@ export const getSigningRefractedlabsClientOptions = ({
 } => {
   const registry = new Registry([...defaultTypes, ...refractedlabsProtoRegistry]);
   const aminoTypes = new AminoTypes({
-    ...refractedlabsAminoConverters,
-    ...cosmosAminoConverters
+    ...cosmosAminoConverters,
+    ...refractedlabsAminoConverters
   });
   return {
     registry,
@@ -29,7 +29,7 @@ export const getSigningRefractedlabsClientOptions = ({
 export const getSigningRefractedlabsClient = async ({
   rpcEndpoint,
   signer,
-  defaultTypes = cosmosProtoRegistry
+  defaultTypes = defaultRegistryTypes
 }: {
   rpcEndpoint: string | HttpEndpoint;
   signer: OfflineSigner;
