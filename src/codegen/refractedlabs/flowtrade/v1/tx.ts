@@ -14,10 +14,10 @@ export interface MsgUpdateParamsProtoMsg {
 }
 export interface MsgUpdateParamsAmino {
   authority?: string;
-  params?: ParamsAmino;
+  params: ParamsAmino;
 }
 export interface MsgUpdateParamsAminoMsg {
-  type: "refractedlabs/flowtrade/v1/UpdateParams";
+  type: "refracted/flowtrade/v1/UpdateParams";
   value: MsgUpdateParamsAmino;
 }
 export interface MsgUpdateParamsSDKType {
@@ -45,10 +45,10 @@ export interface MsgCreateFlowProtoMsg {
 }
 export interface MsgCreateFlowAmino {
   creator?: string;
-  request?: FlowCreationRequestAmino;
+  request: FlowCreationRequestAmino;
 }
 export interface MsgCreateFlowAminoMsg {
-  type: "refractedlabs/flowtrade/v1/CreateFlow";
+  type: "refracted/flowtrade/v1/CreateFlow";
   value: MsgCreateFlowAmino;
 }
 export interface MsgCreateFlowSDKType {
@@ -83,13 +83,13 @@ export interface MsgJoinFlowProtoMsg {
   value: Uint8Array;
 }
 export interface MsgJoinFlowAmino {
-  flow?: string;
+  flow: string;
   address?: string;
-  amount?: CoinAmino;
+  amount: CoinAmino;
   signer?: string;
 }
 export interface MsgJoinFlowAminoMsg {
-  type: "refractedlabs/flowtrade/v1/JoinFlow";
+  type: "refracted/flowtrade/v1/JoinFlow";
   value: MsgJoinFlowAmino;
 }
 export interface MsgJoinFlowSDKType {
@@ -126,13 +126,13 @@ export interface MsgExitFlowProtoMsg {
   value: Uint8Array;
 }
 export interface MsgExitFlowAmino {
-  flow?: string;
+  flow: string;
   address?: string;
-  amount?: CoinAmino;
+  amount: CoinAmino;
   signer?: string;
 }
 export interface MsgExitFlowAminoMsg {
-  type: "refractedlabs/flowtrade/v1/ExitFlow";
+  type: "refracted/flowtrade/v1/ExitFlow";
   value: MsgExitFlowAmino;
 }
 export interface MsgExitFlowSDKType {
@@ -168,12 +168,12 @@ export interface MsgSetOperatorProtoMsg {
   value: Uint8Array;
 }
 export interface MsgSetOperatorAmino {
-  flow?: string;
+  flow: string;
   owner?: string;
   operator?: string;
 }
 export interface MsgSetOperatorAminoMsg {
-  type: "refractedlabs/flowtrade/v1/SetOperator";
+  type: "refracted/flowtrade/v1/SetOperator";
   value: MsgSetOperatorAmino;
 }
 export interface MsgSetOperatorSDKType {
@@ -203,11 +203,11 @@ export interface MsgClaimTokenInProtoMsg {
 }
 export interface MsgClaimTokenInAmino {
   creator?: string;
-  flow?: string;
+  flow: string;
   treasury_address?: string;
 }
 export interface MsgClaimTokenInAminoMsg {
-  type: "refractedlabs/flowtrade/v1/ClaimTokenIn";
+  type: "refracted/flowtrade/v1/ClaimTokenIn";
   value: MsgClaimTokenInAmino;
 }
 export interface MsgClaimTokenInSDKType {
@@ -245,12 +245,12 @@ export interface MsgClaimTokenOutProtoMsg {
   value: Uint8Array;
 }
 export interface MsgClaimTokenOutAmino {
-  flow?: string;
+  flow: string;
   address?: string;
   signer?: string;
 }
 export interface MsgClaimTokenOutAminoMsg {
-  type: "refractedlabs/flowtrade/v1/ClaimTokenOut";
+  type: "refracted/flowtrade/v1/ClaimTokenOut";
   value: MsgClaimTokenOutAmino;
 }
 export interface MsgClaimTokenOutSDKType {
@@ -287,11 +287,11 @@ export interface MsgStopFlowProtoMsg {
   value: Uint8Array;
 }
 export interface MsgStopFlowAmino {
-  flow_id?: string;
+  flow_id: string;
   creator?: string;
 }
 export interface MsgStopFlowAminoMsg {
-  type: "refractedlabs/flowtrade/v1/StopFlow";
+  type: "refracted/flowtrade/v1/StopFlow";
   value: MsgStopFlowAmino;
 }
 export interface MsgStopFlowSDKType {
@@ -377,7 +377,7 @@ export const MsgUpdateParams = {
   toAmino(message: MsgUpdateParams): MsgUpdateParamsAmino {
     const obj: any = {};
     obj.authority = message.authority;
-    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    obj.params = message.params ? Params.toAmino(message.params) : Params.fromPartial({});
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
@@ -385,7 +385,7 @@ export const MsgUpdateParams = {
   },
   toAminoMsg(message: MsgUpdateParams): MsgUpdateParamsAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/UpdateParams",
+      type: "refracted/flowtrade/v1/UpdateParams",
       value: MsgUpdateParams.toAmino(message)
     };
   },
@@ -527,7 +527,7 @@ export const MsgCreateFlow = {
   toAmino(message: MsgCreateFlow): MsgCreateFlowAmino {
     const obj: any = {};
     obj.creator = message.creator;
-    obj.request = message.request ? FlowCreationRequest.toAmino(message.request) : undefined;
+    obj.request = message.request ? FlowCreationRequest.toAmino(message.request) : FlowCreationRequest.fromPartial({});
     return obj;
   },
   fromAminoMsg(object: MsgCreateFlowAminoMsg): MsgCreateFlow {
@@ -535,7 +535,7 @@ export const MsgCreateFlow = {
   },
   toAminoMsg(message: MsgCreateFlow): MsgCreateFlowAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/CreateFlow",
+      type: "refracted/flowtrade/v1/CreateFlow",
       value: MsgCreateFlow.toAmino(message)
     };
   },
@@ -718,9 +718,9 @@ export const MsgJoinFlow = {
   },
   toAmino(message: MsgJoinFlow): MsgJoinFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow ? message.flow.toString() : "0";
     obj.address = message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : Coin.fromPartial({});
     obj.signer = message.signer;
     return obj;
   },
@@ -729,7 +729,7 @@ export const MsgJoinFlow = {
   },
   toAminoMsg(message: MsgJoinFlow): MsgJoinFlowAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/JoinFlow",
+      type: "refracted/flowtrade/v1/JoinFlow",
       value: MsgJoinFlow.toAmino(message)
     };
   },
@@ -912,9 +912,9 @@ export const MsgExitFlow = {
   },
   toAmino(message: MsgExitFlow): MsgExitFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow ? message.flow.toString() : "0";
     obj.address = message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount) : undefined;
+    obj.amount = message.amount ? Coin.toAmino(message.amount) : Coin.fromPartial({});
     obj.signer = message.signer;
     return obj;
   },
@@ -923,7 +923,7 @@ export const MsgExitFlow = {
   },
   toAminoMsg(message: MsgExitFlow): MsgExitFlowAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/ExitFlow",
+      type: "refracted/flowtrade/v1/ExitFlow",
       value: MsgExitFlow.toAmino(message)
     };
   },
@@ -1093,7 +1093,7 @@ export const MsgSetOperator = {
   },
   toAmino(message: MsgSetOperator): MsgSetOperatorAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow ? message.flow.toString() : "0";
     obj.owner = message.owner;
     obj.operator = message.operator;
     return obj;
@@ -1103,7 +1103,7 @@ export const MsgSetOperator = {
   },
   toAminoMsg(message: MsgSetOperator): MsgSetOperatorAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/SetOperator",
+      type: "refracted/flowtrade/v1/SetOperator",
       value: MsgSetOperator.toAmino(message)
     };
   },
@@ -1258,7 +1258,7 @@ export const MsgClaimTokenIn = {
   toAmino(message: MsgClaimTokenIn): MsgClaimTokenInAmino {
     const obj: any = {};
     obj.creator = message.creator;
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow ? message.flow.toString() : "0";
     obj.treasury_address = message.treasuryAddress;
     return obj;
   },
@@ -1267,7 +1267,7 @@ export const MsgClaimTokenIn = {
   },
   toAminoMsg(message: MsgClaimTokenIn): MsgClaimTokenInAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/ClaimTokenIn",
+      type: "refracted/flowtrade/v1/ClaimTokenIn",
       value: MsgClaimTokenIn.toAmino(message)
     };
   },
@@ -1451,7 +1451,7 @@ export const MsgClaimTokenOut = {
   },
   toAmino(message: MsgClaimTokenOut): MsgClaimTokenOutAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow ? message.flow.toString() : "0";
     obj.address = message.address;
     obj.signer = message.signer;
     return obj;
@@ -1461,7 +1461,7 @@ export const MsgClaimTokenOut = {
   },
   toAminoMsg(message: MsgClaimTokenOut): MsgClaimTokenOutAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/ClaimTokenOut",
+      type: "refracted/flowtrade/v1/ClaimTokenOut",
       value: MsgClaimTokenOut.toAmino(message)
     };
   },
@@ -1632,7 +1632,7 @@ export const MsgStopFlow = {
   },
   toAmino(message: MsgStopFlow): MsgStopFlowAmino {
     const obj: any = {};
-    obj.flow_id = message.flowId ? message.flowId.toString() : undefined;
+    obj.flow_id = message.flowId ? message.flowId.toString() : "0";
     obj.creator = message.creator;
     return obj;
   },
@@ -1641,7 +1641,7 @@ export const MsgStopFlow = {
   },
   toAminoMsg(message: MsgStopFlow): MsgStopFlowAminoMsg {
     return {
-      type: "refractedlabs/flowtrade/v1/StopFlow",
+      type: "refracted/flowtrade/v1/StopFlow",
       value: MsgStopFlow.toAmino(message)
     };
   },
