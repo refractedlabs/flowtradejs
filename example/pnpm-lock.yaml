@@ -1,11 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.3.1
+  '@refractedlabs/flowtradejs': 0.3.2
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.3.1_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.3.2_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.1.6
@@ -24,8 +24,8 @@ packages:
       protobufjs: 6.11.4
     dev: false
 
-  /@cosmjs/amino/0.32.1:
-    resolution: {integrity: sha512-5l2xQ2XuAhV/B3kTIMPBcVZ/OQ+9Yyddzw/lIVs4qE5e/oBI0PVNWXw1oyR0wgfGHrMUxgKjsoOOqE2IbXVyCw==}
+  /@cosmjs/amino/0.32.2:
+    resolution: {integrity: sha512-lcK5RCVm4OfdAooxKcF2+NwaDVVpghOq6o/A40c2mHXDUzUoRZ33VAHjVJ9Me6vOFxshrw/XEFn1f4KObntjYA==}
     dependencies:
       '@cosmjs/crypto': 0.32.2
       '@cosmjs/encoding': 0.32.2
@@ -66,10 +66,10 @@ packages:
       bn.js: 5.2.1
     dev: false
 
-  /@cosmjs/proto-signing/0.32.1:
-    resolution: {integrity: sha512-IHJMXQ8XnfzR5K1hWb8VV/jEfJof6BL2mgGIA7X4hSPegwoVfb9hnFKPEPgFjGCTTvGZ8SfnCdXxpsOjianVIA==}
+  /@cosmjs/proto-signing/0.32.2:
+    resolution: {integrity: sha512-UV4WwkE3W3G3s7wwU9rizNcUEz2g0W8jQZS5J6/3fiN0mRPwtPKQ6EinPN9ASqcAJ7/VQH4/9EPOw7d6XQGnqw==}
     dependencies:
-      '@cosmjs/amino': 0.32.1
+      '@cosmjs/amino': 0.32.2
       '@cosmjs/crypto': 0.32.2
       '@cosmjs/encoding': 0.32.2
       '@cosmjs/math': 0.32.2
@@ -89,16 +89,16 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@cosmjs/stargate/0.32.1:
-    resolution: {integrity: sha512-S0E1qKQ2CMJU79G8bQTquTyrbU03gFsvCkbo3RvK8v2OltVCByjFNh+0nGN5do+uDOzwwmDvnNLhR+SaIyNQoQ==}
+  /@cosmjs/stargate/0.32.2:
+    resolution: {integrity: sha512-AsJa29fT7Jd4xt9Ai+HMqhyj7UQu7fyYKdXj/8+/9PD74xe6lZSYhQPcitUmMLJ1ckKPgXSk5Dd2LbsQT0IhZg==}
     dependencies:
       '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.32.1
+      '@cosmjs/amino': 0.32.2
       '@cosmjs/encoding': 0.32.2
       '@cosmjs/math': 0.32.2
-      '@cosmjs/proto-signing': 0.32.1
+      '@cosmjs/proto-signing': 0.32.2
       '@cosmjs/stream': 0.32.2
-      '@cosmjs/tendermint-rpc': 0.32.1
+      '@cosmjs/tendermint-rpc': 0.32.2
       '@cosmjs/utils': 0.32.2
       cosmjs-types: 0.9.0
       xstream: 11.14.0
@@ -114,8 +114,8 @@ packages:
       xstream: 11.14.0
     dev: false
 
-  /@cosmjs/tendermint-rpc/0.32.1:
-    resolution: {integrity: sha512-4uGSxB2JejWhwBUgxca4GqcK/BGnCFMIP7ptwEledrC3AY/shPeIYcPXWEBwO7sfwCta8DhAOCLrc9zhVC+VAQ==}
+  /@cosmjs/tendermint-rpc/0.32.2:
+    resolution: {integrity: sha512-DXyJHDmcAfCix4H/7/dKR0UMdshP01KxJOXHdHxBCbLIpck94BsWD3B2ZTXwfA6sv98so9wOzhp7qGQa5malxg==}
     dependencies:
       '@cosmjs/crypto': 0.32.2
       '@cosmjs/encoding': 0.32.2
@@ -218,10 +218,10 @@ packages:
       - debug
     dev: false
 
-  /@refractedlabs/flowtradejs/0.3.1_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-fhxzF0hKcshFgikyu1aTZKPidoGIwx+u8XOaN2BZfhTKzlAB/Z1nfOMcmoZKtBLYQrTxRtD21X3RtuodqCDqZg==, tarball: download/@refractedlabs/flowtradejs/0.3.1/f968ebb0e1076dba73cd861892de18d806358ed1}
+  /@refractedlabs/flowtradejs/0.3.2_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-VdY6alMyHYwmKUYUK9DBeGsZp2BjrQdCqXSZhMKbDqKKtA3Ee7p+wv7bdpRIJ+0BH4QJn+9imo0nbPZjIZ93cw==, tarball: download/@refractedlabs/flowtradejs/0.3.2/f1763ee3d97817f3f1ee4bfc4b3840cdefd50a4c}
     dependencies:
-      '@refractedlabs/utils': 0.3.1_google-protobuf@3.21.2
+      '@refractedlabs/utils': 0.3.2_google-protobuf@3.21.2
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -229,13 +229,13 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@refractedlabs/utils/0.3.1_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-8pHCW07VdX3j9INAJreGiFA5Jp09Dq2fidif2Z3nwh77GVd/fW91qYJo4kvfEiVULRrEkMLFGYwrCkEK4uaa0w==, tarball: download/@refractedlabs/utils/0.3.1/03100f1d4cbec911ab99e9d7be3cc6bfb1f4af51}
+  /@refractedlabs/utils/0.3.2_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-fwajgN1TmDLGDbjlKzMQj/PuTNars3CEXSO6UpR7G58zv5rIHd6S3MW2NhA9QAS/TBmupEXde4clblpZhYz2/A==, tarball: download/@refractedlabs/utils/0.3.2/22fb78e79868c70f8bcac288d199526218d279e6}
     dependencies:
-      '@cosmjs/amino': 0.32.1
-      '@cosmjs/proto-signing': 0.32.1
-      '@cosmjs/stargate': 0.32.1
-      '@cosmjs/tendermint-rpc': 0.32.1
+      '@cosmjs/amino': 0.32.2
+      '@cosmjs/proto-signing': 0.32.2
+      '@cosmjs/stargate': 0.32.2
+      '@cosmjs/tendermint-rpc': 0.32.2
       '@improbable-eng/grpc-web': 0.15.0_google-protobuf@3.21.2
       '@improbable-eng/grpc-web-node-http-transport': 0.15.0_fng5pv4qmdetiqq66m6yjkaacu
       '@refractedlabs/cosmology-lcd-fork': 0.13.3
