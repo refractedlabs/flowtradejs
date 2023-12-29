@@ -1,11 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.3.2
+  '@refractedlabs/flowtradejs': 0.3.3
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.3.2_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.3.3_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.1.6
@@ -218,9 +218,13 @@ packages:
       - debug
     dev: false
 
-  /@refractedlabs/flowtradejs/0.3.2_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-VdY6alMyHYwmKUYUK9DBeGsZp2BjrQdCqXSZhMKbDqKKtA3Ee7p+wv7bdpRIJ+0BH4QJn+9imo0nbPZjIZ93cw==, tarball: download/@refractedlabs/flowtradejs/0.3.2/f1763ee3d97817f3f1ee4bfc4b3840cdefd50a4c}
+  /@refractedlabs/flowtradejs/0.3.3_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-ZJh2FSzZ1VuPhEY/uIHRpYDgJDmcpmdBbFLtHuP6rY6fsMVSGA1cr3yNwYZMWnXX6kxg+VqnMWZCcloTlbaePA==, tarball: download/@refractedlabs/flowtradejs/0.3.3/c32173616c7740d99940faa96dc1b4169f993d29}
     dependencies:
+      '@cosmjs/amino': 0.32.2
+      '@cosmjs/proto-signing': 0.32.2
+      '@cosmjs/stargate': 0.32.2
+      '@cosmjs/tendermint-rpc': 0.32.2
       '@refractedlabs/utils': 0.3.2_google-protobuf@3.21.2
     transitivePeerDependencies:
       - bufferutil
