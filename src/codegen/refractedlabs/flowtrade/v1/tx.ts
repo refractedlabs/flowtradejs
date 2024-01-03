@@ -4,6 +4,7 @@ import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin"
 import { Position, PositionAmino, PositionSDKType } from "./position";
 import { BinaryReader, BinaryWriter } from "../../../binary";
 import { isSet } from "../../../helpers";
+import { GlobalDecoderRegistry } from "../../../registry";
 export interface MsgUpdateParams {
   authority: string;
   params: Params;
@@ -317,6 +318,16 @@ function createBaseMsgUpdateParams(): MsgUpdateParams {
 }
 export const MsgUpdateParams = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgUpdateParams",
+  aminoType: "refracted/flowtrade/v1/UpdateParams",
+  is(o: any): o is MsgUpdateParams {
+    return o && (o.$typeUrl === MsgUpdateParams.typeUrl || typeof o.authority === "string" && Params.is(o.params));
+  },
+  isSDK(o: any): o is MsgUpdateParamsSDKType {
+    return o && (o.$typeUrl === MsgUpdateParams.typeUrl || typeof o.authority === "string" && Params.isSDK(o.params));
+  },
+  isAmino(o: any): o is MsgUpdateParamsAmino {
+    return o && (o.$typeUrl === MsgUpdateParams.typeUrl || typeof o.authority === "string" && Params.isAmino(o.params));
+  },
   encode(message: MsgUpdateParams, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.authority !== "") {
       writer.uint32(10).string(message.authority);
@@ -326,7 +337,7 @@ export const MsgUpdateParams = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParams {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgUpdateParams {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParams();
@@ -337,7 +348,7 @@ export const MsgUpdateParams = {
           message.authority = reader.string();
           break;
         case 2:
-          message.params = Params.decode(reader, reader.uint32());
+          message.params = Params.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -374,23 +385,23 @@ export const MsgUpdateParams = {
     }
     return message;
   },
-  toAmino(message: MsgUpdateParams): MsgUpdateParamsAmino {
+  toAmino(message: MsgUpdateParams, useInterfaces: boolean = true): MsgUpdateParamsAmino {
     const obj: any = {};
-    obj.authority = message.authority;
-    obj.params = message.params ? Params.toAmino(message.params) : Params.fromPartial({});
+    obj.authority = message.authority === "" ? undefined : message.authority;
+    obj.params = message.params ? Params.toAmino(message.params, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
     return MsgUpdateParams.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgUpdateParams): MsgUpdateParamsAminoMsg {
+  toAminoMsg(message: MsgUpdateParams, useInterfaces: boolean = true): MsgUpdateParamsAminoMsg {
     return {
       type: "refracted/flowtrade/v1/UpdateParams",
-      value: MsgUpdateParams.toAmino(message)
+      value: MsgUpdateParams.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgUpdateParamsProtoMsg): MsgUpdateParams {
-    return MsgUpdateParams.decode(message.value);
+  fromProtoMsg(message: MsgUpdateParamsProtoMsg, useInterfaces: boolean = true): MsgUpdateParams {
+    return MsgUpdateParams.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgUpdateParams): Uint8Array {
     return MsgUpdateParams.encode(message).finish();
@@ -402,15 +413,26 @@ export const MsgUpdateParams = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgUpdateParams.typeUrl, MsgUpdateParams);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgUpdateParams.aminoType, MsgUpdateParams.typeUrl);
 function createBaseMsgUpdateParamsResponse(): MsgUpdateParamsResponse {
   return {};
 }
 export const MsgUpdateParamsResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgUpdateParamsResponse",
+  is(o: any): o is MsgUpdateParamsResponse {
+    return o && o.$typeUrl === MsgUpdateParamsResponse.typeUrl;
+  },
+  isSDK(o: any): o is MsgUpdateParamsResponseSDKType {
+    return o && o.$typeUrl === MsgUpdateParamsResponse.typeUrl;
+  },
+  isAmino(o: any): o is MsgUpdateParamsResponseAmino {
+    return o && o.$typeUrl === MsgUpdateParamsResponse.typeUrl;
+  },
   encode(_: MsgUpdateParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgUpdateParamsResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgUpdateParamsResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgUpdateParamsResponse();
@@ -439,15 +461,15 @@ export const MsgUpdateParamsResponse = {
     const message = createBaseMsgUpdateParamsResponse();
     return message;
   },
-  toAmino(_: MsgUpdateParamsResponse): MsgUpdateParamsResponseAmino {
+  toAmino(_: MsgUpdateParamsResponse, useInterfaces: boolean = true): MsgUpdateParamsResponseAmino {
     const obj: any = {};
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsResponseAminoMsg): MsgUpdateParamsResponse {
     return MsgUpdateParamsResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgUpdateParamsResponseProtoMsg): MsgUpdateParamsResponse {
-    return MsgUpdateParamsResponse.decode(message.value);
+  fromProtoMsg(message: MsgUpdateParamsResponseProtoMsg, useInterfaces: boolean = true): MsgUpdateParamsResponse {
+    return MsgUpdateParamsResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgUpdateParamsResponse): Uint8Array {
     return MsgUpdateParamsResponse.encode(message).finish();
@@ -459,6 +481,7 @@ export const MsgUpdateParamsResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgUpdateParamsResponse.typeUrl, MsgUpdateParamsResponse);
 function createBaseMsgCreateFlow(): MsgCreateFlow {
   return {
     creator: "",
@@ -467,6 +490,16 @@ function createBaseMsgCreateFlow(): MsgCreateFlow {
 }
 export const MsgCreateFlow = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgCreateFlow",
+  aminoType: "refracted/flowtrade/v1/CreateFlow",
+  is(o: any): o is MsgCreateFlow {
+    return o && (o.$typeUrl === MsgCreateFlow.typeUrl || typeof o.creator === "string" && FlowCreationRequest.is(o.request));
+  },
+  isSDK(o: any): o is MsgCreateFlowSDKType {
+    return o && (o.$typeUrl === MsgCreateFlow.typeUrl || typeof o.creator === "string" && FlowCreationRequest.isSDK(o.request));
+  },
+  isAmino(o: any): o is MsgCreateFlowAmino {
+    return o && (o.$typeUrl === MsgCreateFlow.typeUrl || typeof o.creator === "string" && FlowCreationRequest.isAmino(o.request));
+  },
   encode(message: MsgCreateFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
@@ -476,7 +509,7 @@ export const MsgCreateFlow = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateFlow {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgCreateFlow {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateFlow();
@@ -487,7 +520,7 @@ export const MsgCreateFlow = {
           message.creator = reader.string();
           break;
         case 2:
-          message.request = FlowCreationRequest.decode(reader, reader.uint32());
+          message.request = FlowCreationRequest.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -524,23 +557,23 @@ export const MsgCreateFlow = {
     }
     return message;
   },
-  toAmino(message: MsgCreateFlow): MsgCreateFlowAmino {
+  toAmino(message: MsgCreateFlow, useInterfaces: boolean = true): MsgCreateFlowAmino {
     const obj: any = {};
-    obj.creator = message.creator;
-    obj.request = message.request ? FlowCreationRequest.toAmino(message.request) : FlowCreationRequest.fromPartial({});
+    obj.creator = message.creator === "" ? undefined : message.creator;
+    obj.request = message.request ? FlowCreationRequest.toAmino(message.request, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCreateFlowAminoMsg): MsgCreateFlow {
     return MsgCreateFlow.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgCreateFlow): MsgCreateFlowAminoMsg {
+  toAminoMsg(message: MsgCreateFlow, useInterfaces: boolean = true): MsgCreateFlowAminoMsg {
     return {
       type: "refracted/flowtrade/v1/CreateFlow",
-      value: MsgCreateFlow.toAmino(message)
+      value: MsgCreateFlow.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgCreateFlowProtoMsg): MsgCreateFlow {
-    return MsgCreateFlow.decode(message.value);
+  fromProtoMsg(message: MsgCreateFlowProtoMsg, useInterfaces: boolean = true): MsgCreateFlow {
+    return MsgCreateFlow.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgCreateFlow): Uint8Array {
     return MsgCreateFlow.encode(message).finish();
@@ -552,6 +585,8 @@ export const MsgCreateFlow = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgCreateFlow.typeUrl, MsgCreateFlow);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgCreateFlow.aminoType, MsgCreateFlow.typeUrl);
 function createBaseMsgCreateFlowResponse(): MsgCreateFlowResponse {
   return {
     flow: Flow.fromPartial({})
@@ -559,13 +594,22 @@ function createBaseMsgCreateFlowResponse(): MsgCreateFlowResponse {
 }
 export const MsgCreateFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgCreateFlowResponse",
+  is(o: any): o is MsgCreateFlowResponse {
+    return o && (o.$typeUrl === MsgCreateFlowResponse.typeUrl || Flow.is(o.flow));
+  },
+  isSDK(o: any): o is MsgCreateFlowResponseSDKType {
+    return o && (o.$typeUrl === MsgCreateFlowResponse.typeUrl || Flow.isSDK(o.flow));
+  },
+  isAmino(o: any): o is MsgCreateFlowResponseAmino {
+    return o && (o.$typeUrl === MsgCreateFlowResponse.typeUrl || Flow.isAmino(o.flow));
+  },
   encode(message: MsgCreateFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== undefined) {
       Flow.encode(message.flow, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgCreateFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgCreateFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgCreateFlowResponse();
@@ -573,7 +617,7 @@ export const MsgCreateFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = Flow.decode(reader, reader.uint32());
+          message.flow = Flow.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -604,16 +648,16 @@ export const MsgCreateFlowResponse = {
     }
     return message;
   },
-  toAmino(message: MsgCreateFlowResponse): MsgCreateFlowResponseAmino {
+  toAmino(message: MsgCreateFlowResponse, useInterfaces: boolean = true): MsgCreateFlowResponseAmino {
     const obj: any = {};
-    obj.flow = message.flow ? Flow.toAmino(message.flow) : undefined;
+    obj.flow = message.flow ? Flow.toAmino(message.flow, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCreateFlowResponseAminoMsg): MsgCreateFlowResponse {
     return MsgCreateFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgCreateFlowResponseProtoMsg): MsgCreateFlowResponse {
-    return MsgCreateFlowResponse.decode(message.value);
+  fromProtoMsg(message: MsgCreateFlowResponseProtoMsg, useInterfaces: boolean = true): MsgCreateFlowResponse {
+    return MsgCreateFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgCreateFlowResponse): Uint8Array {
     return MsgCreateFlowResponse.encode(message).finish();
@@ -625,6 +669,7 @@ export const MsgCreateFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgCreateFlowResponse.typeUrl, MsgCreateFlowResponse);
 function createBaseMsgJoinFlow(): MsgJoinFlow {
   return {
     flow: BigInt(0),
@@ -635,6 +680,16 @@ function createBaseMsgJoinFlow(): MsgJoinFlow {
 }
 export const MsgJoinFlow = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgJoinFlow",
+  aminoType: "refracted/flowtrade/v1/JoinFlow",
+  is(o: any): o is MsgJoinFlow {
+    return o && (o.$typeUrl === MsgJoinFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.is(o.amount) && typeof o.signer === "string");
+  },
+  isSDK(o: any): o is MsgJoinFlowSDKType {
+    return o && (o.$typeUrl === MsgJoinFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.isSDK(o.amount) && typeof o.signer === "string");
+  },
+  isAmino(o: any): o is MsgJoinFlowAmino {
+    return o && (o.$typeUrl === MsgJoinFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.isAmino(o.amount) && typeof o.signer === "string");
+  },
   encode(message: MsgJoinFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -650,7 +705,7 @@ export const MsgJoinFlow = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgJoinFlow {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgJoinFlow {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgJoinFlow();
@@ -664,7 +719,7 @@ export const MsgJoinFlow = {
           message.address = reader.string();
           break;
         case 3:
-          message.amount = Coin.decode(reader, reader.uint32());
+          message.amount = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         case 4:
           message.signer = reader.string();
@@ -716,25 +771,25 @@ export const MsgJoinFlow = {
     }
     return message;
   },
-  toAmino(message: MsgJoinFlow): MsgJoinFlowAmino {
+  toAmino(message: MsgJoinFlow, useInterfaces: boolean = true): MsgJoinFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
-    obj.address = message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount) : Coin.fromPartial({});
-    obj.signer = message.signer;
+    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.address = message.address === "" ? undefined : message.address;
+    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : undefined;
+    obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
   },
   fromAminoMsg(object: MsgJoinFlowAminoMsg): MsgJoinFlow {
     return MsgJoinFlow.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgJoinFlow): MsgJoinFlowAminoMsg {
+  toAminoMsg(message: MsgJoinFlow, useInterfaces: boolean = true): MsgJoinFlowAminoMsg {
     return {
       type: "refracted/flowtrade/v1/JoinFlow",
-      value: MsgJoinFlow.toAmino(message)
+      value: MsgJoinFlow.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgJoinFlowProtoMsg): MsgJoinFlow {
-    return MsgJoinFlow.decode(message.value);
+  fromProtoMsg(message: MsgJoinFlowProtoMsg, useInterfaces: boolean = true): MsgJoinFlow {
+    return MsgJoinFlow.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgJoinFlow): Uint8Array {
     return MsgJoinFlow.encode(message).finish();
@@ -746,6 +801,8 @@ export const MsgJoinFlow = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgJoinFlow.typeUrl, MsgJoinFlow);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgJoinFlow.aminoType, MsgJoinFlow.typeUrl);
 function createBaseMsgJoinFlowResponse(): MsgJoinFlowResponse {
   return {
     position: Position.fromPartial({})
@@ -753,13 +810,22 @@ function createBaseMsgJoinFlowResponse(): MsgJoinFlowResponse {
 }
 export const MsgJoinFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgJoinFlowResponse",
+  is(o: any): o is MsgJoinFlowResponse {
+    return o && (o.$typeUrl === MsgJoinFlowResponse.typeUrl || Position.is(o.position));
+  },
+  isSDK(o: any): o is MsgJoinFlowResponseSDKType {
+    return o && (o.$typeUrl === MsgJoinFlowResponse.typeUrl || Position.isSDK(o.position));
+  },
+  isAmino(o: any): o is MsgJoinFlowResponseAmino {
+    return o && (o.$typeUrl === MsgJoinFlowResponse.typeUrl || Position.isAmino(o.position));
+  },
   encode(message: MsgJoinFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.position !== undefined) {
       Position.encode(message.position, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgJoinFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgJoinFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgJoinFlowResponse();
@@ -767,7 +833,7 @@ export const MsgJoinFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.position = Position.decode(reader, reader.uint32());
+          message.position = Position.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -798,16 +864,16 @@ export const MsgJoinFlowResponse = {
     }
     return message;
   },
-  toAmino(message: MsgJoinFlowResponse): MsgJoinFlowResponseAmino {
+  toAmino(message: MsgJoinFlowResponse, useInterfaces: boolean = true): MsgJoinFlowResponseAmino {
     const obj: any = {};
-    obj.position = message.position ? Position.toAmino(message.position) : undefined;
+    obj.position = message.position ? Position.toAmino(message.position, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgJoinFlowResponseAminoMsg): MsgJoinFlowResponse {
     return MsgJoinFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgJoinFlowResponseProtoMsg): MsgJoinFlowResponse {
-    return MsgJoinFlowResponse.decode(message.value);
+  fromProtoMsg(message: MsgJoinFlowResponseProtoMsg, useInterfaces: boolean = true): MsgJoinFlowResponse {
+    return MsgJoinFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgJoinFlowResponse): Uint8Array {
     return MsgJoinFlowResponse.encode(message).finish();
@@ -819,6 +885,7 @@ export const MsgJoinFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgJoinFlowResponse.typeUrl, MsgJoinFlowResponse);
 function createBaseMsgExitFlow(): MsgExitFlow {
   return {
     flow: BigInt(0),
@@ -829,6 +896,16 @@ function createBaseMsgExitFlow(): MsgExitFlow {
 }
 export const MsgExitFlow = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgExitFlow",
+  aminoType: "refracted/flowtrade/v1/ExitFlow",
+  is(o: any): o is MsgExitFlow {
+    return o && (o.$typeUrl === MsgExitFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.is(o.amount) && typeof o.signer === "string");
+  },
+  isSDK(o: any): o is MsgExitFlowSDKType {
+    return o && (o.$typeUrl === MsgExitFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.isSDK(o.amount) && typeof o.signer === "string");
+  },
+  isAmino(o: any): o is MsgExitFlowAmino {
+    return o && (o.$typeUrl === MsgExitFlow.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && Coin.isAmino(o.amount) && typeof o.signer === "string");
+  },
   encode(message: MsgExitFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -844,7 +921,7 @@ export const MsgExitFlow = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgExitFlow {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgExitFlow {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExitFlow();
@@ -858,7 +935,7 @@ export const MsgExitFlow = {
           message.address = reader.string();
           break;
         case 3:
-          message.amount = Coin.decode(reader, reader.uint32());
+          message.amount = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         case 4:
           message.signer = reader.string();
@@ -910,25 +987,25 @@ export const MsgExitFlow = {
     }
     return message;
   },
-  toAmino(message: MsgExitFlow): MsgExitFlowAmino {
+  toAmino(message: MsgExitFlow, useInterfaces: boolean = true): MsgExitFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
-    obj.address = message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount) : Coin.fromPartial({});
-    obj.signer = message.signer;
+    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.address = message.address === "" ? undefined : message.address;
+    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : undefined;
+    obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
   },
   fromAminoMsg(object: MsgExitFlowAminoMsg): MsgExitFlow {
     return MsgExitFlow.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgExitFlow): MsgExitFlowAminoMsg {
+  toAminoMsg(message: MsgExitFlow, useInterfaces: boolean = true): MsgExitFlowAminoMsg {
     return {
       type: "refracted/flowtrade/v1/ExitFlow",
-      value: MsgExitFlow.toAmino(message)
+      value: MsgExitFlow.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgExitFlowProtoMsg): MsgExitFlow {
-    return MsgExitFlow.decode(message.value);
+  fromProtoMsg(message: MsgExitFlowProtoMsg, useInterfaces: boolean = true): MsgExitFlow {
+    return MsgExitFlow.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgExitFlow): Uint8Array {
     return MsgExitFlow.encode(message).finish();
@@ -940,6 +1017,8 @@ export const MsgExitFlow = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgExitFlow.typeUrl, MsgExitFlow);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgExitFlow.aminoType, MsgExitFlow.typeUrl);
 function createBaseMsgExitFlowResponse(): MsgExitFlowResponse {
   return {
     position: Position.fromPartial({})
@@ -947,13 +1026,22 @@ function createBaseMsgExitFlowResponse(): MsgExitFlowResponse {
 }
 export const MsgExitFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgExitFlowResponse",
+  is(o: any): o is MsgExitFlowResponse {
+    return o && (o.$typeUrl === MsgExitFlowResponse.typeUrl || Position.is(o.position));
+  },
+  isSDK(o: any): o is MsgExitFlowResponseSDKType {
+    return o && (o.$typeUrl === MsgExitFlowResponse.typeUrl || Position.isSDK(o.position));
+  },
+  isAmino(o: any): o is MsgExitFlowResponseAmino {
+    return o && (o.$typeUrl === MsgExitFlowResponse.typeUrl || Position.isAmino(o.position));
+  },
   encode(message: MsgExitFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.position !== undefined) {
       Position.encode(message.position, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgExitFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgExitFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgExitFlowResponse();
@@ -961,7 +1049,7 @@ export const MsgExitFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.position = Position.decode(reader, reader.uint32());
+          message.position = Position.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -992,16 +1080,16 @@ export const MsgExitFlowResponse = {
     }
     return message;
   },
-  toAmino(message: MsgExitFlowResponse): MsgExitFlowResponseAmino {
+  toAmino(message: MsgExitFlowResponse, useInterfaces: boolean = true): MsgExitFlowResponseAmino {
     const obj: any = {};
-    obj.position = message.position ? Position.toAmino(message.position) : undefined;
+    obj.position = message.position ? Position.toAmino(message.position, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgExitFlowResponseAminoMsg): MsgExitFlowResponse {
     return MsgExitFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgExitFlowResponseProtoMsg): MsgExitFlowResponse {
-    return MsgExitFlowResponse.decode(message.value);
+  fromProtoMsg(message: MsgExitFlowResponseProtoMsg, useInterfaces: boolean = true): MsgExitFlowResponse {
+    return MsgExitFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgExitFlowResponse): Uint8Array {
     return MsgExitFlowResponse.encode(message).finish();
@@ -1013,6 +1101,7 @@ export const MsgExitFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgExitFlowResponse.typeUrl, MsgExitFlowResponse);
 function createBaseMsgSetOperator(): MsgSetOperator {
   return {
     flow: BigInt(0),
@@ -1022,6 +1111,16 @@ function createBaseMsgSetOperator(): MsgSetOperator {
 }
 export const MsgSetOperator = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgSetOperator",
+  aminoType: "refracted/flowtrade/v1/SetOperator",
+  is(o: any): o is MsgSetOperator {
+    return o && (o.$typeUrl === MsgSetOperator.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string" && typeof o.operator === "string");
+  },
+  isSDK(o: any): o is MsgSetOperatorSDKType {
+    return o && (o.$typeUrl === MsgSetOperator.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string" && typeof o.operator === "string");
+  },
+  isAmino(o: any): o is MsgSetOperatorAmino {
+    return o && (o.$typeUrl === MsgSetOperator.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string" && typeof o.operator === "string");
+  },
   encode(message: MsgSetOperator, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -1034,7 +1133,7 @@ export const MsgSetOperator = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetOperator {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgSetOperator {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOperator();
@@ -1091,24 +1190,24 @@ export const MsgSetOperator = {
     }
     return message;
   },
-  toAmino(message: MsgSetOperator): MsgSetOperatorAmino {
+  toAmino(message: MsgSetOperator, useInterfaces: boolean = true): MsgSetOperatorAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
-    obj.owner = message.owner;
-    obj.operator = message.operator;
+    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.owner = message.owner === "" ? undefined : message.owner;
+    obj.operator = message.operator === "" ? undefined : message.operator;
     return obj;
   },
   fromAminoMsg(object: MsgSetOperatorAminoMsg): MsgSetOperator {
     return MsgSetOperator.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgSetOperator): MsgSetOperatorAminoMsg {
+  toAminoMsg(message: MsgSetOperator, useInterfaces: boolean = true): MsgSetOperatorAminoMsg {
     return {
       type: "refracted/flowtrade/v1/SetOperator",
-      value: MsgSetOperator.toAmino(message)
+      value: MsgSetOperator.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgSetOperatorProtoMsg): MsgSetOperator {
-    return MsgSetOperator.decode(message.value);
+  fromProtoMsg(message: MsgSetOperatorProtoMsg, useInterfaces: boolean = true): MsgSetOperator {
+    return MsgSetOperator.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgSetOperator): Uint8Array {
     return MsgSetOperator.encode(message).finish();
@@ -1120,15 +1219,26 @@ export const MsgSetOperator = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgSetOperator.typeUrl, MsgSetOperator);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgSetOperator.aminoType, MsgSetOperator.typeUrl);
 function createBaseMsgSetOperatorResponse(): MsgSetOperatorResponse {
   return {};
 }
 export const MsgSetOperatorResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgSetOperatorResponse",
+  is(o: any): o is MsgSetOperatorResponse {
+    return o && o.$typeUrl === MsgSetOperatorResponse.typeUrl;
+  },
+  isSDK(o: any): o is MsgSetOperatorResponseSDKType {
+    return o && o.$typeUrl === MsgSetOperatorResponse.typeUrl;
+  },
+  isAmino(o: any): o is MsgSetOperatorResponseAmino {
+    return o && o.$typeUrl === MsgSetOperatorResponse.typeUrl;
+  },
   encode(_: MsgSetOperatorResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgSetOperatorResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgSetOperatorResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgSetOperatorResponse();
@@ -1157,15 +1267,15 @@ export const MsgSetOperatorResponse = {
     const message = createBaseMsgSetOperatorResponse();
     return message;
   },
-  toAmino(_: MsgSetOperatorResponse): MsgSetOperatorResponseAmino {
+  toAmino(_: MsgSetOperatorResponse, useInterfaces: boolean = true): MsgSetOperatorResponseAmino {
     const obj: any = {};
     return obj;
   },
   fromAminoMsg(object: MsgSetOperatorResponseAminoMsg): MsgSetOperatorResponse {
     return MsgSetOperatorResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgSetOperatorResponseProtoMsg): MsgSetOperatorResponse {
-    return MsgSetOperatorResponse.decode(message.value);
+  fromProtoMsg(message: MsgSetOperatorResponseProtoMsg, useInterfaces: boolean = true): MsgSetOperatorResponse {
+    return MsgSetOperatorResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgSetOperatorResponse): Uint8Array {
     return MsgSetOperatorResponse.encode(message).finish();
@@ -1177,6 +1287,7 @@ export const MsgSetOperatorResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgSetOperatorResponse.typeUrl, MsgSetOperatorResponse);
 function createBaseMsgClaimTokenIn(): MsgClaimTokenIn {
   return {
     creator: "",
@@ -1186,6 +1297,16 @@ function createBaseMsgClaimTokenIn(): MsgClaimTokenIn {
 }
 export const MsgClaimTokenIn = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgClaimTokenIn",
+  aminoType: "refracted/flowtrade/v1/ClaimTokenIn",
+  is(o: any): o is MsgClaimTokenIn {
+    return o && (o.$typeUrl === MsgClaimTokenIn.typeUrl || typeof o.creator === "string" && typeof o.flow === "bigint" && typeof o.treasuryAddress === "string");
+  },
+  isSDK(o: any): o is MsgClaimTokenInSDKType {
+    return o && (o.$typeUrl === MsgClaimTokenIn.typeUrl || typeof o.creator === "string" && typeof o.flow === "bigint" && typeof o.treasury_address === "string");
+  },
+  isAmino(o: any): o is MsgClaimTokenInAmino {
+    return o && (o.$typeUrl === MsgClaimTokenIn.typeUrl || typeof o.creator === "string" && typeof o.flow === "bigint" && typeof o.treasury_address === "string");
+  },
   encode(message: MsgClaimTokenIn, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.creator !== "") {
       writer.uint32(10).string(message.creator);
@@ -1198,7 +1319,7 @@ export const MsgClaimTokenIn = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenIn {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgClaimTokenIn {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenIn();
@@ -1255,24 +1376,24 @@ export const MsgClaimTokenIn = {
     }
     return message;
   },
-  toAmino(message: MsgClaimTokenIn): MsgClaimTokenInAmino {
+  toAmino(message: MsgClaimTokenIn, useInterfaces: boolean = true): MsgClaimTokenInAmino {
     const obj: any = {};
-    obj.creator = message.creator;
-    obj.flow = message.flow ? message.flow.toString() : "0";
-    obj.treasury_address = message.treasuryAddress;
+    obj.creator = message.creator === "" ? undefined : message.creator;
+    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.treasury_address = message.treasuryAddress === "" ? undefined : message.treasuryAddress;
     return obj;
   },
   fromAminoMsg(object: MsgClaimTokenInAminoMsg): MsgClaimTokenIn {
     return MsgClaimTokenIn.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgClaimTokenIn): MsgClaimTokenInAminoMsg {
+  toAminoMsg(message: MsgClaimTokenIn, useInterfaces: boolean = true): MsgClaimTokenInAminoMsg {
     return {
       type: "refracted/flowtrade/v1/ClaimTokenIn",
-      value: MsgClaimTokenIn.toAmino(message)
+      value: MsgClaimTokenIn.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgClaimTokenInProtoMsg): MsgClaimTokenIn {
-    return MsgClaimTokenIn.decode(message.value);
+  fromProtoMsg(message: MsgClaimTokenInProtoMsg, useInterfaces: boolean = true): MsgClaimTokenIn {
+    return MsgClaimTokenIn.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgClaimTokenIn): Uint8Array {
     return MsgClaimTokenIn.encode(message).finish();
@@ -1284,6 +1405,8 @@ export const MsgClaimTokenIn = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgClaimTokenIn.typeUrl, MsgClaimTokenIn);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgClaimTokenIn.aminoType, MsgClaimTokenIn.typeUrl);
 function createBaseMsgClaimTokenInResponse(): MsgClaimTokenInResponse {
   return {
     claimed: Coin.fromPartial({}),
@@ -1292,6 +1415,15 @@ function createBaseMsgClaimTokenInResponse(): MsgClaimTokenInResponse {
 }
 export const MsgClaimTokenInResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgClaimTokenInResponse",
+  is(o: any): o is MsgClaimTokenInResponse {
+    return o && (o.$typeUrl === MsgClaimTokenInResponse.typeUrl || Coin.is(o.claimed) && Coin.is(o.fee));
+  },
+  isSDK(o: any): o is MsgClaimTokenInResponseSDKType {
+    return o && (o.$typeUrl === MsgClaimTokenInResponse.typeUrl || Coin.isSDK(o.claimed) && Coin.isSDK(o.fee));
+  },
+  isAmino(o: any): o is MsgClaimTokenInResponseAmino {
+    return o && (o.$typeUrl === MsgClaimTokenInResponse.typeUrl || Coin.isAmino(o.claimed) && Coin.isAmino(o.fee));
+  },
   encode(message: MsgClaimTokenInResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.claimed !== undefined) {
       Coin.encode(message.claimed, writer.uint32(10).fork()).ldelim();
@@ -1301,7 +1433,7 @@ export const MsgClaimTokenInResponse = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenInResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgClaimTokenInResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenInResponse();
@@ -1309,10 +1441,10 @@ export const MsgClaimTokenInResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.claimed = Coin.decode(reader, reader.uint32());
+          message.claimed = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         case 2:
-          message.fee = Coin.decode(reader, reader.uint32());
+          message.fee = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1349,17 +1481,17 @@ export const MsgClaimTokenInResponse = {
     }
     return message;
   },
-  toAmino(message: MsgClaimTokenInResponse): MsgClaimTokenInResponseAmino {
+  toAmino(message: MsgClaimTokenInResponse, useInterfaces: boolean = true): MsgClaimTokenInResponseAmino {
     const obj: any = {};
-    obj.claimed = message.claimed ? Coin.toAmino(message.claimed) : undefined;
-    obj.fee = message.fee ? Coin.toAmino(message.fee) : undefined;
+    obj.claimed = message.claimed ? Coin.toAmino(message.claimed, useInterfaces) : undefined;
+    obj.fee = message.fee ? Coin.toAmino(message.fee, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgClaimTokenInResponseAminoMsg): MsgClaimTokenInResponse {
     return MsgClaimTokenInResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgClaimTokenInResponseProtoMsg): MsgClaimTokenInResponse {
-    return MsgClaimTokenInResponse.decode(message.value);
+  fromProtoMsg(message: MsgClaimTokenInResponseProtoMsg, useInterfaces: boolean = true): MsgClaimTokenInResponse {
+    return MsgClaimTokenInResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgClaimTokenInResponse): Uint8Array {
     return MsgClaimTokenInResponse.encode(message).finish();
@@ -1371,6 +1503,7 @@ export const MsgClaimTokenInResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgClaimTokenInResponse.typeUrl, MsgClaimTokenInResponse);
 function createBaseMsgClaimTokenOut(): MsgClaimTokenOut {
   return {
     flow: BigInt(0),
@@ -1380,6 +1513,16 @@ function createBaseMsgClaimTokenOut(): MsgClaimTokenOut {
 }
 export const MsgClaimTokenOut = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgClaimTokenOut",
+  aminoType: "refracted/flowtrade/v1/ClaimTokenOut",
+  is(o: any): o is MsgClaimTokenOut {
+    return o && (o.$typeUrl === MsgClaimTokenOut.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && typeof o.signer === "string");
+  },
+  isSDK(o: any): o is MsgClaimTokenOutSDKType {
+    return o && (o.$typeUrl === MsgClaimTokenOut.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && typeof o.signer === "string");
+  },
+  isAmino(o: any): o is MsgClaimTokenOutAmino {
+    return o && (o.$typeUrl === MsgClaimTokenOut.typeUrl || typeof o.flow === "bigint" && typeof o.address === "string" && typeof o.signer === "string");
+  },
   encode(message: MsgClaimTokenOut, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -1392,7 +1535,7 @@ export const MsgClaimTokenOut = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenOut {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgClaimTokenOut {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenOut();
@@ -1449,24 +1592,24 @@ export const MsgClaimTokenOut = {
     }
     return message;
   },
-  toAmino(message: MsgClaimTokenOut): MsgClaimTokenOutAmino {
+  toAmino(message: MsgClaimTokenOut, useInterfaces: boolean = true): MsgClaimTokenOutAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
-    obj.address = message.address;
-    obj.signer = message.signer;
+    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.address = message.address === "" ? undefined : message.address;
+    obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
   },
   fromAminoMsg(object: MsgClaimTokenOutAminoMsg): MsgClaimTokenOut {
     return MsgClaimTokenOut.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgClaimTokenOut): MsgClaimTokenOutAminoMsg {
+  toAminoMsg(message: MsgClaimTokenOut, useInterfaces: boolean = true): MsgClaimTokenOutAminoMsg {
     return {
       type: "refracted/flowtrade/v1/ClaimTokenOut",
-      value: MsgClaimTokenOut.toAmino(message)
+      value: MsgClaimTokenOut.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgClaimTokenOutProtoMsg): MsgClaimTokenOut {
-    return MsgClaimTokenOut.decode(message.value);
+  fromProtoMsg(message: MsgClaimTokenOutProtoMsg, useInterfaces: boolean = true): MsgClaimTokenOut {
+    return MsgClaimTokenOut.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgClaimTokenOut): Uint8Array {
     return MsgClaimTokenOut.encode(message).finish();
@@ -1478,6 +1621,8 @@ export const MsgClaimTokenOut = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgClaimTokenOut.typeUrl, MsgClaimTokenOut);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgClaimTokenOut.aminoType, MsgClaimTokenOut.typeUrl);
 function createBaseMsgClaimTokenOutResponse(): MsgClaimTokenOutResponse {
   return {
     claimed: Coin.fromPartial({}),
@@ -1486,6 +1631,15 @@ function createBaseMsgClaimTokenOutResponse(): MsgClaimTokenOutResponse {
 }
 export const MsgClaimTokenOutResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgClaimTokenOutResponse",
+  is(o: any): o is MsgClaimTokenOutResponse {
+    return o && (o.$typeUrl === MsgClaimTokenOutResponse.typeUrl || Coin.is(o.claimed) && Coin.is(o.fee));
+  },
+  isSDK(o: any): o is MsgClaimTokenOutResponseSDKType {
+    return o && (o.$typeUrl === MsgClaimTokenOutResponse.typeUrl || Coin.isSDK(o.claimed) && Coin.isSDK(o.fee));
+  },
+  isAmino(o: any): o is MsgClaimTokenOutResponseAmino {
+    return o && (o.$typeUrl === MsgClaimTokenOutResponse.typeUrl || Coin.isAmino(o.claimed) && Coin.isAmino(o.fee));
+  },
   encode(message: MsgClaimTokenOutResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.claimed !== undefined) {
       Coin.encode(message.claimed, writer.uint32(10).fork()).ldelim();
@@ -1495,7 +1649,7 @@ export const MsgClaimTokenOutResponse = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgClaimTokenOutResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgClaimTokenOutResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgClaimTokenOutResponse();
@@ -1503,10 +1657,10 @@ export const MsgClaimTokenOutResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.claimed = Coin.decode(reader, reader.uint32());
+          message.claimed = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         case 2:
-          message.fee = Coin.decode(reader, reader.uint32());
+          message.fee = Coin.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1543,17 +1697,17 @@ export const MsgClaimTokenOutResponse = {
     }
     return message;
   },
-  toAmino(message: MsgClaimTokenOutResponse): MsgClaimTokenOutResponseAmino {
+  toAmino(message: MsgClaimTokenOutResponse, useInterfaces: boolean = true): MsgClaimTokenOutResponseAmino {
     const obj: any = {};
-    obj.claimed = message.claimed ? Coin.toAmino(message.claimed) : undefined;
-    obj.fee = message.fee ? Coin.toAmino(message.fee) : undefined;
+    obj.claimed = message.claimed ? Coin.toAmino(message.claimed, useInterfaces) : undefined;
+    obj.fee = message.fee ? Coin.toAmino(message.fee, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgClaimTokenOutResponseAminoMsg): MsgClaimTokenOutResponse {
     return MsgClaimTokenOutResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgClaimTokenOutResponseProtoMsg): MsgClaimTokenOutResponse {
-    return MsgClaimTokenOutResponse.decode(message.value);
+  fromProtoMsg(message: MsgClaimTokenOutResponseProtoMsg, useInterfaces: boolean = true): MsgClaimTokenOutResponse {
+    return MsgClaimTokenOutResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgClaimTokenOutResponse): Uint8Array {
     return MsgClaimTokenOutResponse.encode(message).finish();
@@ -1565,6 +1719,7 @@ export const MsgClaimTokenOutResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgClaimTokenOutResponse.typeUrl, MsgClaimTokenOutResponse);
 function createBaseMsgStopFlow(): MsgStopFlow {
   return {
     flowId: BigInt(0),
@@ -1573,6 +1728,16 @@ function createBaseMsgStopFlow(): MsgStopFlow {
 }
 export const MsgStopFlow = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgStopFlow",
+  aminoType: "refracted/flowtrade/v1/StopFlow",
+  is(o: any): o is MsgStopFlow {
+    return o && (o.$typeUrl === MsgStopFlow.typeUrl || typeof o.flowId === "bigint" && typeof o.creator === "string");
+  },
+  isSDK(o: any): o is MsgStopFlowSDKType {
+    return o && (o.$typeUrl === MsgStopFlow.typeUrl || typeof o.flow_id === "bigint" && typeof o.creator === "string");
+  },
+  isAmino(o: any): o is MsgStopFlowAmino {
+    return o && (o.$typeUrl === MsgStopFlow.typeUrl || typeof o.flow_id === "bigint" && typeof o.creator === "string");
+  },
   encode(message: MsgStopFlow, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flowId !== BigInt(0)) {
       writer.uint32(8).uint64(message.flowId);
@@ -1582,7 +1747,7 @@ export const MsgStopFlow = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgStopFlow {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgStopFlow {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStopFlow();
@@ -1630,23 +1795,23 @@ export const MsgStopFlow = {
     }
     return message;
   },
-  toAmino(message: MsgStopFlow): MsgStopFlowAmino {
+  toAmino(message: MsgStopFlow, useInterfaces: boolean = true): MsgStopFlowAmino {
     const obj: any = {};
-    obj.flow_id = message.flowId ? message.flowId.toString() : "0";
-    obj.creator = message.creator;
+    obj.flow_id = message.flowId ? message.flowId.toString() : undefined;
+    obj.creator = message.creator === "" ? undefined : message.creator;
     return obj;
   },
   fromAminoMsg(object: MsgStopFlowAminoMsg): MsgStopFlow {
     return MsgStopFlow.fromAmino(object.value);
   },
-  toAminoMsg(message: MsgStopFlow): MsgStopFlowAminoMsg {
+  toAminoMsg(message: MsgStopFlow, useInterfaces: boolean = true): MsgStopFlowAminoMsg {
     return {
       type: "refracted/flowtrade/v1/StopFlow",
-      value: MsgStopFlow.toAmino(message)
+      value: MsgStopFlow.toAmino(message, useInterfaces)
     };
   },
-  fromProtoMsg(message: MsgStopFlowProtoMsg): MsgStopFlow {
-    return MsgStopFlow.decode(message.value);
+  fromProtoMsg(message: MsgStopFlowProtoMsg, useInterfaces: boolean = true): MsgStopFlow {
+    return MsgStopFlow.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgStopFlow): Uint8Array {
     return MsgStopFlow.encode(message).finish();
@@ -1658,15 +1823,26 @@ export const MsgStopFlow = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgStopFlow.typeUrl, MsgStopFlow);
+GlobalDecoderRegistry.registerAminoProtoMapping(MsgStopFlow.aminoType, MsgStopFlow.typeUrl);
 function createBaseMsgStopFlowResponse(): MsgStopFlowResponse {
   return {};
 }
 export const MsgStopFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.MsgStopFlowResponse",
+  is(o: any): o is MsgStopFlowResponse {
+    return o && o.$typeUrl === MsgStopFlowResponse.typeUrl;
+  },
+  isSDK(o: any): o is MsgStopFlowResponseSDKType {
+    return o && o.$typeUrl === MsgStopFlowResponse.typeUrl;
+  },
+  isAmino(o: any): o is MsgStopFlowResponseAmino {
+    return o && o.$typeUrl === MsgStopFlowResponse.typeUrl;
+  },
   encode(_: MsgStopFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): MsgStopFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): MsgStopFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseMsgStopFlowResponse();
@@ -1695,15 +1871,15 @@ export const MsgStopFlowResponse = {
     const message = createBaseMsgStopFlowResponse();
     return message;
   },
-  toAmino(_: MsgStopFlowResponse): MsgStopFlowResponseAmino {
+  toAmino(_: MsgStopFlowResponse, useInterfaces: boolean = true): MsgStopFlowResponseAmino {
     const obj: any = {};
     return obj;
   },
   fromAminoMsg(object: MsgStopFlowResponseAminoMsg): MsgStopFlowResponse {
     return MsgStopFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: MsgStopFlowResponseProtoMsg): MsgStopFlowResponse {
-    return MsgStopFlowResponse.decode(message.value);
+  fromProtoMsg(message: MsgStopFlowResponseProtoMsg, useInterfaces: boolean = true): MsgStopFlowResponse {
+    return MsgStopFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: MsgStopFlowResponse): Uint8Array {
     return MsgStopFlowResponse.encode(message).finish();
@@ -1715,3 +1891,4 @@ export const MsgStopFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(MsgStopFlowResponse.typeUrl, MsgStopFlowResponse);
