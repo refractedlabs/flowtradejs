@@ -4,7 +4,7 @@
     "compile": "rm -rf lib && tsc"
   },
   "dependencies": {
-    "@refractedlabs/flowtradejs": "0.3.0"
+    "@refractedlabs/flowtradejs": "0.4.2"
   },
   "devDependencies": {
     "typescript": "^5.1.6"

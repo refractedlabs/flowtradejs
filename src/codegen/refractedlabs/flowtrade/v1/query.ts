@@ -3,6 +3,7 @@ import { Params, ParamsAmino, ParamsSDKType } from "./params";
 import { Flow, FlowAmino, FlowSDKType } from "./flow";
 import { Position, PositionAmino, PositionSDKType } from "./position";
 import { BinaryReader, BinaryWriter } from "../../../binary";
+import { GlobalDecoderRegistry } from "../../../registry";
 import { isSet } from "../../../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {}
@@ -233,10 +234,19 @@ function createBaseQueryParamsRequest(): QueryParamsRequest {
 }
 export const QueryParamsRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryParamsRequest",
+  is(o: any): o is QueryParamsRequest {
+    return o && o.$typeUrl === QueryParamsRequest.typeUrl;
+  },
+  isSDK(o: any): o is QueryParamsRequestSDKType {
+    return o && o.$typeUrl === QueryParamsRequest.typeUrl;
+  },
+  isAmino(o: any): o is QueryParamsRequestAmino {
+    return o && o.$typeUrl === QueryParamsRequest.typeUrl;
+  },
   encode(_: QueryParamsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryParamsRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsRequest();
@@ -265,15 +275,15 @@ export const QueryParamsRequest = {
     const message = createBaseQueryParamsRequest();
     return message;
   },
-  toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
+  toAmino(_: QueryParamsRequest, useInterfaces: boolean = true): QueryParamsRequestAmino {
     const obj: any = {};
     return obj;
   },
   fromAminoMsg(object: QueryParamsRequestAminoMsg): QueryParamsRequest {
     return QueryParamsRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryParamsRequestProtoMsg): QueryParamsRequest {
-    return QueryParamsRequest.decode(message.value);
+  fromProtoMsg(message: QueryParamsRequestProtoMsg, useInterfaces: boolean = true): QueryParamsRequest {
+    return QueryParamsRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryParamsRequest): Uint8Array {
     return QueryParamsRequest.encode(message).finish();
@@ -285,6 +295,7 @@ export const QueryParamsRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryParamsRequest.typeUrl, QueryParamsRequest);
 function createBaseQueryParamsResponse(): QueryParamsResponse {
   return {
     params: Params.fromPartial({})
@@ -292,13 +303,22 @@ function createBaseQueryParamsResponse(): QueryParamsResponse {
 }
 export const QueryParamsResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryParamsResponse",
+  is(o: any): o is QueryParamsResponse {
+    return o && (o.$typeUrl === QueryParamsResponse.typeUrl || Params.is(o.params));
+  },
+  isSDK(o: any): o is QueryParamsResponseSDKType {
+    return o && (o.$typeUrl === QueryParamsResponse.typeUrl || Params.isSDK(o.params));
+  },
+  isAmino(o: any): o is QueryParamsResponseAmino {
+    return o && (o.$typeUrl === QueryParamsResponse.typeUrl || Params.isAmino(o.params));
+  },
   encode(message: QueryParamsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.params !== undefined) {
       Params.encode(message.params, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryParamsResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryParamsResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryParamsResponse();
@@ -306,7 +326,7 @@ export const QueryParamsResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.params = Params.decode(reader, reader.uint32());
+          message.params = Params.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -337,16 +357,16 @@ export const QueryParamsResponse = {
     }
     return message;
   },
-  toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
+  toAmino(message: QueryParamsResponse, useInterfaces: boolean = true): QueryParamsResponseAmino {
     const obj: any = {};
-    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    obj.params = message.params ? Params.toAmino(message.params, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryParamsResponseAminoMsg): QueryParamsResponse {
     return QueryParamsResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryParamsResponseProtoMsg): QueryParamsResponse {
-    return QueryParamsResponse.decode(message.value);
+  fromProtoMsg(message: QueryParamsResponseProtoMsg, useInterfaces: boolean = true): QueryParamsResponse {
+    return QueryParamsResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryParamsResponse): Uint8Array {
     return QueryParamsResponse.encode(message).finish();
@@ -358,6 +378,7 @@ export const QueryParamsResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryParamsResponse.typeUrl, QueryParamsResponse);
 function createBaseQueryGetFlowRequest(): QueryGetFlowRequest {
   return {
     id: BigInt(0)
@@ -365,13 +386,22 @@ function createBaseQueryGetFlowRequest(): QueryGetFlowRequest {
 }
 export const QueryGetFlowRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetFlowRequest",
+  is(o: any): o is QueryGetFlowRequest {
+    return o && (o.$typeUrl === QueryGetFlowRequest.typeUrl || typeof o.id === "bigint");
+  },
+  isSDK(o: any): o is QueryGetFlowRequestSDKType {
+    return o && (o.$typeUrl === QueryGetFlowRequest.typeUrl || typeof o.id === "bigint");
+  },
+  isAmino(o: any): o is QueryGetFlowRequestAmino {
+    return o && (o.$typeUrl === QueryGetFlowRequest.typeUrl || typeof o.id === "bigint");
+  },
   encode(message: QueryGetFlowRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.id !== BigInt(0)) {
       writer.uint32(8).uint64(message.id);
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetFlowRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowRequest();
@@ -410,7 +440,7 @@ export const QueryGetFlowRequest = {
     }
     return message;
   },
-  toAmino(message: QueryGetFlowRequest): QueryGetFlowRequestAmino {
+  toAmino(message: QueryGetFlowRequest, useInterfaces: boolean = true): QueryGetFlowRequestAmino {
     const obj: any = {};
     obj.id = message.id ? message.id.toString() : undefined;
     return obj;
@@ -418,8 +448,8 @@ export const QueryGetFlowRequest = {
   fromAminoMsg(object: QueryGetFlowRequestAminoMsg): QueryGetFlowRequest {
     return QueryGetFlowRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetFlowRequestProtoMsg): QueryGetFlowRequest {
-    return QueryGetFlowRequest.decode(message.value);
+  fromProtoMsg(message: QueryGetFlowRequestProtoMsg, useInterfaces: boolean = true): QueryGetFlowRequest {
+    return QueryGetFlowRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetFlowRequest): Uint8Array {
     return QueryGetFlowRequest.encode(message).finish();
@@ -431,6 +461,7 @@ export const QueryGetFlowRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetFlowRequest.typeUrl, QueryGetFlowRequest);
 function createBaseQueryGetFlowResponse(): QueryGetFlowResponse {
   return {
     flow: Flow.fromPartial({})
@@ -438,13 +469,22 @@ function createBaseQueryGetFlowResponse(): QueryGetFlowResponse {
 }
 export const QueryGetFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetFlowResponse",
+  is(o: any): o is QueryGetFlowResponse {
+    return o && (o.$typeUrl === QueryGetFlowResponse.typeUrl || Flow.is(o.flow));
+  },
+  isSDK(o: any): o is QueryGetFlowResponseSDKType {
+    return o && (o.$typeUrl === QueryGetFlowResponse.typeUrl || Flow.isSDK(o.flow));
+  },
+  isAmino(o: any): o is QueryGetFlowResponseAmino {
+    return o && (o.$typeUrl === QueryGetFlowResponse.typeUrl || Flow.isAmino(o.flow));
+  },
   encode(message: QueryGetFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== undefined) {
       Flow.encode(message.flow, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowResponse();
@@ -452,7 +492,7 @@ export const QueryGetFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow = Flow.decode(reader, reader.uint32());
+          message.flow = Flow.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -483,16 +523,16 @@ export const QueryGetFlowResponse = {
     }
     return message;
   },
-  toAmino(message: QueryGetFlowResponse): QueryGetFlowResponseAmino {
+  toAmino(message: QueryGetFlowResponse, useInterfaces: boolean = true): QueryGetFlowResponseAmino {
     const obj: any = {};
-    obj.flow = message.flow ? Flow.toAmino(message.flow) : undefined;
+    obj.flow = message.flow ? Flow.toAmino(message.flow, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetFlowResponseAminoMsg): QueryGetFlowResponse {
     return QueryGetFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetFlowResponseProtoMsg): QueryGetFlowResponse {
-    return QueryGetFlowResponse.decode(message.value);
+  fromProtoMsg(message: QueryGetFlowResponseProtoMsg, useInterfaces: boolean = true): QueryGetFlowResponse {
+    return QueryGetFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetFlowResponse): Uint8Array {
     return QueryGetFlowResponse.encode(message).finish();
@@ -504,6 +544,7 @@ export const QueryGetFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetFlowResponse.typeUrl, QueryGetFlowResponse);
 function createBaseQueryAllFlowRequest(): QueryAllFlowRequest {
   return {
     pagination: undefined
@@ -511,13 +552,22 @@ function createBaseQueryAllFlowRequest(): QueryAllFlowRequest {
 }
 export const QueryAllFlowRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryAllFlowRequest",
+  is(o: any): o is QueryAllFlowRequest {
+    return o && o.$typeUrl === QueryAllFlowRequest.typeUrl;
+  },
+  isSDK(o: any): o is QueryAllFlowRequestSDKType {
+    return o && o.$typeUrl === QueryAllFlowRequest.typeUrl;
+  },
+  isAmino(o: any): o is QueryAllFlowRequestAmino {
+    return o && o.$typeUrl === QueryAllFlowRequest.typeUrl;
+  },
   encode(message: QueryAllFlowRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.pagination !== undefined) {
       PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllFlowRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryAllFlowRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllFlowRequest();
@@ -525,7 +575,7 @@ export const QueryAllFlowRequest = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.pagination = PageRequest.decode(reader, reader.uint32());
+          message.pagination = PageRequest.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -556,16 +606,16 @@ export const QueryAllFlowRequest = {
     }
     return message;
   },
-  toAmino(message: QueryAllFlowRequest): QueryAllFlowRequestAmino {
+  toAmino(message: QueryAllFlowRequest, useInterfaces: boolean = true): QueryAllFlowRequestAmino {
     const obj: any = {};
-    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryAllFlowRequestAminoMsg): QueryAllFlowRequest {
     return QueryAllFlowRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryAllFlowRequestProtoMsg): QueryAllFlowRequest {
-    return QueryAllFlowRequest.decode(message.value);
+  fromProtoMsg(message: QueryAllFlowRequestProtoMsg, useInterfaces: boolean = true): QueryAllFlowRequest {
+    return QueryAllFlowRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryAllFlowRequest): Uint8Array {
     return QueryAllFlowRequest.encode(message).finish();
@@ -577,6 +627,7 @@ export const QueryAllFlowRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryAllFlowRequest.typeUrl, QueryAllFlowRequest);
 function createBaseQueryAllFlowResponse(): QueryAllFlowResponse {
   return {
     flow: [],
@@ -585,6 +636,15 @@ function createBaseQueryAllFlowResponse(): QueryAllFlowResponse {
 }
 export const QueryAllFlowResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryAllFlowResponse",
+  is(o: any): o is QueryAllFlowResponse {
+    return o && (o.$typeUrl === QueryAllFlowResponse.typeUrl || Array.isArray(o.flow) && (!o.flow.length || Flow.is(o.flow[0])));
+  },
+  isSDK(o: any): o is QueryAllFlowResponseSDKType {
+    return o && (o.$typeUrl === QueryAllFlowResponse.typeUrl || Array.isArray(o.flow) && (!o.flow.length || Flow.isSDK(o.flow[0])));
+  },
+  isAmino(o: any): o is QueryAllFlowResponseAmino {
+    return o && (o.$typeUrl === QueryAllFlowResponse.typeUrl || Array.isArray(o.flow) && (!o.flow.length || Flow.isAmino(o.flow[0])));
+  },
   encode(message: QueryAllFlowResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.flow) {
       Flow.encode(v!, writer.uint32(10).fork()).ldelim();
@@ -594,7 +654,7 @@ export const QueryAllFlowResponse = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryAllFlowResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryAllFlowResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryAllFlowResponse();
@@ -602,10 +662,10 @@ export const QueryAllFlowResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.flow.push(Flow.decode(reader, reader.uint32()));
+          message.flow.push(Flow.decode(reader, reader.uint32(), useInterfaces));
           break;
         case 2:
-          message.pagination = PageResponse.decode(reader, reader.uint32());
+          message.pagination = PageResponse.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -644,21 +704,21 @@ export const QueryAllFlowResponse = {
     }
     return message;
   },
-  toAmino(message: QueryAllFlowResponse): QueryAllFlowResponseAmino {
+  toAmino(message: QueryAllFlowResponse, useInterfaces: boolean = true): QueryAllFlowResponseAmino {
     const obj: any = {};
     if (message.flow) {
-      obj.flow = message.flow.map(e => e ? Flow.toAmino(e) : undefined);
+      obj.flow = message.flow.map(e => e ? Flow.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.flow = [];
+      obj.flow = message.flow;
     }
-    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryAllFlowResponseAminoMsg): QueryAllFlowResponse {
     return QueryAllFlowResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryAllFlowResponseProtoMsg): QueryAllFlowResponse {
-    return QueryAllFlowResponse.decode(message.value);
+  fromProtoMsg(message: QueryAllFlowResponseProtoMsg, useInterfaces: boolean = true): QueryAllFlowResponse {
+    return QueryAllFlowResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryAllFlowResponse): Uint8Array {
     return QueryAllFlowResponse.encode(message).finish();
@@ -670,6 +730,7 @@ export const QueryAllFlowResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryAllFlowResponse.typeUrl, QueryAllFlowResponse);
 function createBaseQueryGetPositionRequest(): QueryGetPositionRequest {
   return {
     flow: BigInt(0),
@@ -678,6 +739,15 @@ function createBaseQueryGetPositionRequest(): QueryGetPositionRequest {
 }
 export const QueryGetPositionRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetPositionRequest",
+  is(o: any): o is QueryGetPositionRequest {
+    return o && (o.$typeUrl === QueryGetPositionRequest.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string");
+  },
+  isSDK(o: any): o is QueryGetPositionRequestSDKType {
+    return o && (o.$typeUrl === QueryGetPositionRequest.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string");
+  },
+  isAmino(o: any): o is QueryGetPositionRequestAmino {
+    return o && (o.$typeUrl === QueryGetPositionRequest.typeUrl || typeof o.flow === "bigint" && typeof o.owner === "string");
+  },
   encode(message: QueryGetPositionRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -687,7 +757,7 @@ export const QueryGetPositionRequest = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetPositionRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetPositionRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPositionRequest();
@@ -735,17 +805,17 @@ export const QueryGetPositionRequest = {
     }
     return message;
   },
-  toAmino(message: QueryGetPositionRequest): QueryGetPositionRequestAmino {
+  toAmino(message: QueryGetPositionRequest, useInterfaces: boolean = true): QueryGetPositionRequestAmino {
     const obj: any = {};
     obj.flow = message.flow ? message.flow.toString() : undefined;
-    obj.owner = message.owner;
+    obj.owner = message.owner === "" ? undefined : message.owner;
     return obj;
   },
   fromAminoMsg(object: QueryGetPositionRequestAminoMsg): QueryGetPositionRequest {
     return QueryGetPositionRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetPositionRequestProtoMsg): QueryGetPositionRequest {
-    return QueryGetPositionRequest.decode(message.value);
+  fromProtoMsg(message: QueryGetPositionRequestProtoMsg, useInterfaces: boolean = true): QueryGetPositionRequest {
+    return QueryGetPositionRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetPositionRequest): Uint8Array {
     return QueryGetPositionRequest.encode(message).finish();
@@ -757,6 +827,7 @@ export const QueryGetPositionRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetPositionRequest.typeUrl, QueryGetPositionRequest);
 function createBaseQueryGetPositionResponse(): QueryGetPositionResponse {
   return {
     position: Position.fromPartial({})
@@ -764,13 +835,22 @@ function createBaseQueryGetPositionResponse(): QueryGetPositionResponse {
 }
 export const QueryGetPositionResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetPositionResponse",
+  is(o: any): o is QueryGetPositionResponse {
+    return o && (o.$typeUrl === QueryGetPositionResponse.typeUrl || Position.is(o.position));
+  },
+  isSDK(o: any): o is QueryGetPositionResponseSDKType {
+    return o && (o.$typeUrl === QueryGetPositionResponse.typeUrl || Position.isSDK(o.position));
+  },
+  isAmino(o: any): o is QueryGetPositionResponseAmino {
+    return o && (o.$typeUrl === QueryGetPositionResponse.typeUrl || Position.isAmino(o.position));
+  },
   encode(message: QueryGetPositionResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.position !== undefined) {
       Position.encode(message.position, writer.uint32(10).fork()).ldelim();
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetPositionResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetPositionResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetPositionResponse();
@@ -778,7 +858,7 @@ export const QueryGetPositionResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.position = Position.decode(reader, reader.uint32());
+          message.position = Position.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -809,16 +889,16 @@ export const QueryGetPositionResponse = {
     }
     return message;
   },
-  toAmino(message: QueryGetPositionResponse): QueryGetPositionResponseAmino {
+  toAmino(message: QueryGetPositionResponse, useInterfaces: boolean = true): QueryGetPositionResponseAmino {
     const obj: any = {};
-    obj.position = message.position ? Position.toAmino(message.position) : undefined;
+    obj.position = message.position ? Position.toAmino(message.position, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetPositionResponseAminoMsg): QueryGetPositionResponse {
     return QueryGetPositionResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetPositionResponseProtoMsg): QueryGetPositionResponse {
-    return QueryGetPositionResponse.decode(message.value);
+  fromProtoMsg(message: QueryGetPositionResponseProtoMsg, useInterfaces: boolean = true): QueryGetPositionResponse {
+    return QueryGetPositionResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetPositionResponse): Uint8Array {
     return QueryGetPositionResponse.encode(message).finish();
@@ -830,6 +910,7 @@ export const QueryGetPositionResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetPositionResponse.typeUrl, QueryGetPositionResponse);
 function createBaseQueryGetFlowPositionsRequest(): QueryGetFlowPositionsRequest {
   return {
     flow: BigInt(0),
@@ -838,6 +919,15 @@ function createBaseQueryGetFlowPositionsRequest(): QueryGetFlowPositionsRequest 
 }
 export const QueryGetFlowPositionsRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetFlowPositionsRequest",
+  is(o: any): o is QueryGetFlowPositionsRequest {
+    return o && (o.$typeUrl === QueryGetFlowPositionsRequest.typeUrl || typeof o.flow === "bigint");
+  },
+  isSDK(o: any): o is QueryGetFlowPositionsRequestSDKType {
+    return o && (o.$typeUrl === QueryGetFlowPositionsRequest.typeUrl || typeof o.flow === "bigint");
+  },
+  isAmino(o: any): o is QueryGetFlowPositionsRequestAmino {
+    return o && (o.$typeUrl === QueryGetFlowPositionsRequest.typeUrl || typeof o.flow === "bigint");
+  },
   encode(message: QueryGetFlowPositionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.flow !== BigInt(0)) {
       writer.uint32(8).uint64(message.flow);
@@ -847,7 +937,7 @@ export const QueryGetFlowPositionsRequest = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowPositionsRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetFlowPositionsRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowPositionsRequest();
@@ -858,7 +948,7 @@ export const QueryGetFlowPositionsRequest = {
           message.flow = reader.uint64();
           break;
         case 2:
-          message.pagination = PageRequest.decode(reader, reader.uint32());
+          message.pagination = PageRequest.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -895,17 +985,17 @@ export const QueryGetFlowPositionsRequest = {
     }
     return message;
   },
-  toAmino(message: QueryGetFlowPositionsRequest): QueryGetFlowPositionsRequestAmino {
+  toAmino(message: QueryGetFlowPositionsRequest, useInterfaces: boolean = true): QueryGetFlowPositionsRequestAmino {
     const obj: any = {};
     obj.flow = message.flow ? message.flow.toString() : undefined;
-    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetFlowPositionsRequestAminoMsg): QueryGetFlowPositionsRequest {
     return QueryGetFlowPositionsRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetFlowPositionsRequestProtoMsg): QueryGetFlowPositionsRequest {
-    return QueryGetFlowPositionsRequest.decode(message.value);
+  fromProtoMsg(message: QueryGetFlowPositionsRequestProtoMsg, useInterfaces: boolean = true): QueryGetFlowPositionsRequest {
+    return QueryGetFlowPositionsRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetFlowPositionsRequest): Uint8Array {
     return QueryGetFlowPositionsRequest.encode(message).finish();
@@ -917,6 +1007,7 @@ export const QueryGetFlowPositionsRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetFlowPositionsRequest.typeUrl, QueryGetFlowPositionsRequest);
 function createBaseQueryGetFlowPositionsResponse(): QueryGetFlowPositionsResponse {
   return {
     position: [],
@@ -925,6 +1016,15 @@ function createBaseQueryGetFlowPositionsResponse(): QueryGetFlowPositionsRespons
 }
 export const QueryGetFlowPositionsResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetFlowPositionsResponse",
+  is(o: any): o is QueryGetFlowPositionsResponse {
+    return o && (o.$typeUrl === QueryGetFlowPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.is(o.position[0])));
+  },
+  isSDK(o: any): o is QueryGetFlowPositionsResponseSDKType {
+    return o && (o.$typeUrl === QueryGetFlowPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.isSDK(o.position[0])));
+  },
+  isAmino(o: any): o is QueryGetFlowPositionsResponseAmino {
+    return o && (o.$typeUrl === QueryGetFlowPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.isAmino(o.position[0])));
+  },
   encode(message: QueryGetFlowPositionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.position) {
       Position.encode(v!, writer.uint32(10).fork()).ldelim();
@@ -934,7 +1034,7 @@ export const QueryGetFlowPositionsResponse = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetFlowPositionsResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetFlowPositionsResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetFlowPositionsResponse();
@@ -942,10 +1042,10 @@ export const QueryGetFlowPositionsResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.position.push(Position.decode(reader, reader.uint32()));
+          message.position.push(Position.decode(reader, reader.uint32(), useInterfaces));
           break;
         case 2:
-          message.pagination = PageResponse.decode(reader, reader.uint32());
+          message.pagination = PageResponse.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -984,21 +1084,21 @@ export const QueryGetFlowPositionsResponse = {
     }
     return message;
   },
-  toAmino(message: QueryGetFlowPositionsResponse): QueryGetFlowPositionsResponseAmino {
+  toAmino(message: QueryGetFlowPositionsResponse, useInterfaces: boolean = true): QueryGetFlowPositionsResponseAmino {
     const obj: any = {};
     if (message.position) {
-      obj.position = message.position.map(e => e ? Position.toAmino(e) : undefined);
+      obj.position = message.position.map(e => e ? Position.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.position = [];
+      obj.position = message.position;
     }
-    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetFlowPositionsResponseAminoMsg): QueryGetFlowPositionsResponse {
     return QueryGetFlowPositionsResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetFlowPositionsResponseProtoMsg): QueryGetFlowPositionsResponse {
-    return QueryGetFlowPositionsResponse.decode(message.value);
+  fromProtoMsg(message: QueryGetFlowPositionsResponseProtoMsg, useInterfaces: boolean = true): QueryGetFlowPositionsResponse {
+    return QueryGetFlowPositionsResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetFlowPositionsResponse): Uint8Array {
     return QueryGetFlowPositionsResponse.encode(message).finish();
@@ -1010,6 +1110,7 @@ export const QueryGetFlowPositionsResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetFlowPositionsResponse.typeUrl, QueryGetFlowPositionsResponse);
 function createBaseQueryGetUserPositionsRequest(): QueryGetUserPositionsRequest {
   return {
     owner: "",
@@ -1018,6 +1119,15 @@ function createBaseQueryGetUserPositionsRequest(): QueryGetUserPositionsRequest 
 }
 export const QueryGetUserPositionsRequest = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetUserPositionsRequest",
+  is(o: any): o is QueryGetUserPositionsRequest {
+    return o && (o.$typeUrl === QueryGetUserPositionsRequest.typeUrl || typeof o.owner === "string");
+  },
+  isSDK(o: any): o is QueryGetUserPositionsRequestSDKType {
+    return o && (o.$typeUrl === QueryGetUserPositionsRequest.typeUrl || typeof o.owner === "string");
+  },
+  isAmino(o: any): o is QueryGetUserPositionsRequestAmino {
+    return o && (o.$typeUrl === QueryGetUserPositionsRequest.typeUrl || typeof o.owner === "string");
+  },
   encode(message: QueryGetUserPositionsRequest, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     if (message.owner !== "") {
       writer.uint32(10).string(message.owner);
@@ -1027,7 +1137,7 @@ export const QueryGetUserPositionsRequest = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetUserPositionsRequest {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetUserPositionsRequest {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetUserPositionsRequest();
@@ -1038,7 +1148,7 @@ export const QueryGetUserPositionsRequest = {
           message.owner = reader.string();
           break;
         case 2:
-          message.pagination = PageRequest.decode(reader, reader.uint32());
+          message.pagination = PageRequest.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1075,17 +1185,17 @@ export const QueryGetUserPositionsRequest = {
     }
     return message;
   },
-  toAmino(message: QueryGetUserPositionsRequest): QueryGetUserPositionsRequestAmino {
+  toAmino(message: QueryGetUserPositionsRequest, useInterfaces: boolean = true): QueryGetUserPositionsRequestAmino {
     const obj: any = {};
-    obj.owner = message.owner;
-    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    obj.owner = message.owner === "" ? undefined : message.owner;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetUserPositionsRequestAminoMsg): QueryGetUserPositionsRequest {
     return QueryGetUserPositionsRequest.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetUserPositionsRequestProtoMsg): QueryGetUserPositionsRequest {
-    return QueryGetUserPositionsRequest.decode(message.value);
+  fromProtoMsg(message: QueryGetUserPositionsRequestProtoMsg, useInterfaces: boolean = true): QueryGetUserPositionsRequest {
+    return QueryGetUserPositionsRequest.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetUserPositionsRequest): Uint8Array {
     return QueryGetUserPositionsRequest.encode(message).finish();
@@ -1097,6 +1207,7 @@ export const QueryGetUserPositionsRequest = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetUserPositionsRequest.typeUrl, QueryGetUserPositionsRequest);
 function createBaseQueryGetUserPositionsResponse(): QueryGetUserPositionsResponse {
   return {
     position: [],
@@ -1105,6 +1216,15 @@ function createBaseQueryGetUserPositionsResponse(): QueryGetUserPositionsRespons
 }
 export const QueryGetUserPositionsResponse = {
   typeUrl: "/refractedlabs.flowtrade.v1.QueryGetUserPositionsResponse",
+  is(o: any): o is QueryGetUserPositionsResponse {
+    return o && (o.$typeUrl === QueryGetUserPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.is(o.position[0])));
+  },
+  isSDK(o: any): o is QueryGetUserPositionsResponseSDKType {
+    return o && (o.$typeUrl === QueryGetUserPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.isSDK(o.position[0])));
+  },
+  isAmino(o: any): o is QueryGetUserPositionsResponseAmino {
+    return o && (o.$typeUrl === QueryGetUserPositionsResponse.typeUrl || Array.isArray(o.position) && (!o.position.length || Position.isAmino(o.position[0])));
+  },
   encode(message: QueryGetUserPositionsResponse, writer: BinaryWriter = BinaryWriter.create()): BinaryWriter {
     for (const v of message.position) {
       Position.encode(v!, writer.uint32(10).fork()).ldelim();
@@ -1114,7 +1234,7 @@ export const QueryGetUserPositionsResponse = {
     }
     return writer;
   },
-  decode(input: BinaryReader | Uint8Array, length?: number): QueryGetUserPositionsResponse {
+  decode(input: BinaryReader | Uint8Array, length?: number, useInterfaces: boolean = true): QueryGetUserPositionsResponse {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
     const message = createBaseQueryGetUserPositionsResponse();
@@ -1122,10 +1242,10 @@ export const QueryGetUserPositionsResponse = {
       const tag = reader.uint32();
       switch (tag >>> 3) {
         case 1:
-          message.position.push(Position.decode(reader, reader.uint32()));
+          message.position.push(Position.decode(reader, reader.uint32(), useInterfaces));
           break;
         case 2:
-          message.pagination = PageResponse.decode(reader, reader.uint32());
+          message.pagination = PageResponse.decode(reader, reader.uint32(), useInterfaces);
           break;
         default:
           reader.skipType(tag & 7);
@@ -1164,21 +1284,21 @@ export const QueryGetUserPositionsResponse = {
     }
     return message;
   },
-  toAmino(message: QueryGetUserPositionsResponse): QueryGetUserPositionsResponseAmino {
+  toAmino(message: QueryGetUserPositionsResponse, useInterfaces: boolean = true): QueryGetUserPositionsResponseAmino {
     const obj: any = {};
     if (message.position) {
-      obj.position = message.position.map(e => e ? Position.toAmino(e) : undefined);
+      obj.position = message.position.map(e => e ? Position.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.position = [];
+      obj.position = message.position;
     }
-    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetUserPositionsResponseAminoMsg): QueryGetUserPositionsResponse {
     return QueryGetUserPositionsResponse.fromAmino(object.value);
   },
-  fromProtoMsg(message: QueryGetUserPositionsResponseProtoMsg): QueryGetUserPositionsResponse {
-    return QueryGetUserPositionsResponse.decode(message.value);
+  fromProtoMsg(message: QueryGetUserPositionsResponseProtoMsg, useInterfaces: boolean = true): QueryGetUserPositionsResponse {
+    return QueryGetUserPositionsResponse.decode(message.value, undefined, useInterfaces);
   },
   toProto(message: QueryGetUserPositionsResponse): Uint8Array {
     return QueryGetUserPositionsResponse.encode(message).finish();
@@ -1190,3 +1310,4 @@ export const QueryGetUserPositionsResponse = {
     };
   }
 };
+GlobalDecoderRegistry.register(QueryGetUserPositionsResponse.typeUrl, QueryGetUserPositionsResponse);
