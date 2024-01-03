@@ -1,6 +1,6 @@
 {
   "name": "@refractedlabs/flowtradejs",
-  "version": "0.4.1-rc1",
+  "version": "0.4.2",
   "description": "Javascript SDK for Flowtrade",
   "author": "amin <amin@refractedlabs.com>",
   "homepage": "https://github.com/refractedlabs/flowtradejs#readme",
@@ -25,7 +25,7 @@
     "url": "https://github.com/refractedlabs/flowtradejs"
   },
   "devDependencies": {
-    "@refractedlabs/telescope": "1.4.1-rc22",
+    "@refractedlabs/telescope": "1.4.1-rc24",
     "@types/node": "^20.10.5",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",

@@ -709,7 +709,7 @@ export const QueryAllFlowResponse = {
     if (message.flow) {
       obj.flow = message.flow.map(e => e ? Flow.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.flow = null;
+      obj.flow = message.flow;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
@@ -1089,7 +1089,7 @@ export const QueryGetFlowPositionsResponse = {
     if (message.position) {
       obj.position = message.position.map(e => e ? Position.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.position = null;
+      obj.position = message.position;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
@@ -1289,7 +1289,7 @@ export const QueryGetUserPositionsResponse = {
     if (message.position) {
       obj.position = message.position.map(e => e ? Position.toAmino(e, useInterfaces) : undefined);
     } else {
-      obj.position = null;
+      obj.position = message.position;
     }
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
