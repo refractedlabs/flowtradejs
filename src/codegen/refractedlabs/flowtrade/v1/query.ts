@@ -442,7 +442,7 @@ export const QueryGetFlowRequest = {
   },
   toAmino(message: QueryGetFlowRequest, useInterfaces: boolean = true): QueryGetFlowRequestAmino {
     const obj: any = {};
-    obj.id = message.id ? message.id.toString() : undefined;
+    obj.id = message.id !== BigInt(0) ? message.id.toString() : undefined;
     return obj;
   },
   fromAminoMsg(object: QueryGetFlowRequestAminoMsg): QueryGetFlowRequest {
@@ -807,7 +807,7 @@ export const QueryGetPositionRequest = {
   },
   toAmino(message: QueryGetPositionRequest, useInterfaces: boolean = true): QueryGetPositionRequestAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow !== BigInt(0) ? message.flow.toString() : undefined;
     obj.owner = message.owner === "" ? undefined : message.owner;
     return obj;
   },
@@ -987,7 +987,7 @@ export const QueryGetFlowPositionsRequest = {
   },
   toAmino(message: QueryGetFlowPositionsRequest, useInterfaces: boolean = true): QueryGetFlowPositionsRequestAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : undefined;
+    obj.flow = message.flow !== BigInt(0) ? message.flow.toString() : undefined;
     obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination, useInterfaces) : undefined;
     return obj;
   },
