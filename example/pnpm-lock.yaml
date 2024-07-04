@@ -1,11 +1,11 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@refractedlabs/flowtradejs': 0.5.2
+  '@refractedlabs/flowtradejs': 0.6.0
   typescript: ^5.1.6
 
 dependencies:
-  '@refractedlabs/flowtradejs': 0.5.2_google-protobuf@3.21.2
+  '@refractedlabs/flowtradejs': 0.6.0_google-protobuf@3.21.2
 
 devDependencies:
   typescript: 5.4.5
@@ -251,8 +251,8 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@refractedlabs/flowtradejs/0.5.2_google-protobuf@3.21.2:
-    resolution: {integrity: sha512-+853G2fLKxT5dFAJi2jYwxl485zmy+yI61tOkGQJsXVRUyIwsNunjfEY3Tog5cBF05PCJRW1SA7i8V/g/eCLuA==, tarball: download/@refractedlabs/flowtradejs/0.5.2/3e2e83df721e09abf4986e7c2ee52a302b1f2a74}
+  /@refractedlabs/flowtradejs/0.6.0_google-protobuf@3.21.2:
+    resolution: {integrity: sha512-vZNDyHkF5fcso8BGcUdgDfFODCxOx3GFn3dVAnEiPTUTGIu9Ji6tZHTZc0b3GwCNjoSfiHG8POtAAnIHnHMhag==, tarball: download/@refractedlabs/flowtradejs/0.6.0/0f54c0d5841da7fcccd57fc2fc80171504330672}
     dependencies:
       '@cosmjs/math': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
