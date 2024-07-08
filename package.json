@@ -1,6 +1,6 @@
 {
   "name": "@refractedlabs/flowtradejs",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "Javascript SDK for Flowtrade",
   "author": "amin <amin@refractedlabs.com>",
   "homepage": "https://github.com/refractedlabs/flowtradejs#readme",
@@ -32,11 +32,11 @@
     "@improbable-eng/grpc-web": "0.15.0",
     "@improbable-eng/grpc-web-node-http-transport": "0.15.0",
     "@keplr-wallet/unit": "^0.12.53",
-    "@refractedlabs/utils": "0.4.0",
+    "@refractedlabs/utils": "0.4.1",
     "browser-headers": "0.4.1"
   },
   "devDependencies": {
-    "@cosmology/telescope": "^1.5.4",
+    "@refractedlabs/telescope": "1.4.1-rc24",
     "@types/node": "^20.10.5",
     "rimraf": "^5.0.5",
     "ts-node": "^10.9.2",

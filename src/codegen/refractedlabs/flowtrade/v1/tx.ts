@@ -388,7 +388,7 @@ export const MsgUpdateParams = {
   toAmino(message: MsgUpdateParams, useInterfaces: boolean = true): MsgUpdateParamsAmino {
     const obj: any = {};
     obj.authority = message.authority === "" ? undefined : message.authority;
-    obj.params = message.params ? Params.toAmino(message.params, useInterfaces) : Params.toAmino(Params.fromPartial({}));
+    obj.params = message.params ? Params.toAmino(message.params, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgUpdateParamsAminoMsg): MsgUpdateParams {
@@ -560,7 +560,7 @@ export const MsgCreateFlow = {
   toAmino(message: MsgCreateFlow, useInterfaces: boolean = true): MsgCreateFlowAmino {
     const obj: any = {};
     obj.creator = message.creator === "" ? undefined : message.creator;
-    obj.request = message.request ? FlowCreationRequest.toAmino(message.request, useInterfaces) : FlowCreationRequest.toAmino(FlowCreationRequest.fromPartial({}));
+    obj.request = message.request ? FlowCreationRequest.toAmino(message.request, useInterfaces) : undefined;
     return obj;
   },
   fromAminoMsg(object: MsgCreateFlowAminoMsg): MsgCreateFlow {
@@ -773,9 +773,9 @@ export const MsgJoinFlow = {
   },
   toAmino(message: MsgJoinFlow, useInterfaces: boolean = true): MsgJoinFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
+    obj.flow = message.flow ? message.flow.toString() : undefined;
     obj.address = message.address === "" ? undefined : message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : Coin.toAmino(Coin.fromPartial({}));
+    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : undefined;
     obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
   },
@@ -989,9 +989,9 @@ export const MsgExitFlow = {
   },
   toAmino(message: MsgExitFlow, useInterfaces: boolean = true): MsgExitFlowAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
+    obj.flow = message.flow ? message.flow.toString() : undefined;
     obj.address = message.address === "" ? undefined : message.address;
-    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : Coin.toAmino(Coin.fromPartial({}));
+    obj.amount = message.amount ? Coin.toAmino(message.amount, useInterfaces) : undefined;
     obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
   },
@@ -1192,7 +1192,7 @@ export const MsgSetOperator = {
   },
   toAmino(message: MsgSetOperator, useInterfaces: boolean = true): MsgSetOperatorAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
+    obj.flow = message.flow ? message.flow.toString() : undefined;
     obj.owner = message.owner === "" ? undefined : message.owner;
     obj.operator = message.operator === "" ? undefined : message.operator;
     return obj;
@@ -1379,7 +1379,7 @@ export const MsgClaimTokenIn = {
   toAmino(message: MsgClaimTokenIn, useInterfaces: boolean = true): MsgClaimTokenInAmino {
     const obj: any = {};
     obj.creator = message.creator === "" ? undefined : message.creator;
-    obj.flow = message.flow ? message.flow.toString() : "0";
+    obj.flow = message.flow ? message.flow.toString() : undefined;
     obj.treasury_address = message.treasuryAddress === "" ? undefined : message.treasuryAddress;
     return obj;
   },
@@ -1594,7 +1594,7 @@ export const MsgClaimTokenOut = {
   },
   toAmino(message: MsgClaimTokenOut, useInterfaces: boolean = true): MsgClaimTokenOutAmino {
     const obj: any = {};
-    obj.flow = message.flow ? message.flow.toString() : "0";
+    obj.flow = message.flow ? message.flow.toString() : undefined;
     obj.address = message.address === "" ? undefined : message.address;
     obj.signer = message.signer === "" ? undefined : message.signer;
     return obj;
@@ -1797,7 +1797,7 @@ export const MsgStopFlow = {
   },
   toAmino(message: MsgStopFlow, useInterfaces: boolean = true): MsgStopFlowAmino {
     const obj: any = {};
-    obj.flow_id = message.flowId ? message.flowId.toString() : "0";
+    obj.flow_id = message.flowId ? message.flowId.toString() : undefined;
     obj.creator = message.creator === "" ? undefined : message.creator;
     return obj;
   },

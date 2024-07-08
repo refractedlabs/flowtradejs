@@ -1,5 +1,5 @@
 const {join} = require('path');
-const telescope = require('@cosmology/telescope').default;
+const telescope = require('@refractedlabs/telescope').default;
 const rimraf = require('rimraf').rimrafSync;
 const {AMINO_MAP} = require('./aminos');
 const {correctFile, correctFiles, correctDir} = require('./corrections');
@@ -102,6 +102,41 @@ async function main() {
         }
     })
 
+    correctDir('./src/codegen', [
+        {
+            regex: /decode\(reader, reader\.uint32\(\), true\)/gm,
+            subst: `decode(reader, reader.uint32())`
+        },
+        {
+            regex: /decode\(data\.value, undefined, true\)/gm,
+            subst: `decode(data.value, undefined)`
+        },
+        {
+            regex: /\.fromPartial\(request\)/gm,
+            subst: `.fromPartial(request as any)`
+        },
+        {
+            regex: /\(Any\(reader\) as Any\)/gm,
+            subst: 'Any.decode(reader, reader.uint32()) as any'
+        },
+        {
+            regex: /Any\.fromJSON\(/gm,
+            subst: `Any.fromJSONAsAny(`
+        },
+        {
+            regex: /Any\.fromPartial\(/gm,
+            subst: `Any.fromPartialAsAny(`
+        },
+        {
+            regex: /_InterfaceDecoder\(reader\) as Any\)/gm,
+            subst: `_InterfaceDecoder(reader) as any)`
+        },
+        // {
+        //     regex: /const Cosmos_cryptoPubKey_FromAmino = \(content: AnyAmino\) =>/gm,
+        //     subst: `const Cosmos_cryptoPubKey_FromAmino = (content: AnyAmino): Any =>`
+        // }
+    ]);
+
     correctFile('./src/codegen/refractedlabs/client.ts', [
         {
             regex: /import { defaultRegistryTypes, AminoTypes, SigningStargateClient } from "@cosmjs\/stargate";/gm,
@@ -114,6 +149,19 @@ async function main() {
         }
     ])
 
+    correctFile('./src/codegen/helpers.ts', [{
+        regex: /bundle.\n\*\//gm,
+        subst: `bundle.\n*/\nimport { PageRequest } from "./cosmos/base/query/v1beta1/pagination";`
+    }, {
+        regex: /\n\nexport interface PageRequest {\s*key: Uint8Array;\s*offset: bigint;\s*limit: bigint;\s*countTotal: boolean;\s*reverse: boolean;\s*}/gm,
+        subst: ''
+    }])
+
+    correctFile('./src/codegen/google/protobuf/any.ts', [{
+        regex: /export const Any = {\n  typeUrl: "\/google\.protobuf\.Any",/gm,
+        subst: `export const Any = {\n  typeUrl: "/google.protobuf.Any",\n  fromJSONAsAny(object: any): any { return Any.fromJSON(object) },\n  fromPartialAsAny(object: any): any { return Any.fromPartial(object) },`,
+    }])
+
     correctFiles([
         './src/codegen/refractedlabs/rpc.query.ts',
         './src/codegen/refractedlabs/rpc.tx.ts'
@@ -121,13 +169,6 @@ async function main() {
         regex: /import\("..\/cosmos\/app\/v1alpha1\/query.rpc.Query"\)/gm,
         subst: `await import("../../default.grpc.impl")`
     }])
-
-    correctDir('./src/codegen', [
-        {
-            regex: /\.fromPartial\(request\)/gm,
-            subst: `.fromPartial(request as any)`
-        }
-    ]);
 
     console.log('✨ all done!');
 }
